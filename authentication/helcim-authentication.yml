@@ -1,0 +1,20 @@
+generated: '2026-07-24'
+method: searched
+source: openapi/helcim-api.json + https://devdocs.helcim.com/docs/authentication-with-the-helcim-api-and-helcimpayjs
+docs: https://devdocs.helcim.com/docs/authentication-with-the-helcim-api-and-helcimpayjs
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+model: Permissioned API access token created per API Access Configuration in the Helcim dashboard. Each
+  token carries granular per-resource permissions (e.g. General, Processing, Settings set to Read / PositiveTransaction
+  / Admin) which gate individual operations.
+schemes:
+- name: ApiAccessAuth
+  type: apiKey
+  in: header
+  parameter: api-token
+  description: API Token with required permissions
+  sources:
+  - openapi/helcim-api.json

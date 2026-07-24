@@ -1,0 +1,31 @@
+generated: '2026-07-24'
+method: derived
+format: custom-json-envelope
+source: openapi/helcim-api.json 4xx/5xx responses + https://devdocs.helcim.com/docs/errors-and-error-handling
+envelope_note: Helcim returns errors as a JSON object with an "errors" field (string or map), not RFC
+  9457 problem+json.
+error_envelope:
+  errors: <human-readable message or field->message map>
+problems:
+- status: 400
+  title: Bad Request
+  envelope: '{"errors": "<message>"}'
+- status: 401
+  title: Unauthorized (no API token)
+  envelope: '{"errors": "<message>"}'
+- status: 403
+  title: Forbidden (invalid API token or insufficient permissions)
+  envelope: '{"errors": "<message>"}'
+- status: 404
+  title: Not Found
+  envelope: '{"errors": "<message>"}'
+- status: 409
+  title: Conflict
+  envelope: '{"errors": "<message>"}'
+- status: 500
+  title: Internal Server Error
+  envelope: '{"errors": "<message>"}'
+- status: 429
+  title: Too Many Requests
+  envelope: HTTP 429 when concurrent (5) / per-minute (100) / per-hour (3000) limits exceeded
+  docs: https://devdocs.helcim.com/docs/api-rate-limits

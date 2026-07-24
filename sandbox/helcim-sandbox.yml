@@ -1,0 +1,43 @@
+generated: '2026-07-24'
+method: searched
+source: https://devdocs.helcim.com/docs/test-credit-card-numbers + /docs/testing-declines-and-avs + /docs/developer-testing
+test_mode:
+  note: Requires a dedicated developer test account. Test cards on a production account/terminal are declined
+    by card networks and may incur charges.
+  test_host: https://api.helcim.test/v2
+  setup_docs: https://devdocs.helcim.com/docs/developer-testing
+test_cards:
+- brand: Mastercard
+  number: '5413330089099130'
+  expiry: 01/28
+  cvv: '100'
+- brand: Mastercard
+  number: '5413330089020011'
+  expiry: 01/28
+  cvv: '100'
+- brand: Visa
+  number: '4124939999999990'
+  expiry: 01/28
+  cvv: '100'
+- brand: Visa
+  number: '4000000000000028'
+  expiry: 01/28
+  cvv: '100'
+- brand: American Express
+  number: '374245001751006'
+  expiry: 01/28
+  cvv: '1000'
+- brand: Discover
+  number: '6011973700000005'
+  expiry: 01/28
+  cvv: '100'
+- brand: Discover
+  number: '6011450103333333'
+  expiry: 01/28
+  cvv: '100'
+decline_simulation:
+  mechanism: Submit cardCVV of 200+ to force the mapped decline; 100-104 return approvals with a specific
+    CVV response code.
+  reference: errors/helcim-decline-codes.yml
+recommended_flow: Tokenize test cards via HelcimPay.js, then send the card token to the Purchase endpoint
+  to mirror production.

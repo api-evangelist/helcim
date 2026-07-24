@@ -1,0 +1,20 @@
+generated: '2026-07-24'
+method: searched
+source: https://devdocs.helcim.com/docs/api-versions-and-deprecation + https://status.helcim.com
+versioning:
+  scheme: uri-path-semver
+  current: v2 (2.2.0)
+  docs: https://devdocs.helcim.com/docs/api-versions-and-deprecation
+deprecation:
+  policy_url: https://devdocs.helcim.com/docs/api-versions-and-deprecation
+  stages:
+  - Stable
+  - Beta
+  - Deprecated
+  - End of Life
+  - Removal
+  sunset_header: false
+  note: Deprecated = no new functionality, high-severity fixes only. End-of-life deadlines announced ahead
+    of time. No RFC 8594 Sunset/Deprecation headers advertised.
+status_page: https://status.helcim.com
+deprecated_operations: []

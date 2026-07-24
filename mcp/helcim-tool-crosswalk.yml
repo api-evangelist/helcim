@@ -1,0 +1,309 @@
+generated: '2026-07-24'
+method: derived
+source: openapi/helcim-api.json + mcp/helcim-mcp.yml
+note: MCP tool list is derived 1:1 from OpenAPI operations (no official MCP server, no GraphQL), so every
+  tool binds cleanly to one REST operation; there are no mcp-only or rest-only divergences.
+surfaces:
+  openapi: openapi/helcim-api.json
+  graphql: null
+  mcp:
+    url: null
+    status: candidate
+    gated: false
+crosswalk:
+- tool: connectionTest
+  category: General
+  rest:
+  - connectionTest
+  binding: rest
+  confidence: high
+- tool: purchase
+  category: Payment
+  rest:
+  - purchase
+  binding: rest
+  confidence: high
+- tool: preauth
+  category: Payment
+  rest:
+  - preauth
+  binding: rest
+  confidence: high
+- tool: capture
+  category: Payment
+  rest:
+  - capture
+  binding: rest
+  confidence: high
+- tool: verify
+  category: Payment
+  rest:
+  - verify
+  binding: rest
+  confidence: high
+- tool: refund
+  category: Payment
+  rest:
+  - refund
+  binding: rest
+  confidence: high
+- tool: reverse
+  category: Payment
+  rest:
+  - reverse
+  binding: rest
+  confidence: high
+- tool: withdraw
+  category: Payment
+  rest:
+  - withdraw
+  binding: rest
+  confidence: high
+- tool: get_card_batches
+  category: Card Batch
+  rest:
+  - get-card-batches
+  binding: rest
+  confidence: high
+- tool: get_card_batch
+  category: Card Batch
+  rest:
+  - get-card-batch
+  binding: rest
+  confidence: high
+- tool: settle_card_batch
+  category: Card Batch
+  rest:
+  - settle-card-batch
+  binding: rest
+  confidence: high
+- tool: get_card_transactions
+  category: Card Transaction
+  rest:
+  - get-card-transactions
+  binding: rest
+  confidence: high
+- tool: get_card_transaction
+  category: Card Transaction
+  rest:
+  - get-card-transaction
+  binding: rest
+  confidence: high
+- tool: get_customers
+  category: Customer
+  rest:
+  - get-customers
+  binding: rest
+  confidence: high
+- tool: create_customer
+  category: Customer
+  rest:
+  - create-customer
+  binding: rest
+  confidence: high
+- tool: get_customer
+  category: Customer
+  rest:
+  - get-customer
+  binding: rest
+  confidence: high
+- tool: update_customer
+  category: Customer
+  rest:
+  - update-customer
+  binding: rest
+  confidence: high
+- tool: get_customer_cards
+  category: Customer
+  rest:
+  - get-customer-cards
+  binding: rest
+  confidence: high
+- tool: get_customer_card
+  category: Customer
+  rest:
+  - get-customer-card
+  binding: rest
+  confidence: high
+- tool: delete_customer_card
+  category: Customer
+  rest:
+  - delete-customer-card
+  binding: rest
+  confidence: high
+- tool: set_customer_card_default
+  category: Customer
+  rest:
+  - set-customer-card-default
+  binding: rest
+  confidence: high
+- tool: get_pads
+  category: Customer
+  rest:
+  - get-pads
+  binding: rest
+  confidence: high
+- tool: get_customer_bank_accounts
+  category: Customer
+  rest:
+  - get-customer-bank-accounts
+  binding: rest
+  confidence: high
+- tool: create_bank_account
+  category: Customer
+  rest:
+  - create-bank-account
+  binding: rest
+  confidence: high
+- tool: request_new_bank_account
+  category: Customer
+  rest:
+  - request-new-bank-account
+  binding: rest
+  confidence: high
+- tool: get_customer_bank_account
+  category: Customer
+  rest:
+  - get-customer-bank-account
+  binding: rest
+  confidence: high
+- tool: delete_customer_bank_account
+  category: Customer
+  rest:
+  - delete-customer-bank-account
+  binding: rest
+  confidence: high
+- tool: set_customer_bank_account_default
+  category: Customer
+  rest:
+  - set-customer-bank-account-default
+  binding: rest
+  confidence: high
+- tool: get_pad
+  category: Customer
+  rest:
+  - get-pad
+  binding: rest
+  confidence: high
+- tool: update_pad
+  category: Customer
+  rest:
+  - update-pad
+  binding: rest
+  confidence: high
+- tool: create_invoice
+  category: Invoice
+  rest:
+  - create-invoice
+  binding: rest
+  confidence: high
+- tool: get_invoices
+  category: Invoice
+  rest:
+  - get-invoices
+  binding: rest
+  confidence: high
+- tool: get_invoice
+  category: Invoice
+  rest:
+  - get-invoice
+  binding: rest
+  confidence: high
+- tool: update_invoice
+  category: Invoice
+  rest:
+  - update-invoice
+  binding: rest
+  confidence: high
+- tool: ach_withdraw
+  category: ACH Payment
+  rest:
+  - ach-withdraw
+  binding: rest
+  confidence: high
+- tool: get_many_ach_transactions
+  category: ACH Payment
+  rest:
+  - get-many-ach-transactions
+  binding: rest
+  confidence: high
+- tool: get_ach_transaction_by_id
+  category: ACH Payment
+  rest:
+  - get-ach-transaction-by-id
+  binding: rest
+  confidence: high
+- tool: ach_refund
+  category: ACH Payment
+  rest:
+  - ach-refund
+  binding: rest
+  confidence: high
+- tool: ach_void
+  category: ACH Payment
+  rest:
+  - ach-void
+  binding: rest
+  confidence: high
+- tool: ach_cancel
+  category: ACH Payment
+  rest:
+  - ach-cancel
+  binding: rest
+  confidence: high
+- tool: get_many_ach_batches
+  category: ACH Payment
+  rest:
+  - get-many-ach-batches
+  binding: rest
+  confidence: high
+- tool: ach_batch_settle
+  category: ACH Payment
+  rest:
+  - ach-batch-settle
+  binding: rest
+  confidence: high
+- tool: card_terminals
+  category: Card Terminal
+  rest:
+  - card-terminals
+  binding: rest
+  confidence: high
+- tool: get_devices
+  category: Device
+  rest:
+  - get-devices
+  binding: rest
+  confidence: high
+- tool: get_device
+  category: Device
+  rest:
+  - get-device
+  binding: rest
+  confidence: high
+- tool: start_purchase
+  category: Device
+  rest:
+  - start-purchase
+  binding: rest
+  confidence: high
+- tool: start_refund
+  category: Device
+  rest:
+  - start-refund
+  binding: rest
+  confidence: high
+- tool: ping_device
+  category: Device
+  rest:
+  - ping-device
+  binding: rest
+  confidence: high
+mcp_only: []
+rest_only: []
+coverage:
+  tools_named: 48
+  tools_bound: 48
+  mcp_only: 0
+  rest_ops_total: 48
+  rest_ops_with_tool: 48

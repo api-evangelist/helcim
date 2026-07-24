@@ -1,0 +1,19 @@
+generated: '2026-07-24'
+method: searched
+source: https://devdocs.helcim.com/docs/overview-of-helcimpayjs + /docs/overview-of-helcimjs
+components:
+- family: HelcimPay.js
+  kind: hosted-checkout-modal
+  description: Premium drop-in payment gateway that renders a hosted, PCI-reducing payment modal; supports
+    Fee Saver, partial payments, customization, and customer/invoice management.
+  loader: HelcimPay.js (checkout session initialized server-side via checkout-init)
+  docs: https://devdocs.helcim.com/docs/overview-of-helcimpayjs
+- family: Helcim.js
+  kind: client-side-tokenization
+  description: Browser library to tokenize/process card payments without handling full card numbers; supports
+    reCaptcha and amount hashing.
+  docs: https://devdocs.helcim.com/docs/overview-of-helcimjs
+- family: Hosted Payment Pages / Online Checkout
+  kind: hosted-page
+  description: Helcim-hosted checkout and payment pages requiring no client integration.
+  docs: https://devdocs.helcim.com/docs/hosted-payment-pages

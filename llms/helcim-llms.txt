@@ -1,0 +1,167 @@
+# Helcim Developer Docs Documentation
+
+> API documentation for developers using the Helcim payment and merchant platform.
+
+## Guides
+- [Welcome to Helcim!](https://devdocs.helcim.com/docs/welcome-to-helcim.md): Payments your business will love.
+- [Review Our Solutions](https://devdocs.helcim.com/docs/review-our-solutions.md)
+- [API Use Cases](https://devdocs.helcim.com/docs/api-use-cases.md)
+- [Developer testing](https://devdocs.helcim.com/docs/developer-testing.md)
+- [Test Credit Card Numbers](https://devdocs.helcim.com/docs/test-credit-card-numbers.md): Card numbers to use while testing transaction flows on Helcim test accounts.
+- [Testing Payment Declines and CVV Responses](https://devdocs.helcim.com/docs/testing-declines-and-avs.md): Test potential decline and AVS responses returned by HelcimPay.js or the Payment API endpoints.
+- [Connecting to the Helcim API](https://devdocs.helcim.com/docs/authentication-with-the-helcim-api-and-helcimpayjs.md): Connect and authenticate with the Helcim API and HelcimPay.js using your API Access Configuration.
+- [Understanding PCI Compliance](https://devdocs.helcim.com/docs/pci-compliance-scope.md): Understand the impacts of PCI compliance on your integration and how to reduce your PCI scope.
+- [Processing with Card Tokens](https://devdocs.helcim.com/docs/processing-with-card-tokens.md): Create card tokens to process online payments through the Payment API.
+- [Processing with Full Card Numbers](https://devdocs.helcim.com/docs/processing-with-full-card-numbers.md): Get approved to send full card numbers to process online payments through the Payment API.
+- [Overview of the Helcim API](https://devdocs.helcim.com/docs/overview-of-helcim-api.md): Integrate with the Helcim API to process payments and access other Helcim functionality within your existing website or application.
+- [API Message Format](https://devdocs.helcim.com/docs/api-message-format.md)
+- [API Rate Limits](https://devdocs.helcim.com/docs/api-rate-limits.md): Helcim has implemented API rate limits to ensure the security and availability of our services for all merchants.
+- [Payment API](https://devdocs.helcim.com/docs/payment-api.md): Process credit card payments online using the Payment API.
+- [Payments](https://devdocs.helcim.com/docs/payments.md): Process a range of online credit card payments type for your customers through the Payment API.
+- [Card Batches](https://devdocs.helcim.com/docs/card-batches.md): Manage your card batches and payments and learn how card batches impact your payment settlements.
+- [Card Terminals](https://devdocs.helcim.com/docs/processing-terminals.md): Learn how card terminals support your processing through the Payment API or HelcimPay.js.
+- [Idempotency](https://devdocs.helcim.com/docs/idempotency.md): Learn how idempotency can protect you from accidental duplicate payments through the Payment API.
+- [Suspected Duplicate Transactions](https://devdocs.helcim.com/docs/suspected-duplicate-transactions.md)
+- [Level 2 and 3 Optimized Payments](https://devdocs.helcim.com/docs/level-2-and-3-optimized-payments.md): Level 2 and 3 optimized payments capture and transmit additional data for eligible cards to achieve lower processing fees.
+- [Invoice API](https://devdocs.helcim.com/docs/invoice-api.md)
+- [Invoices](https://devdocs.helcim.com/docs/invoices.md): Create itemized invoices to collect payments from your customers.
+- [Invoice Online View](https://devdocs.helcim.com/docs/online-invoice-view.md)
+- [Customer API](https://devdocs.helcim.com/docs/customer-api.md): Manage your customer information and payment details using the Customer API.
+- [Customers](https://devdocs.helcim.com/docs/customers.md): Track customer information and payments in the Helcim system.
+- [Cards](https://devdocs.helcim.com/docs/cards.md): Store customer credit cards for quick and easy processing.
+- [Bank Accounts](https://devdocs.helcim.com/docs/bank-accounts.md): Store customer bank accounts for quick and easy processing.
+- [PAD Agreements](https://devdocs.helcim.com/docs/pad-agreements.md): Send PAD agreements for approval for ACH processing.
+- [Recurring API](https://devdocs.helcim.com/docs/recurring-api.md): Set up recurring payments for your customers using the Recurring API.
+- [Payment Plans](https://devdocs.helcim.com/docs/recurring-payment-plans.md): Create payment plans for easy recurring billing in the Helcim system.
+- [Subscribers](https://devdocs.helcim.com/docs/recurring-subscriptions.md): Subscribe customers to your payment plans.
+- [Add-ons](https://devdocs.helcim.com/docs/recurring-add-ons.md): Create optional add-ons for your subscribers recurring billing.
+- [Procedures](https://devdocs.helcim.com/docs/recurring-procedures.md): Manage your recurring payments using procedure endpoints.
+- [Errors and Error Handling](https://devdocs.helcim.com/docs/recurring-errors-and-error-handling.md): Review common errors for the Recurring API and how to handle them.
+- [Payments Hardware API](https://devdocs.helcim.com/docs/overview-of-payment-hardware-api.md): Connect your existing point-of-sale solutions with Helcim to process in-person debit and credit card payments using the Payment Hardware API.
+- [Testing the Payment Hardware API](https://devdocs.helcim.com/docs/testing-the-payment-hardware-api.md): Learn how to set up your developer environment and order hardware to test your integration with the Payment Hardware API.
+- [Testing In-Person Transactions](https://devdocs.helcim.com/docs/testing-in-person-transactions.md): Learn how to simulate and handle different payment and decline scenarios to ensure your integration manages payments smoothly.
+- [Turning Pairing mode on and off](https://devdocs.helcim.com/docs/turning-pairing-mode-on-and-off.md): Learn how to enable or disable the connection between your software and your Helcim hardware to start taking integrated payments.
+- [Registering Devices with the Payment Hardware API](https://devdocs.helcim.com/docs/registering-devices-with-the-payment-hardware-api.md): Generate the unique device codes needed to connect your Helcim payment hardware to your software for integrated payments.
+- [Pairing Devices with your Third-Party System](https://devdocs.helcim.com/docs/pairing-devices-with-your-third-party-system.md): Pair your devices by storing your unique device codes and send transactions from your existing third-party point of sale system or software.
+- [Initiating a Purchase Transaction](https://devdocs.helcim.com/docs/initiating-a-purchase-transaction.md): Learn how to send payment requests from your software directly to your compatible Helcim payment hardware to start a credit or debit transaction.
+- [Initiating a Debit Refund Transaction](https://devdocs.helcim.com/docs/initiating-a-refund-transaction.md): Learn how to send an in-person debit refund request from your software to your hardware for transactions that require the customer's original card.
+- [Enabling Webhooks for the Payment Hardware API](https://devdocs.helcim.com/docs/enabling-webhooks-for-transactions.md): This guide explains how to set up automated notifications so your system knows exactly when a payment is processed on your hardware.
+- [ACH Payment API](https://devdocs.helcim.com/docs/ach-payment-api.md): Process ACH payments online using the ACH Payment API.
+- [ACH Bank Payments](https://devdocs.helcim.com/docs/ach-payments.md)
+- [ACH Batches](https://devdocs.helcim.com/docs/ach-batches.md)
+- [Webhooks](https://devdocs.helcim.com/docs/webhooks.md): This guide explains how to set up automated notifications so your system knows exactly when a payment is processed through Helcim.
+- [Errors and Error Handling](https://devdocs.helcim.com/docs/errors-and-error-handling.md): Understand common API errors and how to resolve them.
+- [Overview of HelcimPay.js](https://devdocs.helcim.com/docs/overview-of-helcimpayjs.md): Integrate with HelcimPay.js, our premium payment gateway solution, and get access to a range of payment options and functionality.
+- [Payment Types and Methods](https://devdocs.helcim.com/docs/available-payment-types-and-methods-through-helcimpayjs.md): Helcim provides flexible tools to help you get paid. With HelcimPay.js, you can choose exactly how your customers pay and what transaction types you want to use.
+- [Managing Customers and Invoices](https://devdocs.helcim.com/docs/managing-customers-and-invoices-through-helcimpayjs.md): HelcimPay.js offers three distinct ways to handle invoice and customer records, ensuring your records stay accurate and your customers stay happy.
+- [Customization Options](https://devdocs.helcim.com/docs/customizing-your-helcimpayjs-modal.md): Through HelcimPay.js you can control a range of styling and display elements for the payment modal that is rendered.
+- [Processing with Fee Saver](https://devdocs.helcim.com/docs/processing-with-fee-saver-through-helcimpayjs.md): Through HelcimPay.js you can process with Fee Saver, passing credit card processing fees on to your customer.
+- [Processing Partial Payments](https://devdocs.helcim.com/docs/processing-partial-payments-through-helcimpayjs.md): Through HelcimPay.js you can allow customers to process partial payments against existing linked invoices.
+- [Managing Payment Details](https://devdocs.helcim.com/docs/managing-payment-details.md): Through HelcimPay.js you can determine whether payment details are displayed, set as default, or if payments are processed on a specific terminal.
+- [Initialize a HelcimPay.js Checkout Session](https://devdocs.helcim.com/docs/initialize-helcimpayjs.md)
+- [Render the HelcimPay.js Payment Modal](https://devdocs.helcim.com/docs/render-helcimpayjs.md)
+- [Validate a HelcimPay.js Payment](https://devdocs.helcim.com/docs/validate-helcimpayjs.md)
+- [Errors and Error Handling](https://devdocs.helcim.com/docs/helcimpayjs-errors-and-error-handling-1.md)
+- [Testing HelcimPay in Localhost environments](https://devdocs.helcim.com/docs/testing-helcimpay-in-localhost-environments.md): To maintain the highest security standards and ensure the integrity of the payment session, HelcimPay.js requires a secure, publicly accessible origin to render the payment modal.
+- [Overview of Helcim.js](https://devdocs.helcim.com/docs/overview-of-helcimjs.md): Integrate with Helcim.js and get access to process credit card payments online without handling full card numbers.
+- [Creating a Helcim.js Configuration](https://devdocs.helcim.com/docs/creating-a-new-config.md): Process payments with Helcim.js using your Helcim.js Configuration.
+- [Testing your Helcim.js Integration](https://devdocs.helcim.com/docs/testing-your-helcimjs-integration.md): Test your integration with Helcim.js using our developer test accounts.
+- [Enabling reCaptcha for Helcim.js](https://devdocs.helcim.com/docs/enabling-recaptcha-for-helcimjs.md): Protect against card testing and secure your Helcim.js transactions through your website using reCaptcha.
+- [Utilizing Amount Hashing for Helcim.js](https://devdocs.helcim.com/docs/amount-hashing.md)
+- [Transactions through Helcim.js and the Payment API](https://devdocs.helcim.com/docs/helcimjs-transactions-and-the-payment-api.md): Learn how to retrieve or manage transactions processed through Helcim.js in the Payment API.
+- [Integrating with Helcim.js](https://devdocs.helcim.com/docs/html-form-structure.md)
+- [HTML Request Fields](https://devdocs.helcim.com/docs/request-fields.md)
+- [Transaction Responses](https://devdocs.helcim.com/docs/helcimjs-transaction-responses.md)
+- [Errors and Error Handling](https://devdocs.helcim.com/docs/errors-and-error-handling-helcimjs.md): Review common errors you might encounter when integrating with Helcim.js.
+- [Helcim Online Checkout](https://devdocs.helcim.com/docs/helcim-online-checkout.md)
+- [Hosted Payment Pages](https://devdocs.helcim.com/docs/hosted-payment-pages.md)
+- [Technical Support](https://devdocs.helcim.com/docs/get-help.md)
+- [API Versions](https://devdocs.helcim.com/docs/api-versions-and-deprecation.md)
+- [Integration Partner Program](https://devdocs.helcim.com/docs/integration-partner-program.md): Learn about exclusive integration partner functionality to earn revenue through your technical integration with Helcim.
+- [Programmatic Revenue Share](https://devdocs.helcim.com/docs/programmatic-revenue-share.md): Earn revenue for payments processed through your technical integrations with Helcim.
+- [Connected Account Registrations](https://devdocs.helcim.com/docs/connected-account-registrations.md): Refer merchants to Helcim for processing using your unique affiliate URL.
+- [Connected Account Webhooks](https://devdocs.helcim.com/docs/connected-account-webhooks.md): Webhooks for connected accounts allows Helcim partners to be notified of API token values when a referred merchant is signed up and approved with Helcim.
+
+## API Reference
+- [Tests connectivity to the Helcim API](https://devdocs.helcim.com/reference/connectiontest.md)
+- [Process a Purchase Transaction](https://devdocs.helcim.com/reference/purchase.md)
+- [Process a Preauth Transaction](https://devdocs.helcim.com/reference/preauth.md)
+- [Process a Capture Transaction](https://devdocs.helcim.com/reference/capture.md)
+- [Process a Verify Transaction](https://devdocs.helcim.com/reference/verify.md)
+- [Process a Refund Transaction](https://devdocs.helcim.com/reference/refund.md)
+- [Process a Reverse Transaction](https://devdocs.helcim.com/reference/reverse.md)
+- [Process a Withdraw Transaction](https://devdocs.helcim.com/reference/withdraw.md)
+- [Get Card Batches](https://devdocs.helcim.com/reference/getcardbatches.md)
+- [Get Card Batch](https://devdocs.helcim.com/reference/getcardbatch.md)
+- [Settles an Open Card Batch](https://devdocs.helcim.com/reference/settlecardbatch.md)
+- [Collects up to 1000 Card Transactions](https://devdocs.helcim.com/reference/getcardtransactions.md)
+- [Get Card Transaction by id](https://devdocs.helcim.com/reference/getcardtransaction.md)
+- [Get customers](https://devdocs.helcim.com/reference/getcustomers.md)
+- [Create customer](https://devdocs.helcim.com/reference/createcustomer.md)
+- [Get customer](https://devdocs.helcim.com/reference/getcustomer.md)
+- [Update customer](https://devdocs.helcim.com/reference/updatecustomer.md)
+- [Get customer cards](https://devdocs.helcim.com/reference/getcustomercards.md)
+- [Delete customer card](https://devdocs.helcim.com/reference/deletecustomercard.md)
+- [Get customer card](https://devdocs.helcim.com/reference/getcustomercard.md)
+- [Set customer card as default](https://devdocs.helcim.com/reference/setcustomercarddefault.md)
+- [Get all PADS for a customer.](https://devdocs.helcim.com/reference/getpads.md)
+- [Get customer bank accounts.](https://devdocs.helcim.com/reference/getcustomerbankaccounts.md)
+- [Create a bank account.](https://devdocs.helcim.com/reference/createbankaccount.md)
+- [Request bank account information from a customer.](https://devdocs.helcim.com/reference/requestnewbankaccount.md)
+- [Get customer bank account](https://devdocs.helcim.com/reference/getcustomerbankaccount.md)
+- [Set customer bank account as default](https://devdocs.helcim.com/reference/setcustomerbankaccountdefault.md)
+- [Get a PAD by its ID.](https://devdocs.helcim.com/reference/getpad.md)
+- [Update a PAD by its ID.](https://devdocs.helcim.com/reference/updatepad.md)
+- [Delete customer bank account.](https://devdocs.helcim.com/reference/delete-customer-bank-account.md)
+- [Get invoices](https://devdocs.helcim.com/reference/getinvoices.md)
+- [Create invoice](https://devdocs.helcim.com/reference/createinvoice.md)
+- [Get invoice](https://devdocs.helcim.com/reference/getinvoice.md)
+- [Update invoice](https://devdocs.helcim.com/reference/updateinvoice.md)
+- [Process an ACH withdraw.](https://devdocs.helcim.com/reference/achwithdraw.md)
+- [Collects all ACH transactions.](https://devdocs.helcim.com/reference/getmanyachtransactions.md)
+- [Retrieves a single ACH transaction.](https://devdocs.helcim.com/reference/getachtransactionbyid.md)
+- [Refund an ACH transaction.](https://devdocs.helcim.com/reference/achrefund.md)
+- [Void an ACH transaction.](https://devdocs.helcim.com/reference/achvoid.md)
+- [Cancel a pending ACH transaction.](https://devdocs.helcim.com/reference/achcancel.md)
+- [Collects all ACH batches.](https://devdocs.helcim.com/reference/getmanyachbatches.md)
+- [Settle an ACH batch.](https://devdocs.helcim.com/reference/achbatchsettle.md)
+- [Get card terminals](https://devdocs.helcim.com/reference/cardterminals.md)
+- [Get Devices](https://devdocs.helcim.com/reference/getdevices.md): This operation requires the provided API key to have General permission set to 'Read' or higher, and Settings permission set to 'Read' or higher.
+- [Get Device Information](https://devdocs.helcim.com/reference/getdevice.md): This operation requires the provided API key to have General permission set to 'Read' or higher, and Settings permission set to 'Read' or higher.
+- [Start A Purchase](https://devdocs.helcim.com/reference/startpurchase.md): This operation requires the provided API key to have Processing permission set to 'PositiveTransaction' or higher.
+- [Start A Refund](https://devdocs.helcim.com/reference/startrefund.md): This operation requires the provided API key to have Processing permission set to 'Admin'.
+- [Send a Ping Event to a Device](https://devdocs.helcim.com/reference/pingdevice.md)
+- [Get payment plan collection](https://devdocs.helcim.com/reference/payment-plan-collection.md): Query all payment plans filtered by the provided parameters
+- [Patch payment plans](https://devdocs.helcim.com/reference/payment-plan-patch.md): Partially update one or more existing payment plans.  Each specified payment plan must contain one or fields in the request body to update.
+- [Create payment plans](https://devdocs.helcim.com/reference/payment-plan-create.md): Create one or more payment plans customers can subscribe to.
+- [Delete payment plan](https://devdocs.helcim.com/reference/payment-plan-delete.md): Delete a payment plan by id. This operation will also delete all subscriptions subscribed to the indicated plan and remove the plan from all associated payment links. Any payment link with only this plan as an option will be deleted.
+- [Get payment plan](https://devdocs.helcim.com/reference/payment-plan-single.md): Query a payment plan by id
+- [Get subscription collection](https://devdocs.helcim.com/reference/subscriptions-collection.md): Query all subscriptions filtered by the provided parameters
+- [Patch subscriptions](https://devdocs.helcim.com/reference/subscription-patch.md): Partially update one or more existing subscriptions.
+- [Create subscriptions](https://devdocs.helcim.com/reference/subscription-create.md): Create one or more subscriptions to your payment plans.
+- [Delete subscription](https://devdocs.helcim.com/reference/subscription-delete.md): Delete a subscription by id.
+- [Get subscription](https://devdocs.helcim.com/reference/subscription-single.md): Query a subscription by id
+- [Delete linked subscription add-ons](https://devdocs.helcim.com/reference/subscription-add-on-delete.md): Delete all linked add-ons for a subscription by subscription id.
+- [Patch subscription add-ons](https://devdocs.helcim.com/reference/subscription-add-on-patch.md): Partially update the quantity of one or more add-ons applied to the target subscription. The add-ons specified must support editing of quantity for the designated quantity to be saved.
+- [Link add-ons to a subscription](https://devdocs.helcim.com/reference/subscription-add-on-create.md): Link one or more add-ons to a subscription by subscription id
+- [Delete a linked subscription add-on](https://devdocs.helcim.com/reference/subscription-add-on-single-delete.md): Delete the linked add-on indicated by add-on id for a subscription by subscription id.
+- [Mark payment paid](https://devdocs.helcim.com/reference/subscription-payment-patch.md): Manually update a declined payment as approved (e.g. if payment was collected elsewhere)
+- [Get add-on collection](https://devdocs.helcim.com/reference/add-ons-collection.md): Query all add-ons filtered by provided parameters
+- [Patch add-ons](https://devdocs.helcim.com/reference/add-on-patch.md): Partially update one or more existing add-ons.
+- [Create add-ons](https://devdocs.helcim.com/reference/add-on-create.md): Create one or more add-ons to link to payment plans and subscriptions.
+- [Delete add-on](https://devdocs.helcim.com/reference/add-on-delete.md): Delete an add-on by id. This operation will also unlink the add-on from any linked payment plan and delete it from any linked subscriptions.
+- [Get add-on](https://devdocs.helcim.com/reference/add-on-single.md): Query an add-on by id
+- [Process a subscription payment](https://devdocs.helcim.com/reference/procedure-process-payment.md): Manually process an outstanding subscription payment. The target payment must be declined.
+- [Creates a HelcimPay.js Checkout Session](https://devdocs.helcim.com/reference/checkout-init.md)
+- [Uploads the logo to be displayed on the HelcimPay.js modal](https://devdocs.helcim.com/reference/helcim-pay-logo-upload.md)
+
+## Changelog
+- [ACH Payment API: New GET Response Fields](https://devdocs.helcim.com/changelog/ach-payment-api-new-get-response-fields.md)
+- [Enhanced Pagination and Query Parameters for ACH Transactions Endpoint](https://devdocs.helcim.com/changelog/enhanced-pagination-and-query-parameters-for-ach-transactions-endpoint.md)
+- [Delete Customer Bank Account Endpoint](https://devdocs.helcim.com/changelog/delete-customer-bank-account-endpoint.md)
+- [Updated HelcimPay response](https://devdocs.helcim.com/changelog/updated-helcimpay-response.md)
+- [Removal of LocalHost support for HelcimPay.js](https://devdocs.helcim.com/changelog/removal-of-localhost-support-for-helcimpayjs.md)
+- [Updated Payment Hardware API guides](https://devdocs.helcim.com/changelog/update-payment-hardware-api-guides.md)
+- [New webhook events for Smart Terminal payment cancels](https://devdocs.helcim.com/changelog/new-webhook-events-for-smart-terminal-payment-cancels.md)
+- [Idempotency updated to support 36 character UUID keys through Payment API](https://devdocs.helcim.com/changelog/idempotency-updated-to-support-36-character-uuid-keys-through-payment-api.md)
+- [tipAmount parameter removed from select Payment API endpoints](https://devdocs.helcim.com/changelog/tip-parameter-removed-from-select-payment-api-endpoints.md)

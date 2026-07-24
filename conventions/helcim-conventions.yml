@@ -1,0 +1,47 @@
+generated: '2026-07-24'
+method: searched
+source: https://devdocs.helcim.com/docs/idempotency + /docs/api-rate-limits + /docs/api-message-format
+  + /docs/authentication-with-the-helcim-api-and-helcimpayjs
+authentication:
+  style: api-key
+  header: api-token
+  model: permissioned API access token (per-resource read/processing/admin permissions)
+  docs: https://devdocs.helcim.com/docs/authentication-with-the-helcim-api-and-helcimpayjs
+idempotency:
+  supported: true
+  header: idempotency-key
+  format: UUID, 25-36 alphanumeric chars (including - and _)
+  required_on: all write payment operations (purchase, preauth, capture, verify, refund, reverse, withdraw,
+    ACH withdraw/refund/void/cancel, ACH batch settle)
+  docs: https://devdocs.helcim.com/docs/idempotency
+  note: Protects against accidental duplicate payments; reusing a key returns the original result.
+rate_limiting:
+  algorithm: sliding-window (slides every second)
+  concurrent: 5
+  per_minute: 100
+  per_hour: 3000
+  scope: aggregated across all API Access Configurations on a merchant account
+  headers:
+  - minute-limit-remaining
+  - hour-limit-remaining
+  exceeded_status: 429
+  docs: https://devdocs.helcim.com/docs/api-rate-limits
+pagination:
+  style: page-based
+  note: List endpoints accept page/limit query params (e.g. up to 1000 card transactions per call); ACH
+    transactions endpoint has enhanced pagination + query params.
+  reference: errors/helcim-problem-types.yml
+error_envelope:
+  shape: '{"errors": "<message or field map>"}'
+  reference: errors/helcim-problem-types.yml
+versioning:
+  scheme: uri-path
+  current: v2
+  reference: lifecycle/helcim-lifecycle.yml
+webhooks:
+  signature: HMAC-SHA256 over ${webhook-id}.${webhook-timestamp}.${body}
+  headers:
+  - webhook-signature
+  - webhook-timestamp
+  - webhook-id
+  reference: asyncapi/helcim-webhooks.yml

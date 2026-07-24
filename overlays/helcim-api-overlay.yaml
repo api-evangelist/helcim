@@ -1,0 +1,22 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for The Helcim API
+  version: 1.0.0
+extends: openapi/helcim-api.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment: '2026-07-24'
+    x-api-token-header: api-token
+    x-idempotency-key-header: idempotency-key
+    x-idempotency-required-on: all write payment operations (purchase, preauth, capture, verify, refund,
+      reverse, withdraw, ACH withdraw/refund/void/cancel, ACH batch settle)
+    x-rate-limits:
+      concurrent: 5
+      per_minute: 100
+      per_hour: 3000
+      algorithm: sliding-window
+      exceeded_status: 429
+    x-status-page: https://status.helcim.com
+    x-compliance:
+    - PCI DSS

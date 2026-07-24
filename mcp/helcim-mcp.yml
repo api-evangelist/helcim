@@ -1,0 +1,155 @@
+generated: '2026-07-24'
+method: derived
+status: candidate
+source: openapi/helcim-api.json
+note: Helcim publishes no official hosted MCP server. This is a candidate tool list derived one-to-one
+  from the Helcim API v2 OpenAPI operations; each tool inherits its backing operation parameters/requestBody
+  as its inputSchema.
+server:
+  name: helcim
+  transport: http
+tools:
+- name: connectionTest
+  description: Tests connectivity to the Helcim API
+  source_operation: openapi/helcim-api.json#connectionTest
+- name: purchase
+  description: Process a Purchase Transaction
+  source_operation: openapi/helcim-api.json#purchase
+- name: preauth
+  description: Process a Preauth Transaction
+  source_operation: openapi/helcim-api.json#preauth
+- name: capture
+  description: Process a Capture Transaction
+  source_operation: openapi/helcim-api.json#capture
+- name: verify
+  description: Process a Verify Transaction
+  source_operation: openapi/helcim-api.json#verify
+- name: refund
+  description: Process a Refund Transaction
+  source_operation: openapi/helcim-api.json#refund
+- name: reverse
+  description: Process a Reverse Transaction
+  source_operation: openapi/helcim-api.json#reverse
+- name: withdraw
+  description: Process a Withdraw Transaction
+  source_operation: openapi/helcim-api.json#withdraw
+- name: get_card_batches
+  description: Get Card Batches
+  source_operation: openapi/helcim-api.json#get-card-batches
+- name: get_card_batch
+  description: Get Card Batch
+  source_operation: openapi/helcim-api.json#get-card-batch
+- name: settle_card_batch
+  description: Settles an Open Card Batch
+  source_operation: openapi/helcim-api.json#settle-card-batch
+- name: get_card_transactions
+  description: Collects up to 1000 Card Transactions
+  source_operation: openapi/helcim-api.json#get-card-transactions
+- name: get_card_transaction
+  description: Get Card Transaction by id
+  source_operation: openapi/helcim-api.json#get-card-transaction
+- name: get_customers
+  description: Get customers
+  source_operation: openapi/helcim-api.json#get-customers
+- name: create_customer
+  description: Create customer
+  source_operation: openapi/helcim-api.json#create-customer
+- name: get_customer
+  description: Get customer
+  source_operation: openapi/helcim-api.json#get-customer
+- name: update_customer
+  description: Update customer
+  source_operation: openapi/helcim-api.json#update-customer
+- name: get_customer_cards
+  description: Get customer cards
+  source_operation: openapi/helcim-api.json#get-customer-cards
+- name: get_customer_card
+  description: Get customer card
+  source_operation: openapi/helcim-api.json#get-customer-card
+- name: delete_customer_card
+  description: Delete customer card
+  source_operation: openapi/helcim-api.json#delete-customer-card
+- name: set_customer_card_default
+  description: Set customer card as default
+  source_operation: openapi/helcim-api.json#set-customer-card-default
+- name: get_pads
+  description: Get all PADS for a customer.
+  source_operation: openapi/helcim-api.json#get-pads
+- name: get_customer_bank_accounts
+  description: Get customer bank accounts.
+  source_operation: openapi/helcim-api.json#get-customer-bank-accounts
+- name: create_bank_account
+  description: Create a bank account.
+  source_operation: openapi/helcim-api.json#create-bank-account
+- name: request_new_bank_account
+  description: Request bank account information from a customer.
+  source_operation: openapi/helcim-api.json#request-new-bank-account
+- name: get_customer_bank_account
+  description: Get customer bank account
+  source_operation: openapi/helcim-api.json#get-customer-bank-account
+- name: delete_customer_bank_account
+  description: Delete customer bank account.
+  source_operation: openapi/helcim-api.json#delete-customer-bank-account
+- name: set_customer_bank_account_default
+  description: Set customer bank account as default
+  source_operation: openapi/helcim-api.json#set-customer-bank-account-default
+- name: get_pad
+  description: Get a PAD by its ID.
+  source_operation: openapi/helcim-api.json#get-pad
+- name: update_pad
+  description: Update a PAD by its ID.
+  source_operation: openapi/helcim-api.json#update-pad
+- name: create_invoice
+  description: Create invoice
+  source_operation: openapi/helcim-api.json#create-invoice
+- name: get_invoices
+  description: Get invoices
+  source_operation: openapi/helcim-api.json#get-invoices
+- name: get_invoice
+  description: Get invoice
+  source_operation: openapi/helcim-api.json#get-invoice
+- name: update_invoice
+  description: Update invoice
+  source_operation: openapi/helcim-api.json#update-invoice
+- name: ach_withdraw
+  description: Process an ACH withdraw.
+  source_operation: openapi/helcim-api.json#ach-withdraw
+- name: get_many_ach_transactions
+  description: Collects all ACH transactions.
+  source_operation: openapi/helcim-api.json#get-many-ach-transactions
+- name: get_ach_transaction_by_id
+  description: Retrieves a single ACH transaction.
+  source_operation: openapi/helcim-api.json#get-ach-transaction-by-id
+- name: ach_refund
+  description: Refund an ACH transaction.
+  source_operation: openapi/helcim-api.json#ach-refund
+- name: ach_void
+  description: Void an ACH transaction.
+  source_operation: openapi/helcim-api.json#ach-void
+- name: ach_cancel
+  description: Cancel a pending ACH transaction.
+  source_operation: openapi/helcim-api.json#ach-cancel
+- name: get_many_ach_batches
+  description: Collects all ACH batches.
+  source_operation: openapi/helcim-api.json#get-many-ach-batches
+- name: ach_batch_settle
+  description: Settle an ACH batch.
+  source_operation: openapi/helcim-api.json#ach-batch-settle
+- name: card_terminals
+  description: Get card terminals
+  source_operation: openapi/helcim-api.json#card-terminals
+- name: get_devices
+  description: Get Devices
+  source_operation: openapi/helcim-api.json#get-devices
+- name: get_device
+  description: Get Device Information
+  source_operation: openapi/helcim-api.json#get-device
+- name: start_purchase
+  description: Start A Purchase
+  source_operation: openapi/helcim-api.json#start-purchase
+- name: start_refund
+  description: Start A Refund
+  source_operation: openapi/helcim-api.json#start-refund
+- name: ping_device
+  description: Send a Ping Event to a Device
+  source_operation: openapi/helcim-api.json#ping-device

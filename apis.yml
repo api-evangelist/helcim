@@ -146,6 +146,12 @@ apis:
   - type: APIReference
     url: https://devdocs.helcim.com/reference
 common:
+- type: AgenticAccess
+  url: agentic-access/helcim-agentic-access.yml
+- type: DomainSecurity
+  url: security/helcim-domain-security.yml
+- type: Authentication
+  url: authentication/helcim-authentication.yml
 - type: Website
   url: https://www.helcim.com/
 - type: DeveloperPortal
@@ -166,6 +172,58 @@ common:
   url: https://status.helcim.com
 - type: DeveloperPortal
   url: https://learn.helcim.com/api-developer-documentation
+- type: Idempotency
+  url: conventions/helcim-conventions.yml
+- type: Conventions
+  url: conventions/helcim-conventions.yml
+- type: RateLimits
+  url: rate-limits/helcim-rate-limits.yml
+- type: ErrorCatalog
+  url: errors/helcim-problem-types.yml
+- type: DeclineCodes
+  url: errors/helcim-decline-codes.yml
+- type: Lifecycle
+  url: lifecycle/helcim-lifecycle.yml
+- type: Deprecation
+  url: https://devdocs.helcim.com/docs/api-versions-and-deprecation
+- type: Sandbox
+  url: sandbox/helcim-sandbox.yml
+- type: ChangeLog
+  url: changelog/helcim-changelog.yml
+- type: Components
+  url: components/helcim-components.yml
+- type: DataModel
+  url: data-model/helcim-data-model.yml
+- type: Conformance
+  url: conformance/helcim-conformance.yml
+- type: Compliance
+  url: https://devdocs.helcim.com/docs/pci-compliance-scope
+- type: Packages
+  url: packages/helcim-packages.yml
+- type: MCPServer
+  url: mcp/helcim-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/helcim-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/helcim-llms.txt
+- type: Overlay
+  url: overlays/helcim-api-overlay.yaml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Webhooks
+  url: asyncapi/helcim-webhooks.yml
+- type: Pricing
+  url: https://www.helcim.com/pricing/
+- type: SignUp
+  url: https://hub.helcim.com/signup/register/
+- type: Login
+  url: https://hsso.helcim.com/login/
+- type: TermsOfService
+  url: https://legal.helcim.com/ca/terms-of-service/
+- type: PrivacyPolicy
+  url: https://legal.helcim.com/ca/privacy-policy/
+- type: Support
+  url: https://devdocs.helcim.com/docs/get-help
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

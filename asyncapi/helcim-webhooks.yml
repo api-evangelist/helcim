@@ -1,0 +1,32 @@
+generated: '2026-07-24'
+method: searched
+source: https://devdocs.helcim.com/docs/webhooks + /docs/connected-account-webhooks
+spec_type: Webhooks
+delivery: 'HTTPS POST to a merchant-configured endpoint (dashboard: All Tools > Integrations > Webhooks;
+  URL cannot contain "Helcim")'
+signature:
+  method: HMAC-SHA256
+  signed_content: ${webhook-id}.${webhook-timestamp}.${body}
+  key: base64-decoded verifierToken
+  headers:
+  - webhook-signature
+  - webhook-timestamp
+  - webhook-id
+events:
+- type: cardTransaction
+  description: A card transaction was processed (Payment Hardware API).
+  payload_example:
+    id: '25764674'
+    type: cardTransaction
+- type: terminalCancel
+  description: A payment was cancelled on a Smart Terminal device before processing.
+  payload_example:
+    type: terminalCancel
+    data:
+      cancelledAt: '2026-01-14T18:38:18Z'
+      currency: CAD
+      deviceCode: NBL7
+      transactionAmount: 1
+connected_account_webhooks:
+  description: Partners are notified of API token values when a referred merchant signs up and is approved.
+  docs: https://devdocs.helcim.com/docs/connected-account-webhooks

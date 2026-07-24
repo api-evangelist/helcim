@@ -1,0 +1,28 @@
+generated: '2026-07-24'
+method: searched
+source: openapi/helcim-api.json + https://devdocs.helcim.com/docs/pci-compliance-scope
+standards:
+- id: pci-dss
+  conforms: true
+  evidence: Helcim is a PCI DSS compliant payment processor; docs publish a PCI compliance scope guide
+    and tokenization (HelcimPay.js/card tokens) to reduce merchant PCI scope.
+  docs: https://devdocs.helcim.com/docs/pci-compliance-scope
+- id: idempotency
+  conforms: true
+  evidence: Required idempotency-key header (UUID, 25-36 chars) on all write payment operations.
+  docs: https://devdocs.helcim.com/docs/idempotency
+- id: oauth2
+  conforms: false
+  evidence: Auth is a permissioned API access token in an api-token header; no OAuth2.
+- id: openidconnect
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors returned as JSON {errors:...} envelopes, not application/problem+json.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: Deprecation lifecycle documented but no Sunset/Deprecation header support advertised.
+- id: webhooks-hmac
+  conforms: true
+  evidence: Webhooks signed with HMAC-SHA256 via webhook-signature/webhook-timestamp/webhook-id headers.
+  docs: https://devdocs.helcim.com/docs/webhooks

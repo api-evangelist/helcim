@@ -1,0 +1,81 @@
+generated: '2026-07-24'
+method: searched
+source: https://devdocs.helcim.com/docs/testing-declines-and-avs
+note: In the Helcim test environment declines/CVV outcomes are triggered by the CVV value submitted. CVV
+  100-104 return approvals with the listed CVV response; CVV >=200 forces the mapped decline reason. In
+  production these map to issuer decline reasons surfaced on the transaction response.
+trigger_field: cardData.cardCVV (test accounts)
+decline_codes:
+- code: '200'
+  meaning: CVV2 mismatch/failure
+  action: Verify card security code with cardholder.
+- code: '201'
+  meaning: Pick up card
+  action: Do not retry; card flagged by issuer.
+- code: '202'
+  meaning: Transaction amount error
+  action: Check amount formatting and retry.
+- code: '203'
+  meaning: Amount exceeds service limit
+  action: Reduce amount or contact issuer.
+- code: '204'
+  meaning: Application type error
+  action: Review request configuration.
+- code: '205'
+  meaning: Cannot convert - do not honor
+  action: Do not retry; contact issuer.
+- code: '206'
+  meaning: Failed negative check, unpaid items
+  action: Do not retry.
+- code: '207'
+  meaning: System error
+  action: Retry later.
+- code: '208'
+  meaning: Duplicate check number
+  action: Use a unique reference.
+- code: '209'
+  meaning: Do not honor
+  action: Do not retry; cardholder should contact issuer.
+- code: '210'
+  meaning: Expired card
+  action: Request a valid card.
+- code: '212'
+  meaning: Invalid card
+  action: Request a valid card.
+- code: '213'
+  meaning: Invalid cardholder authentication verification value
+  action: Re-authenticate.
+- code: '214'
+  meaning: Invalid terminal ID
+  action: Check terminalId.
+- code: '222'
+  meaning: General system error
+  action: Retry later.
+- code: '223'
+  meaning: Please retry/reenter transaction
+  action: Retry.
+- code: '225'
+  meaning: Request exceeds balance
+  action: Insufficient funds; try another card.
+- code: '227'
+  meaning: Invalid request
+  action: Fix request payload.
+- code: '229'
+  meaning: Refer to issuer
+  action: Cardholder should contact issuer.
+cvv_response_codes:
+- code: '100'
+  response: M
+  meaning: CVV matches issuing bank records
+- code: '101'
+  response: P
+  meaning: CVV not processed
+- code: '102'
+  response: S
+  meaning: Issuing bank doesn't support CVV verification
+- code: '103'
+  response: U
+  meaning: Bank received CVV but didn't complete verification
+- code: '104'
+  response: N
+  meaning: CVV doesn't match issuing bank records

@@ -1,0 +1,24 @@
+generated: '2026-07-24'
+method: generated
+source: openapi/helcim-api.json
+skills:
+- file: helcim-take-a-card-payment.md
+  name: Take a card payment with Helcim
+  api: openapi/helcim-api.json
+  operations:
+  - connectionTest
+  - purchase
+- file: helcim-save-customer-and-charge.md
+  name: Save a customer and charge a stored card
+  api: openapi/helcim-api.json
+  operations:
+  - create-customer
+  - get-customer-cards
+  - purchase
+- file: helcim-refund-a-payment.md
+  name: Refund or reverse a Helcim payment
+  api: openapi/helcim-api.json
+  operations:
+  - get-card-transaction
+  - reverse
+  - refund

@@ -1,0 +1,30 @@
+generated: '2026-07-24'
+method: searched
+source: live probes of /.well-known/ on api/website/docs hosts
+hosts:
+- https://api.helcim.com
+- https://www.helcim.com
+- https://devdocs.helcim.com
+documents:
+- host: https://api.helcim.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://api.helcim.com
+  path: /.well-known/openid-configuration
+  status: 404
+- host: https://api.helcim.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: https://api.helcim.com
+  path: /.well-known/oauth-protected-resource
+  status: 404
+- host: https://api.helcim.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: https://www.helcim.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://devdocs.helcim.com
+  path: /.well-known/security.txt
+  status: 404
+note: No /.well-known/ discovery documents published on any Helcim host as of this probe.

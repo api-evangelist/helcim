@@ -1,0 +1,44 @@
+generated: '2026-07-24'
+method: searched
+source: https://devdocs.helcim.com/changelog
+scheme: dated entries tagged Added/Improved/Removed
+current_version: v2.2.0
+entries:
+- title: 'ACH Payment API: New GET Response Fields'
+  tag: Improved
+  when: 2026-07 (approx, 1 day before capture)
+  url: https://devdocs.helcim.com/changelog/ach-payment-api-new-get-response-fields
+- title: Enhanced Pagination and Query Parameters for ACH Transactions Endpoint
+  tag: Added
+  when: ~2 months prior
+  url: https://devdocs.helcim.com/changelog/enhanced-pagination-and-query-parameters-for-ach-transactions-endpoint
+- title: Delete Customer Bank Account Endpoint
+  tag: Added
+  when: ~3 months prior
+  url: https://devdocs.helcim.com/changelog/delete-customer-bank-account-endpoint
+- title: Updated HelcimPay response
+  tag: Added
+  when: ~6 months prior
+  url: https://devdocs.helcim.com/changelog/updated-helcimpay-response
+- title: Removal of LocalHost support for HelcimPay.js
+  tag: Removed
+  when: ~6 months prior
+  breaking: true
+  url: https://devdocs.helcim.com/changelog/removal-of-localhost-support-for-helcimpayjs
+- title: Updated Payment Hardware API guides
+  tag: Improved
+  when: ~6 months prior
+  url: https://devdocs.helcim.com/changelog/update-payment-hardware-api-guides
+- title: New webhook events for Smart Terminal payment cancels
+  tag: Improved
+  when: ~1 year prior
+  url: https://devdocs.helcim.com/changelog/new-webhook-events-for-smart-terminal-payment-cancels
+- title: Idempotency updated to support 36 character UUID keys through Payment API
+  tag: Improved
+  when: ~1 year prior
+  url: https://devdocs.helcim.com/changelog/idempotency-updated-to-support-36-character-uuid-keys-through-payment-api
+- title: tipAmount parameter removed from select Payment API endpoints
+  tag: Removed
+  when: '>1 year prior'
+  breaking: true
+  url: https://devdocs.helcim.com/changelog/tip-parameter-removed-from-select-payment-api-endpoints

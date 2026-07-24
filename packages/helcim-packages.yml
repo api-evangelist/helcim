@@ -1,0 +1,26 @@
+generated: '2026-07-24'
+method: searched
+source: npm registry + github.com/helcim search
+note: Helcim publishes no first-party client SDK; the developer surface is the raw REST API plus HelcimPay.js/Helcim.js
+  browser libraries. Only community packages exist.
+packages:
+- language: javascript
+  registry: npm
+  name: '@tapanytime/helcim'
+  url: https://www.npmjs.com/package/@tapanytime/helcim
+  install: npm install @tapanytime/helcim
+  official: false
+  note: Community-built browser library intended to replace Helcim.js for Verify transactions.
+first_party_integrations:
+- name: magento-2
+  url: https://github.com/helcim/magento-2
+  kind: plugin
+  platform: Magento 2
+- name: drupal-8
+  url: https://github.com/helcim/drupal-8
+  kind: plugin
+  platform: Drupal 8
+- name: whmcs-commerce
+  url: https://github.com/helcim/whmcs-commerce
+  kind: plugin
+  platform: WHMCS

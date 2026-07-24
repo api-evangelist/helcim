@@ -1,0 +1,19 @@
+generated: '2026-07-24'
+method: searched
+source: https://devdocs.helcim.com/docs/api-rate-limits
+algorithm: sliding-window
+limits:
+- window: concurrent
+  limit_count: 5
+  unit: simultaneous calls
+- window: minute
+  limit_count: 100
+  unit: requests
+- window: hour
+  limit_count: 3000
+  unit: requests
+scope: aggregated across all API Access Configurations on a merchant account
+headers:
+- minute-limit-remaining
+- hour-limit-remaining
+exceeded_status: 429
