@@ -1,0 +1,171 @@
+aid: helcim
+url: https://raw.githubusercontent.com/api-evangelist/helcim/refs/heads/main/apis.yml
+name: Helcim
+kind: company
+description: >-
+  Helcim is a Calgary, Canada based payment processor and merchant services
+  provider serving small and medium-sized businesses across Canada and the
+  United States with interchange-plus pricing and no monthly fees. Beyond its
+  merchant dashboard, Smart Terminal hardware, and online store, Helcim ships a
+  genuine developer surface: the versioned Helcim API (v2) for taking card and
+  ACH payments, managing customers, cards, bank accounts and pre-authorized
+  debits (PADs), issuing invoices, settling card and ACH batches, and driving
+  in-person Card Terminal devices, alongside HelcimPay.js hosted checkout and
+  connected-account webhooks. Authentication is a permissioned API access token
+  passed in an api-token header, and the public developer portal publishes a
+  downloadable OpenAPI 3.0 definition. In Canada's small, concentrated payments
+  market, Helcim is one of the API-native SMB money-movement fintechs building
+  above the incumbent acquiring and Interac rails.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Payments
+- Canada
+- Payment Gateway
+- Payment Processing
+- Acquiring
+- Merchant Services
+- ACH
+- Invoicing
+- Card Terminal
+- Small Business
+created: '2026-07-24'
+modified: '2026-07-24'
+specificationVersion: '0.19'
+apis:
+- aid: helcim:helcim-payment-api
+  name: Helcim Payment API
+  description: >-
+    Card payment processing endpoints covering the full transaction lifecycle —
+    Purchase, Preauthorization, Capture, Verify, Refund, Reverse, and Withdraw —
+    under the Helcim API v2. Includes the General connection-test endpoint for
+    validating an API access token.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - Payment
+  - Payments
+  - Cards
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-api.json
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+- aid: helcim:helcim-ach-payment-api
+  name: Helcim ACH Payment API
+  description: >-
+    Bank-to-bank (ACH / pre-authorized debit) money movement — withdraw, refund,
+    void, cancel, retrieve ACH transactions, and list and settle ACH batches
+    under the Helcim API v2.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - ACH Payment
+  - ACH
+  - Bank Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-api.json
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+- aid: helcim:helcim-customer-api
+  name: Helcim Customer API
+  description: >-
+    Create, retrieve, and update customers and manage their saved payment
+    instruments — stored cards, bank accounts, and pre-authorized debit
+    agreements (PADs) — under the Helcim API v2.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - Customer
+  - Vault
+  - Cards
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-api.json
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+- aid: helcim:helcim-invoice-api
+  name: Helcim Invoice API
+  description: >-
+    Create, retrieve, and update invoices under the Helcim API v2, supporting
+    billing and payment collection workflows.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - Invoice
+  - Billing
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-api.json
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+- aid: helcim:helcim-card-transaction-batch-api
+  name: Helcim Card Transaction & Batch API
+  description: >-
+    Read access to processed card transactions and card batches, including
+    listing and retrieving transactions and batches and settling a card batch,
+    under the Helcim API v2.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - Card Transaction
+  - Card Batch
+  - Settlement
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-api.json
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+- aid: helcim:helcim-terminal-device-api
+  name: Helcim Card Terminal & Device API
+  description: >-
+    In-person payments through Helcim Smart Terminal hardware — list card
+    terminals and devices, ping a device, and start purchase or refund
+    transactions on a device — under the Helcim API v2.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - Card Terminal
+  - Device
+  - In Person
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-api.json
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+common:
+- type: Website
+  url: https://www.helcim.com/
+- type: DeveloperPortal
+  url: https://devdocs.helcim.com/
+- type: Documentation
+  url: https://devdocs.helcim.com/docs
+- type: APIReference
+  url: https://devdocs.helcim.com/reference
+- type: GettingStarted
+  url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+- type: Authentication
+  url: https://devdocs.helcim.com/docs/authentication-with-the-helcim-api-and-helcimpayjs
+- type: Webhooks
+  url: https://devdocs.helcim.com/docs/connected-account-webhooks
+- type: GitHubOrganization
+  url: https://github.com/helcim
+- type: StatusPage
+  url: https://status.helcim.com
+- type: DeveloperPortal
+  url: https://learn.helcim.com/api-developer-documentation
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

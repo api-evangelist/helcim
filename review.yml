@@ -1,0 +1,114 @@
+aid: helcim
+name: Helcim
+review:
+  question: Does Helcim publish a real public developer portal with a downloadable OpenAPI definition?
+  answer: true
+  date: '2026-07-24'
+  reviewer: API Evangelist
+findings:
+  summary: |
+    Helcim is a Calgary, Canada based SMB payment processor that ships a
+    genuine, self-serve developer surface. The public developer portal is a
+    ReadMe.io-hosted hub at https://devdocs.helcim.com (HTTP 200), with an
+    interactive API Reference at https://devdocs.helcim.com/reference. A real,
+    downloadable OpenAPI 3.0.0 definition is published — "The Helcim API"
+    version 2.2.0, 40 documented paths across 9 tag groups (Payment, ACH
+    Payment, Customer, Invoice, Card Transaction, Card Batch, Card Terminal,
+    Device, General). It was harvested verbatim from the ReadMe API registry
+    and saved to openapi/helcim-api.json. The API is REST/JSON over HTTPS with a
+    single production server (https://api.helcim.com/v2) and a test server
+    (https://api.helcim.test/v2). Authentication is an API key passed in an
+    api-token header (securityScheme ApiAccessAuth), backed by permissioned
+    "API Access Configurations" created in the Helcim dashboard — no OAuth2,
+    mTLS, or FAPI rails are documented. Helcim also documents HelcimPay.js
+    (client-side hosted checkout) and connected-account webhooks for event
+    delivery, and ships in-person payments via Smart Terminal devices. No public
+    Postman collection, GraphQL, gRPC, or AsyncAPI document was found. Home
+    market is Canada (with US coverage); as an SMB acquirer/gateway Helcim sits
+    above the incumbent card rails and Interac, and its API is card- and
+    ACH-centric rather than an ISO 20022 / scheme-doc rail.
+  transports:
+  - protocol: REST
+    scheme: https
+    baseURL: https://api.helcim.com/v2
+    documented: true
+  - protocol: Webhooks
+    scheme: https
+    documented: true
+    note: Connected-account webhooks documented at devdocs.helcim.com/docs/connected-account-webhooks; no AsyncAPI document published.
+  - protocol: GraphQL
+    documented: false
+    note: No public GraphQL endpoint or SDL found.
+  - protocol: gRPC
+    documented: false
+    note: No published .proto or gRPC surface found.
+  auth:
+    model: apiKey
+    scheme: ApiAccessAuth
+    location: header
+    parameter: api-token
+    note: Permissioned API access token created via API Access Configuration in the Helcim dashboard. No OAuth2/OIDC or mTLS documented; /.well-known/openid-configuration not served on the API host.
+  developerPortal:
+    url: https://devdocs.helcim.com
+    httpStatus: 200
+    platform: ReadMe.io (SuperHub)
+    apiReference: https://devdocs.helcim.com/reference
+  openapi:
+    published: true
+    count: 1
+    version: 3.0.0
+    apiVersion: 2.2.0
+    title: The Helcim API
+    paths: 40
+    savedTo: openapi/helcim-api.json
+    provenance:
+      sourceUrl: https://dash.readme.com/api/v1/api-registry/jqvtk5fmrjmntmn
+      registryFilename: the-helcim-api.json
+      registryUUID: jqvtk5fmrjmntmn
+      fetchDate: '2026-07-24'
+      httpStatus: 200
+      note: |
+        ReadMe.io stores the definition as "the-helcim-api.json" (registry
+        uuid jqvtk5fmrjmntmn), surfaced from the reference page at
+        https://devdocs.helcim.com/reference and fetched verbatim from the
+        public ReadMe api-registry endpoint.
+  postman:
+    published: false
+    note: No public Postman collection or workspace found.
+  homeMarket: Canada
+sources:
+- url: https://devdocs.helcim.com/docs/welcome-to-helcim
+  type: Documentation
+  httpStatus: 200
+  note: Developer portal landing page.
+- url: https://devdocs.helcim.com/reference
+  type: APIReference
+  httpStatus: 200
+  note: Interactive API reference; embeds the ReadMe registry definition the-helcim-api.json.
+- url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  type: Documentation
+  httpStatus: 200
+  note: API overview; base URL https://api.helcim.com/v2 and product endpoint families.
+- url: https://devdocs.helcim.com/docs/authentication-with-the-helcim-api-and-helcimpayjs
+  type: Authentication
+  httpStatus: 200
+  note: api-token header auth model and API Access Configuration.
+- url: https://devdocs.helcim.com/docs/connected-account-webhooks
+  type: Webhooks
+  httpStatus: 200
+  note: Connected-account webhook event delivery.
+- url: https://dash.readme.com/api/v1/api-registry/jqvtk5fmrjmntmn
+  type: OpenAPI
+  httpStatus: 200
+  note: Verbatim OpenAPI 3.0.0 source (saved to openapi/helcim-api.json).
+- url: https://github.com/helcim
+  type: GitHubOrganization
+  httpStatus: 200
+- url: https://status.helcim.com
+  type: StatusPage
+  httpStatus: 200
+actions:
+  openapiHarvested: true
+  specsSaved:
+  - openapi/helcim-api.json
+  apisYmlCreated: true
