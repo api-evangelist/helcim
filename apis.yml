@@ -146,6 +146,8 @@ apis:
   - type: APIReference
     url: https://devdocs.helcim.com/reference
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/helcim/overview
 - type: AgenticAccess
   url: agentic-access/helcim-agentic-access.yml
 - type: DomainSecurity
