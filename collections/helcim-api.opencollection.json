@@ -1,0 +1,1638 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "The Helcim API",
+    "version": "2.2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "General",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Tests connectivity to the Helcim API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/connection-test",
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Tests connectivity to the Helcim API"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Process a Purchase Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/payment/purchase",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Process a Purchase Transaction"
+        },
+        {
+          "info": {
+            "name": "Process a Preauth Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/payment/preauth",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Process a Preauth Transaction"
+        },
+        {
+          "info": {
+            "name": "Process a Capture Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/payment/capture",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Process a Capture Transaction"
+        },
+        {
+          "info": {
+            "name": "Process a Verify Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/payment/verify",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Process a Verify Transaction"
+        },
+        {
+          "info": {
+            "name": "Process a Refund Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/payment/refund",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Process a Refund Transaction"
+        },
+        {
+          "info": {
+            "name": "Process a Reverse Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/payment/reverse",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Process a Reverse Transaction"
+        },
+        {
+          "info": {
+            "name": "Process a Withdraw Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/payment/withdraw",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Process a Withdraw Transaction"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Card Batch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Card Batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/card-batches",
+            "params": [
+              {
+                "name": "batchNumber",
+                "value": "18900",
+                "type": "query",
+                "description": "The number of the batch to retrieve. Note that this is the batch number, not batch ID."
+              },
+              {
+                "name": "terminalId",
+                "value": "180000",
+                "type": "query",
+                "description": "The terminalId of the requested batch"
+              },
+              {
+                "name": "collect-stats",
+                "value": "true",
+                "type": "query",
+                "description": "Includes transaction statistics for the batch"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get Card Batches"
+        },
+        {
+          "info": {
+            "name": "Get Card Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/card-batches/:cardBatchId",
+            "params": [
+              {
+                "name": "cardBatchId",
+                "value": "",
+                "type": "path",
+                "description": "The Card Batch Id of the Card Batch you want to get"
+              },
+              {
+                "name": "collect-stats",
+                "value": "true",
+                "type": "query",
+                "description": "Includes transaction statistics for the batch"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get Card Batch"
+        },
+        {
+          "info": {
+            "name": "Settles an Open Card Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/card-batches/:cardBatchId/settle",
+            "params": [
+              {
+                "name": "cardBatchId",
+                "value": "",
+                "type": "path",
+                "description": "The Card Batch Id of the Card Batch you want to settle"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Settles an Open Card Batch"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Card Transaction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Collects up to 1000 Card Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/card-transactions",
+            "params": [
+              {
+                "name": "dateFrom",
+                "value": "2020-01-01",
+                "type": "query",
+                "description": "Filters transactions created from 2020-01-01 (Mountain Time)"
+              },
+              {
+                "name": "dateTo",
+                "value": "2021-01-01",
+                "type": "query",
+                "description": "Filters transactions created until 2021-01-01 (Mountain Time)"
+              },
+              {
+                "name": "search",
+                "value": "500",
+                "type": "query",
+                "description": "Searches amount, card number(F6L4 only), cardholder name, & approval codes"
+              },
+              {
+                "name": "customerCode",
+                "value": "CST1000",
+                "type": "query",
+                "description": "The code of the customer associated with the transaction"
+              },
+              {
+                "name": "invoiceNumber",
+                "value": "INV1000",
+                "type": "query",
+                "description": "The number of the invoice associated with the transaction"
+              },
+              {
+                "name": "cardToken",
+                "value": "5454JK97UU1F5454",
+                "type": "query",
+                "description": "The token of the card associated with the transaction"
+              },
+              {
+                "name": "cardBatchId",
+                "value": "3",
+                "type": "query",
+                "description": "The id of the batch associated with the transaction"
+              },
+              {
+                "name": "limit",
+                "value": "100",
+                "type": "query",
+                "description": "The limit number of transactions will be returned in one request. We only allow maximum 1000 objects per request. If no limit specified, the default limit will be 1000 objects."
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Specifies the page number of the results you want to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Collects up to 1000 Card Transactions"
+        },
+        {
+          "info": {
+            "name": "Get Card Transaction by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/card-transactions/:cardTransactionId",
+            "params": [
+              {
+                "name": "cardTransactionId",
+                "value": "",
+                "type": "path",
+                "description": "The Card Transaction Id of the Card Transaction you want to get"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get Card Transaction by id"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Customer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/customers",
+            "params": [
+              {
+                "name": "search",
+                "value": "john",
+                "type": "query",
+                "description": "The search term to be used for partial matching on contactName, businessName, customerCode, city, phone and email (Only use one query field per request)."
+              },
+              {
+                "name": "customerCode",
+                "value": "CST1000",
+                "type": "query",
+                "description": "Existing customer code (Only use one query field per request)."
+              },
+              {
+                "name": "limit",
+                "value": "25",
+                "type": "query",
+                "description": "The limit number of customers will be returned in one request. We only allow maximum 100 objects per request. If no limit specified, the default limit will be 100 objects."
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Specifies the page number of the results you want to retrieve."
+              },
+              {
+                "name": "includeCards",
+                "value": "yes",
+                "type": "query",
+                "description": "Specifies whether to return any credit cards for retrieved customers. By default no cards are returned.\n  * `yes` - return all available cards for retrieved customers.\n"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get customers"
+        },
+        {
+          "info": {
+            "name": "Create customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/customers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create customer"
+        },
+        {
+          "info": {
+            "name": "Get customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/customers/:customerId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the customer"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get customer"
+        },
+        {
+          "info": {
+            "name": "Update customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.helcim.com/v2/customers/:customerId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the customer"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update customer"
+        },
+        {
+          "info": {
+            "name": "Get customer cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/customers/:customerId/cards",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the customer"
+              },
+              {
+                "name": "cardToken",
+                "value": "907af81acc0224e0134949",
+                "type": "query",
+                "description": "The card token."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get customer cards"
+        },
+        {
+          "info": {
+            "name": "Get customer card",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/customers/:customerId/cards/:cardId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the customer"
+              },
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the card"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get customer card"
+        },
+        {
+          "info": {
+            "name": "Delete customer card",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.helcim.com/v2/customers/:customerId/cards/:cardId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the customer"
+              },
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the card"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete customer card"
+        },
+        {
+          "info": {
+            "name": "Set customer card as default",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.helcim.com/v2/customers/:customerId/cards/:cardId/default",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the customer"
+              },
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the card"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Set customer card as default"
+        },
+        {
+          "info": {
+            "name": "Get all PADS for a customer.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/customers/:customerId/pads",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Customer ID."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get all PADS for a customer."
+        },
+        {
+          "info": {
+            "name": "Get customer bank accounts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/customers/:customerId/bank-accounts",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the customer"
+              },
+              {
+                "name": "bankToken",
+                "value": "",
+                "type": "query",
+                "description": "The bank account token."
+              },
+              {
+                "name": "verified",
+                "value": "",
+                "type": "query",
+                "description": "If the bank account is verified or not. Use 1 or 0."
+              },
+              {
+                "name": "ready",
+                "value": "",
+                "type": "query",
+                "description": "If the bank account is verified or not. Use 1 or 0."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get customer bank accounts."
+        },
+        {
+          "info": {
+            "name": "Create a bank account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/customers/:customerId/bank-accounts",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Customer ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a bank account."
+        },
+        {
+          "info": {
+            "name": "Request bank account information from a customer.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/customers/:customerId/bank-accounts/request-new",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Customer ID."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Request bank account information from a customer."
+        },
+        {
+          "info": {
+            "name": "Get customer bank account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/customers/:customerId/bank-accounts/:bankAccountId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the customer"
+              },
+              {
+                "name": "bankAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the bank account"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get customer bank account"
+        },
+        {
+          "info": {
+            "name": "Delete customer bank account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.helcim.com/v2/customers/:customerId/bank-accounts/:bankAccountId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the customer"
+              },
+              {
+                "name": "bankAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the bank account."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete customer bank account."
+        },
+        {
+          "info": {
+            "name": "Set customer bank account as default",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.helcim.com/v2/customers/:customerId/bank-accounts/:bankAccountId/default",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the customer"
+              },
+              {
+                "name": "bankAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the bank account"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Set customer bank account as default"
+        },
+        {
+          "info": {
+            "name": "Get a PAD by its ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/customers/:customerId/bank-accounts/:bankAccountId/pads/:padId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Customer ID."
+              },
+              {
+                "name": "bankAccountId",
+                "value": "",
+                "type": "path",
+                "description": "Bank account ID."
+              },
+              {
+                "name": "padId",
+                "value": "",
+                "type": "path",
+                "description": "PAD ID."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a PAD by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a PAD by its ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.helcim.com/v2/customers/:customerId/bank-accounts/:bankAccountId/pads/:padId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Customer ID."
+              },
+              {
+                "name": "bankAccountId",
+                "value": "",
+                "type": "path",
+                "description": "Bank account ID."
+              },
+              {
+                "name": "padId",
+                "value": "",
+                "type": "path",
+                "description": "PAD ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a PAD by its ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Invoice",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/invoices",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number for paginated results. Defaults to the first page if omitted.\n"
+              },
+              {
+                "name": "dateStart",
+                "value": "2020-01-01",
+                "type": "query",
+                "description": "Filter invoices created on or after this date or date-time. Format: `YYYY-MM-DD` or `YYYY-MM-DD HH:MM:SS`. If time is omitted, `00:00:00` is assumed. If `dateEnd` is provided, it must not be earlier than `dateStart`.\n"
+              },
+              {
+                "name": "dateEnd",
+                "value": "2021-01-01",
+                "type": "query",
+                "description": "Filter invoices created on or before this date or date-time. Format: `YYYY-MM-DD` or `YYYY-MM-DD HH:MM:SS`. If time is omitted, `23:59:59` is assumed. If `dateStart` is provided, `dateEnd` must not be earlier than `dateStart`.\n"
+              },
+              {
+                "name": "invoiceNumber",
+                "value": "INV1000",
+                "type": "query",
+                "description": "Filter invoices by the exact invoice number. Matches exactly (case-insensitive). If no match exists, no invoices are returned.\n"
+              },
+              {
+                "name": "customerId",
+                "value": "12345",
+                "type": "query",
+                "description": "Filter invoices by customer ID.\n"
+              },
+              {
+                "name": "status",
+                "value": "PAID",
+                "type": "query",
+                "description": "Filter invoices by status.\n"
+              },
+              {
+                "name": "type",
+                "value": "INVOICE",
+                "type": "query",
+                "description": "Filter invoices by type.\n"
+              },
+              {
+                "name": "currency",
+                "value": "USD",
+                "type": "query",
+                "description": "Filter invoices by currency code.\n"
+              },
+              {
+                "name": "withConvenienceFee",
+                "value": "1",
+                "type": "query",
+                "description": "Include the convenience fee for each invoice.  If `1`, the convenience fee is included in the response.  If `0` or omitted, the convenience fee is set to 0.\n"
+              },
+              {
+                "name": "withOrderFields",
+                "value": "1",
+                "type": "query",
+                "description": "Include custom field values for each invoice. If `1`, the `orderFields` array for each invoice is populated. If `0` or omitted, `orderFields` is always an empty array.\n"
+              },
+              {
+                "name": "convenienceFeeEnabled",
+                "value": "1",
+                "type": "query",
+                "description": "Filter invoices by whether the convenience fee is enabled.  If `1`, return all invoices with the convenience fee enabled. If `0`, return all invoices with the convenience fee disabled.  If omitted, no filter is applied.\n"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get invoices"
+        },
+        {
+          "info": {
+            "name": "Create invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/invoices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create invoice"
+        },
+        {
+          "info": {
+            "name": "Get invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of the invoice to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get invoice"
+        },
+        {
+          "info": {
+            "name": "Update invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.helcim.com/v2/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The unique invoice Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update invoice"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ACH Payment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Process an ACH withdraw.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.helcim.com/v2/ach/withdraw",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Process an ACH withdraw."
+        },
+        {
+          "info": {
+            "name": "Collects all ACH transactions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/ach/transactions",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query",
+                "description": "The number of transactions that will be returned in one request. We only allow maximum 125 objects per request.  If no limit specified, the default limit will be 125 objects.\n"
+              },
+              {
+                "name": "startDate",
+                "value": "2020-01-01",
+                "type": "query",
+                "description": "Filter transactions created on or after this date. Format: `YYYY-MM-DD`. If `endDate` is provided, it must not be earlier than `startDate`.\n"
+              },
+              {
+                "name": "endDate",
+                "value": "2021-01-01",
+                "type": "query",
+                "description": "Filter transactions created on or before this date. Format: `YYYY-MM-DD`. If `startDate` is provided, `endDate` must not be earlier than `startDate`.\n"
+              },
+              {
+                "name": "amountMin",
+                "value": "150",
+                "type": "query",
+                "description": "Filter transactions by minimum amount. If `amountMax` is provided, `amountMin` must not be greater than `amountMax`.\n"
+              },
+              {
+                "name": "amountMax",
+                "value": "200",
+                "type": "query",
+                "description": "Filter transactions by maximum amount. If `amountMin` is provided, `amountMax` must not be less than `amountMin`.\n"
+              },
+              {
+                "name": "statusAuth",
+                "value": "APPROVED,PENDING",
+                "type": "query",
+                "description": "Filter transactions by auth status."
+              },
+              {
+                "name": "statusClearing",
+                "value": "REJECTED,CONTESTED",
+                "type": "query",
+                "description": "Filter transactions by clearing status."
+              },
+              {
+                "name": "users",
+                "value": "1234,5678,8271",
+                "type": "query",
+                "description": "Filter transactions by users."
+              },
+              {
+                "name": "search",
+                "value": "Joe",
+                "type": "query",
+                "description": "Searches id, bankAccountL4l4, order id, batch id, contact name and business name.\n"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Collects all ACH transactions."
+        },
+        {
+          "info": {
+            "name": "Retrieves a single ACH transaction.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/ach/transactions/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ACH transaction."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a single ACH transaction."
+        },
+        {
+          "info": {
+            "name": "Refund an ACH transaction.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.helcim.com/v2/ach/transactions/:transactionId/refund",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ACH transaction to refund."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Refund an ACH transaction."
+        },
+        {
+          "info": {
+            "name": "Void an ACH transaction.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.helcim.com/v2/ach/transactions/:transactionId/void",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ACH transaction to void."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Void an ACH transaction."
+        },
+        {
+          "info": {
+            "name": "Cancel a pending ACH transaction.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.helcim.com/v2/ach/transactions/:transactionId/cancel",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ACH transaction to cancel."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancel a pending ACH transaction."
+        },
+        {
+          "info": {
+            "name": "Collects all ACH batches.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/ach/batches",
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Collects all ACH batches."
+        },
+        {
+          "info": {
+            "name": "Settle an ACH batch.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.helcim.com/v2/ach/batches/:batchId/settle",
+            "headers": [
+              {
+                "name": "idempotency-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "batchId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ACH batch."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Settle an ACH batch."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Card Terminal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get card terminals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/card-terminals",
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "The abbreviation of the card terminal's currency. Possible values are CAD | USD"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The card terminal's status. possible values are ACTIVE | INACTIVE"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get card terminals"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Device",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/devices",
+            "params": [
+              {
+                "name": "code",
+                "value": "XY7Z",
+                "type": "query",
+                "description": "Four Digit Alphanumeric Code. Can be a partial match."
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Specifies the maximum number of devices to be returned in one request.\nThe maximum allowed limit is 100 objects per request.\nIf not specified, the default limit is 100 objects.\n"
+              },
+              {
+                "name": "offset",
+                "value": "100",
+                "type": "query",
+                "description": "Specifies the offset of the results you want to retrieve.\nNote: offset and page cannot be used simultaneously.\n"
+              },
+              {
+                "name": "page",
+                "value": "2",
+                "type": "query",
+                "description": "Specifies the page number of the results you want to retrieve.\nNote: offset and page cannot be used simultaneously.\n"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This operation requires the provided API key to have General permission set to 'Read' or higher, and Settings permission set to 'Read' or higher.\n"
+        },
+        {
+          "info": {
+            "name": "Get Device Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/devices/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "Four Digit Alphanumeric Code"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This operation requires the provided API key to have General permission set to 'Read' or higher, and Settings permission set to 'Read' or higher.\n"
+        },
+        {
+          "info": {
+            "name": "Start A Purchase",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/devices/:code/payment/purchase",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "Four Digit Alphanumeric Code."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This operation requires the provided API key to have Processing permission set to 'PositiveTransaction' or higher.\n"
+        },
+        {
+          "info": {
+            "name": "Start A Refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.helcim.com/v2/devices/:code/payment/refund",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "Four Digit Alphanumeric Code."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This operation requires the provided API key to have Processing permission set to 'Admin'.\n"
+        },
+        {
+          "info": {
+            "name": "Send a Ping Event to a Device",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.helcim.com/v2/devices/:code/ping",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "Four Digit Alphanumeric Code"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api-token",
+              "value": "{{api-token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send a Ping Event to a Device"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

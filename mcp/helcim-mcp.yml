@@ -153,3 +153,9 @@ tools:
 - name: ping_device
   description: Send a Ping Event to a Device
   source_operation: openapi/helcim-api.json#ping-device
+deployment:
+  mode: none
+  verified: derived
+  tools: 48
+  checked: '2026-08-12'
+  source: catalog MCP census
