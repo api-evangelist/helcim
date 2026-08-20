@@ -80,6 +80,10 @@ apis:
   humanURL: https://devdocs.helcim.com/reference
   baseURL: https://api.helcim.com/v2
   tags:
+  - Customers
+  - Vault
+  - Cards
+  tags_raw:
   - Customer
   - Vault
   - Cards
