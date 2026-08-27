@@ -32,119 +32,128 @@ created: '2026-07-24'
 modified: '2026-07-24'
 specificationVersion: '0.23'
 apis:
-- aid: helcim:helcim-payment-api
-  name: Helcim Payment API
-  description: >-
-    Card payment processing endpoints covering the full transaction lifecycle —
-    Purchase, Preauthorization, Capture, Verify, Refund, Reverse, and Withdraw —
-    under the Helcim API v2. Includes the General connection-test endpoint for
-    validating an API access token.
-  humanURL: https://devdocs.helcim.com/reference
-  baseURL: https://api.helcim.com/v2
-  tags:
-  - Payment
-  - Payments
-  - Cards
-  properties:
-  - type: OpenAPI
-    url: openapi/helcim-api.json
-  - type: Documentation
-    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
-  - type: APIReference
-    url: https://devdocs.helcim.com/reference
 - aid: helcim:helcim-ach-payment-api
   name: Helcim ACH Payment API
-  description: >-
-    Bank-to-bank (ACH / pre-authorized debit) money movement — withdraw, refund,
-    void, cancel, retrieve ACH transactions, and list and settle ACH batches
-    under the Helcim API v2.
+  description: The ACH Payment API from Helcim — 8 operation(s) for ach payment.
   humanURL: https://devdocs.helcim.com/reference
   baseURL: https://api.helcim.com/v2
   tags:
   - ACH Payment
-  - ACH
-  - Bank Payments
   properties:
   - type: OpenAPI
-    url: openapi/helcim-api.json
+    url: openapi/helcim-ach-payment-api-openapi.yml
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+- aid: helcim:helcim-card-batch-api
+  name: Helcim Card Batch API
+  description: The Card Batch API from Helcim — 3 operation(s) for card batch.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - Card Batch
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-card-batch-api-openapi.yml
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+- aid: helcim:helcim-card-terminal-api
+  name: Helcim Card Terminal API
+  description: The Card Terminal API from Helcim — 1 operation(s) for card terminal.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - Card Terminal
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-card-terminal-api-openapi.yml
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+- aid: helcim:helcim-card-transaction-api
+  name: Helcim Card Transaction API
+  description: The Card Transaction API from Helcim — 2 operation(s) for card transaction.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - Card Transaction
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-card-transaction-api-openapi.yml
   - type: Documentation
     url: https://devdocs.helcim.com/docs/overview-of-helcim-api
   - type: APIReference
     url: https://devdocs.helcim.com/reference
 - aid: helcim:helcim-customer-api
   name: Helcim Customer API
-  description: >-
-    Create, retrieve, and update customers and manage their saved payment
-    instruments — stored cards, bank accounts, and pre-authorized debit
-    agreements (PADs) — under the Helcim API v2.
+  description: The Customer API from Helcim — 11 operation(s) for customer.
   humanURL: https://devdocs.helcim.com/reference
   baseURL: https://api.helcim.com/v2
   tags:
-  - Customers
-  - Vault
-  - Cards
-  tags_raw:
   - Customer
-  - Vault
-  - Cards
   properties:
   - type: OpenAPI
-    url: openapi/helcim-api.json
+    url: openapi/helcim-customer-api-openapi.yml
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+- aid: helcim:helcim-device-api
+  name: Helcim Device API
+  description: The Device API from Helcim — 5 operation(s) for device.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - Device
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-device-api-openapi.yml
+  - type: Documentation
+    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
+  - type: APIReference
+    url: https://devdocs.helcim.com/reference
+- aid: helcim:helcim-general-api
+  name: Helcim General API
+  description: The General API from Helcim — 1 operation(s) for general.
+  humanURL: https://devdocs.helcim.com/reference
+  baseURL: https://api.helcim.com/v2
+  tags:
+  - General
+  properties:
+  - type: OpenAPI
+    url: openapi/helcim-general-api-openapi.yml
   - type: Documentation
     url: https://devdocs.helcim.com/docs/overview-of-helcim-api
   - type: APIReference
     url: https://devdocs.helcim.com/reference
 - aid: helcim:helcim-invoice-api
   name: Helcim Invoice API
-  description: >-
-    Create, retrieve, and update invoices under the Helcim API v2, supporting
-    billing and payment collection workflows.
+  description: The Invoice API from Helcim — 2 operation(s) for invoice.
   humanURL: https://devdocs.helcim.com/reference
   baseURL: https://api.helcim.com/v2
   tags:
   - Invoice
-  - Billing
   properties:
   - type: OpenAPI
-    url: openapi/helcim-api.json
+    url: openapi/helcim-invoice-api-openapi.yml
   - type: Documentation
     url: https://devdocs.helcim.com/docs/overview-of-helcim-api
   - type: APIReference
     url: https://devdocs.helcim.com/reference
-- aid: helcim:helcim-card-transaction-batch-api
-  name: Helcim Card Transaction & Batch API
-  description: >-
-    Read access to processed card transactions and card batches, including
-    listing and retrieving transactions and batches and settling a card batch,
-    under the Helcim API v2.
+- aid: helcim:helcim-payment-api
+  name: Helcim Payment API
+  description: The Payment API from Helcim — 7 operation(s) for payment.
   humanURL: https://devdocs.helcim.com/reference
   baseURL: https://api.helcim.com/v2
   tags:
-  - Card Transaction
-  - Card Batch
-  - Settlement
+  - Payment
   properties:
   - type: OpenAPI
-    url: openapi/helcim-api.json
-  - type: Documentation
-    url: https://devdocs.helcim.com/docs/overview-of-helcim-api
-  - type: APIReference
-    url: https://devdocs.helcim.com/reference
-- aid: helcim:helcim-terminal-device-api
-  name: Helcim Card Terminal & Device API
-  description: >-
-    In-person payments through Helcim Smart Terminal hardware — list card
-    terminals and devices, ping a device, and start purchase or refund
-    transactions on a device — under the Helcim API v2.
-  humanURL: https://devdocs.helcim.com/reference
-  baseURL: https://api.helcim.com/v2
-  tags:
-  - Card Terminal
-  - Device
-  - In Person
-  properties:
-  - type: OpenAPI
-    url: openapi/helcim-api.json
+    url: openapi/helcim-payment-api-openapi.yml
   - type: Documentation
     url: https://devdocs.helcim.com/docs/overview-of-helcim-api
   - type: APIReference
