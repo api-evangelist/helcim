@@ -105,6 +105,8 @@ apis:
   humanURL: https://devdocs.helcim.com/reference
   baseURL: https://api.helcim.com/v2
   tags:
+  - Customers
+  tags_raw:
   - Customer
   properties:
   - type: OpenAPI
@@ -132,7 +134,8 @@ apis:
   description: The General API from Helcim — 1 operation(s) for general.
   humanURL: https://devdocs.helcim.com/reference
   baseURL: https://api.helcim.com/v2
-  tags:
+  tags: []
+  tags_raw:
   - General
   properties:
   - type: OpenAPI
