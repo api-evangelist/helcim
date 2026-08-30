@@ -1,0 +1,202 @@
+openapi: 3.2.0
+info:
+  description: This API covers publicly accessible merchant actions
+  version: 2.2.0
+  title: Helcim Card Batch API
+servers:
+- url: https://api.helcim.com/v2
+- url: https://api.helcim.test/v2
+tags:
+- name: Card Batch
+paths:
+  /card-batches:
+    get:
+      tags:
+      - Card Batch
+      summary: Get Card Batches
+      operationId: get-card-batches
+      parameters:
+      - in: query
+        name: batchNumber
+        description: The number of the batch to retrieve. Note that this is the batch number, not batch ID.
+        example: 18900
+        schema:
+          type: number
+      - in: query
+        name: terminalId
+        description: The terminalId of the requested batch
+        example: 180000
+        schema:
+          type: number
+      - in: query
+        name: collect-stats
+        description: Includes transaction statistics for the batch
+        example: true
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array of card batches
+                items:
+                  $ref: '#/components/schemas/CardBatch'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+  /card-batches/{cardBatchId}:
+    get:
+      tags:
+      - Card Batch
+      summary: Get Card Batch
+      operationId: get-card-batch
+      parameters:
+      - in: path
+        name: cardBatchId
+        schema:
+          type: integer
+        required: true
+        description: The Card Batch Id of the Card Batch you want to get
+      - in: query
+        name: collect-stats
+        description: Includes transaction statistics for the batch
+        example: true
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardBatch'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+  /card-batches/{cardBatchId}/settle:
+    post:
+      tags:
+      - Card Batch
+      summary: Settles an Open Card Batch
+      operationId: settle-card-batch
+      parameters:
+      - in: path
+        name: cardBatchId
+        schema:
+          type: integer
+        required: true
+        description: The Card Batch Id of the Card Batch you want to settle
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardBatch'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+components:
+  schemas:
+    CardBatch:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2488717
+          description: Id of Card batch
+        dateCreated:
+          type: string
+          example: '2022-11-30 13:14:53'
+          description: Date Card batch is Created
+        dateUpdated:
+          type: string
+          example: '2022-11-30 13:14:53'
+          description: Date Card batch is last updated
+        dateClosed:
+          type: string
+          example: '2022-11-30 14:14:53'
+          description: Date Card Batch is closed
+        closed:
+          type: boolean
+          example: true
+          description: True if the batch is closed. Else false
+        terminalId:
+          type: integer
+          example: 1411
+          description: Id of associated Terminal
+        batchNumber:
+          type: integer
+          example: 6
+          description: Batch Number
+        netSales:
+          type: number
+          example: 90
+          description: Approved sales net refunds and voids
+        totalSales:
+          type: number
+          example: 100
+          description: Gross sales
+        totalRefunds:
+          type: number
+          example: 8.5
+          description: Gross refunds
+        totalReversed:
+          type: number
+          example: 5
+          description: Voided amount
+        totalRefundsReversed:
+          type: number
+          example: 3.5
+          description: Amount of voided refunds
+        countTotal:
+          type: number
+          example: 8
+          description: Total number of transactions
+        countApproved:
+          type: number
+          example: 8
+          description: Number of approved transactions
+        countDeclined:
+          type: number
+          example: 0
+          description: Number of declined transactions
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
+  securitySchemes:
+    ApiAccessAuth:
+      description: API Token with required permissions
+      type: apiKey
+      in: header
+      name: api-token

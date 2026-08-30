@@ -1,0 +1,108 @@
+openapi: 3.2.0
+info:
+  description: This API covers publicly accessible merchant actions
+  version: 2.2.0
+  title: Helcim Card Terminal API
+servers:
+- url: https://api.helcim.com/v2
+- url: https://api.helcim.test/v2
+tags:
+- name: Card Terminal
+paths:
+  /card-terminals:
+    get:
+      tags:
+      - Card Terminal
+      summary: Get card terminals
+      operationId: card-terminals
+      parameters:
+      - name: currency
+        in: query
+        schema:
+          type: string
+          example: CAD
+        description: The abbreviation of the card terminal's currency. Possible values are CAD | USD
+      - name: status
+        in: query
+        schema:
+          type: string
+          example: ACTIVE
+        description: The card terminal's status. possible values are ACTIVE | INACTIVE
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CardTerminal'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+components:
+  schemas:
+    CardTerminal:
+      title: Terminal
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+          description: Id of the terminal.
+        nickname:
+          type: string
+          example: Terminal 1
+          description: Nickname of terminal
+        currency:
+          type: string
+          example: CAD
+          description: Currency of terminal. possible values are CAD | USD
+        status:
+          type: string
+          example: ACTIVE
+          description: Status of Terminal. possible values are ACTIVE | INACTIVE
+        address:
+          type: object
+          properties:
+            street1:
+              type: string
+              example: Street 1
+            street2:
+              type: string
+              example: Street 2
+            city:
+              type: string
+              example: Calgary
+            province:
+              type: string
+              example: AB
+              description: Abbreviation of province
+            country:
+              type: string
+              example: CAN
+              description: Abbreviation of country
+            postalCode:
+              type: string
+              example: H0H0H0
+              description: Postal or zip code
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
+  securitySchemes:
+    ApiAccessAuth:
+      description: API Token with required permissions
+      type: apiKey
+      in: header
+      name: api-token

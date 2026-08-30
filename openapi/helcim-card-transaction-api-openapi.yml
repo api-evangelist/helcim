@@ -1,0 +1,211 @@
+openapi: 3.2.0
+info:
+  description: This API covers publicly accessible merchant actions
+  version: 2.2.0
+  title: Helcim Card Transaction API
+servers:
+- url: https://api.helcim.com/v2
+- url: https://api.helcim.test/v2
+tags:
+- name: Card Transaction
+paths:
+  /card-transactions:
+    get:
+      tags:
+      - Card Transaction
+      summary: Collects up to 1000 Card Transactions
+      operationId: get-card-transactions
+      parameters:
+      - in: query
+        name: dateFrom
+        description: Filters transactions created from 2020-01-01 (Mountain Time)
+        example: '2020-01-01'
+        schema:
+          type: string
+      - in: query
+        name: dateTo
+        description: Filters transactions created until 2021-01-01 (Mountain Time)
+        example: '2021-01-01'
+        schema:
+          type: string
+      - in: query
+        name: search
+        description: Searches amount, card number(F6L4 only), cardholder name, & approval codes
+        example: 500
+        schema:
+          type: string
+      - in: query
+        name: customerCode
+        description: The code of the customer associated with the transaction
+        example: CST1000
+        schema:
+          type: string
+      - in: query
+        name: invoiceNumber
+        description: The number of the invoice associated with the transaction
+        example: INV1000
+        schema:
+          type: string
+      - in: query
+        name: cardToken
+        description: The token of the card associated with the transaction
+        example: 5454JK97UU1F5454
+        schema:
+          type: string
+      - in: query
+        name: cardBatchId
+        description: The id of the batch associated with the transaction
+        example: 3
+        schema:
+          type: integer
+      - in: query
+        name: limit
+        description: The limit number of transactions will be returned in one request. We only allow maximum 1000 objects per request. If no limit specified, the default limit will be 1000 objects.
+        example: 100
+        schema:
+          type: integer
+      - in: query
+        name: page
+        description: Specifies the page number of the results you want to retrieve.
+        example: 1
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array of card transactions
+                items:
+                  $ref: '#/components/schemas/SuccessfulPaymentResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+  /card-transactions/{cardTransactionId}:
+    get:
+      tags:
+      - Card Transaction
+      summary: Get Card Transaction by id
+      operationId: get-card-transaction
+      parameters:
+      - in: path
+        name: cardTransactionId
+        schema:
+          type: integer
+        required: true
+        description: The Card Transaction Id of the Card Transaction you want to get
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessfulPaymentResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+components:
+  schemas:
+    SuccessfulPaymentResponse:
+      title: Payment Response
+      type: object
+      properties:
+        transactionId:
+          type: number
+          example: 10
+          description: The transaction id
+        cardBatchId:
+          type: number
+          example: 11
+          description: The id of associated card batch
+        dateCreated:
+          type: string
+          example: '2020-01-01 00:00:00'
+          description: The date(Mountain Time) when the transaction is created.
+        status:
+          type: string
+          example: APPROVED
+          description: The status of the transaction. possible values are APPROVED | DECLINED
+        user:
+          type: string
+          example: Helcim System
+          description: Full name of the user who processed the transaction. Default value is Helcim System
+        type:
+          type: string
+          example: purchase
+          description: The type of the transaction. possible values are purchase | preauth | verify
+        amount:
+          type: number
+          example: 11.99
+          description: The amount of processed transaction
+        currency:
+          type: string
+          example: CAD
+          description: The abbreviation of the transaction's currency
+        avsResponse:
+          type: string
+          example: M
+          description: AVS Response
+        cvvResponse:
+          type: string
+          example: Y
+          description: CVV Response
+        cardType:
+          type: string
+          example: Visa
+          description: "Abbreviated card issuer name\n  * `VI` - Visa\n  * `MC` - MasterCard\n  * `AX` - American Express\n  * `DI` - Discover\n  * `DCI` - Diners Club\n  * `JCB` - JCB\n  * `UP` - China Union Pay\n  * `MR` - Maestro\n  * `AF` - AFFN\n  * `AO` - Alaska Option\n  * `CU` - Credit Union 24\n  * `EB` - EBT Network\n  * `EX` - Accel\n  * `IL` - Interlink\n  * `NT` - Nets\n  * `NY` - NYCE\n  * `PS` - Pulse\n  * `ST` - Star\n  * `SZ` - Shazam\n  * `AT` - ATH\n  * `IN` - Interac\n  * `DB` - Debit\n"
+        approvalCode:
+          type: string
+          example: HCMAPPRV
+          description: Approval Code
+        cardToken:
+          type: string
+          example: 5454HCMXTEST5454
+          description: Card token associated to the transaction
+        cardNumber:
+          type: string
+          example: 5454545454
+          description: First-6 Last-4 numbers of the card number associated to the transaction
+        cardHolderName:
+          type: string
+          example: John Smith
+          description: Cardholdername associated to the transaction
+        customerCode:
+          type: string
+          example: CST1010
+          description: Customer code associated to the transaction
+        invoiceNumber:
+          type: string
+          example: INV2022
+          description: Invoice number associated to the transaction
+        warning:
+          type: string
+          example: Failed to link customer to invoice
+          description: Warnings
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
+  securitySchemes:
+    ApiAccessAuth:
+      description: API Token with required permissions
+      type: apiKey
+      in: header
+      name: api-token

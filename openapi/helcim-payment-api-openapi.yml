@@ -1,0 +1,987 @@
+openapi: 3.2.0
+info:
+  description: This API covers publicly accessible merchant actions
+  version: 2.2.0
+  title: Helcim Payment API
+servers:
+- url: https://api.helcim.com/v2
+- url: https://api.helcim.test/v2
+tags:
+- name: Payment
+paths:
+  /payment/purchase:
+    post:
+      tags:
+      - Payment
+      summary: Process a Purchase Transaction
+      operationId: purchase
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/PaymentRequest'
+              - $ref: '#/components/schemas/CardData'
+            example:
+              ipAddress: 192.168.1.1
+              ecommerce: true
+              terminalId: 3215
+              currency: CAD
+              amount: 100.99
+              customerCode: ''
+              invoiceNumber: ''
+              cardData:
+                cardNumber: '5454545454545454'
+                cardExpiry: '1257'
+                cardCVV: '100'
+                cardHolderName: John Doe
+              billingAddress:
+                name: John Smith / Helcim
+                street1: 21 Jump Street
+                street2: Suite 400
+                city: Calgary
+                province: AB
+                country: CAN
+                postalCode: H0H0H0
+                phone: '4031231234'
+                email: john@example.com
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessfulPaymentResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+  /payment/preauth:
+    post:
+      tags:
+      - Payment
+      summary: Process a Preauth Transaction
+      operationId: preauth
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/PreauthRequest'
+              - $ref: '#/components/schemas/CardData'
+            example:
+              ipAddress: 192.168.1.1
+              ecommerce: true
+              terminalId: 3215
+              currency: CAD
+              amount: 100.99
+              customerCode: ''
+              invoiceNumber: ''
+              cardData:
+                cardNumber: '5454545454545454'
+                cardExpiry: '1257'
+                cardCVV: '100'
+                cardHolderName: John Doe
+              billingAddress:
+                name: John Smith / Helcim
+                street1: 21 Jump Street
+                street2: Suite 400
+                city: Calgary
+                province: AB
+                country: CAN
+                postalCode: H0H0H0
+                phone: '4031231234'
+                email: john@example.com
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessfulPaymentResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+  /payment/capture:
+    post:
+      tags:
+      - Payment
+      summary: Process a Capture Transaction
+      operationId: capture
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaptureRequest'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessfulPaymentResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+  /payment/verify:
+    post:
+      tags:
+      - Payment
+      summary: Process a Verify Transaction
+      operationId: verify
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyRequest'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessfulPaymentResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+  /payment/refund:
+    post:
+      tags:
+      - Payment
+      summary: Process a Refund Transaction
+      operationId: refund
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Refund Request
+              type: object
+              required:
+              - originalTransactionId
+              - amount
+              - ipAddress
+              properties:
+                originalTransactionId:
+                  type: integer
+                  example: 198763
+                  description: The transaction ID of the purchase/capture transaction.  In-person debit transactions cannot be refunded through payment API
+                amount:
+                  type: number
+                  example: 100.99
+                  description: The amount to refund. Must be less or equal to the original purchase/capture amount.
+                ipAddress:
+                  type: string
+                  example: 192.168.1.1
+                  description: IP address of the customer making the transaction, used as part of fraud detection.
+                ecommerce:
+                  type: boolean
+                  example: true
+                  description: Set to indicate that the transaction is e-commerce. When set, the Helcim Fraud Defender will provide further analysis.
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessfulPaymentResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+  /payment/reverse:
+    post:
+      tags:
+      - Payment
+      summary: Process a Reverse Transaction
+      operationId: reverse
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Refund Request
+              type: object
+              required:
+              - cardTransactionId
+              - ipAddress
+              properties:
+                cardTransactionId:
+                  type: integer
+                  example: 198763
+                  description: The transaction ID of the original transaction.
+                ipAddress:
+                  type: string
+                  example: 192.168.1.1
+                  description: IP address of the customer making the transaction, used as part of fraud detection.
+                ecommerce:
+                  type: boolean
+                  example: true
+                  description: Set to indicate that the transaction is e-commerce. When set, the Helcim Fraud Defender will provide further analysis.
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessfulPaymentResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+  /payment/withdraw:
+    post:
+      deprecated: true
+      tags:
+      - Payment
+      summary: Process a Withdraw Transaction
+      operationId: withdraw
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/PaymentRequest'
+              - $ref: '#/components/schemas/BankData'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessfulAchTransactionResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+components:
+  schemas:
+    InvoiceBase:
+      title: Invoice Base
+      type: object
+      properties:
+        invoiceNumber:
+          type: string
+          example: ''
+          description: Invoice number of invoice to be created. Will be generated if blank
+        notes:
+          type: string
+          example: No vegetables please
+          description: Comment to appear at the bottom of the invoice, visible to the customer.
+    SuccessfulAchTransactionResponse:
+      title: Ach Transaction Response
+      type: object
+      properties:
+        transactionId:
+          type: number
+          example: 10
+          description: The transaction id
+        batchId:
+          type: number
+          example: 11
+          description: The id of associated card batch
+        dateCreated:
+          type: string
+          example: '2020-01-01 00:00:00'
+          description: The date(Mountain Time) when the transaction is created.
+        statusAuth:
+          type: string
+          example: APPROVED
+          description: The status of the transaction. possible values are APPROVED | DECLINED | IN_PROGRESS | CANCELLED | PENDING
+        statusClearing:
+          type: string
+          example: OPENED
+          description: The status of the transaction. possible values are OPENED | CLEARED | REJECTED | CONTESTED | RETURNED
+        type:
+          type: string
+          example: WITHDRAWAL
+          description: The type of the transaction. possible values are WITHDRAWAL | DEPOSIT | SETTLE | REVERSE | REFUND
+        amount:
+          type: number
+          example: 11.99
+          description: The amount of processed transaction
+        currency:
+          type: string
+          example: CAD
+          description: The abbreviation of the transaction's currency
+        approvalCode:
+          type: string
+          example: HCMAPPRV
+          description: Approval Code
+        bankAccountNumber:
+          type: string
+          example: A1B2C3D4E5F6G7
+          description: Bank account number
+        bankToken:
+          type: string
+          example: -A1B2C3D4E5F6G7*
+          description: Bank Token associated with bankAccount
+        invoiceNumber:
+          type: string
+          example: INV2022
+          description: Invoice number associated to the transaction
+    PaymentRequest:
+      title: PaymentRequest
+      allOf:
+      - $ref: '#/components/schemas/PaymentRequestBase'
+      - type: object
+        properties:
+          invoice:
+            allOf:
+            - $ref: '#/components/schemas/InvoiceWithTip'
+            - $ref: '#/components/schemas/InvoiceCreateAfterProcessing'
+            description: To be filled when creating new invoice to be associated to transaction. Will be linked to Customer owning the Card used
+    LineItem:
+      title: Line Item Data
+      type: object
+      required:
+      - description
+      - quantity
+      - price
+      properties:
+        description:
+          type: string
+          description: 'A short description of the product or service.
+
+            '
+          example: Red Hat
+        quantity:
+          type: number
+          format: float
+          description: 'The quantity of the line item. Can have up to 2 decimal places.
+
+            '
+          example: 10.5
+        price:
+          type: number
+          format: float
+          description: 'The unit price for a single quantity of this line item, before tax or discounts.
+
+            '
+          example: 10.55
+        taxAmount:
+          type: number
+          format: float
+          description: 'The tax amount for this line item.
+
+            '
+          example: 0
+        discountAmount:
+          type: number
+          format: float
+          description: 'The discount amount applied to this line item.
+
+            '
+          example: 0
+        sku:
+          type: string
+          description: 'The stock keeping unit (SKU) code for this product (or service).
+
+            '
+          example: ITM1434
+    Card:
+      title: Card
+      type: object
+      required:
+      - cardNumber
+      - cardExpiry
+      - cardCVV
+      - cardHolderName
+      properties:
+        cardNumber:
+          type: string
+          example: 5454545454545454
+          description: The full card number (13 to 16 digits) from merchant to process "purchase", "pre-auth", and "verify" transactions.
+        cardExpiry:
+          type: string
+          example: 1257
+          description: The card expiry date, in MMYY format (total of 4 digits without spaces or slashes).
+        cardCVV:
+          type: string
+          example: 100
+          description: The card CVV (3-4 digits on back of credit card).
+        cardHolderName:
+          type: string
+          example: John Doe
+          description: The name of the card holder as it appears on the card.
+    SuccessfulPaymentResponse:
+      title: Payment Response
+      type: object
+      properties:
+        transactionId:
+          type: number
+          example: 10
+          description: The transaction id
+        cardBatchId:
+          type: number
+          example: 11
+          description: The id of associated card batch
+        dateCreated:
+          type: string
+          example: '2020-01-01 00:00:00'
+          description: The date(Mountain Time) when the transaction is created.
+        status:
+          type: string
+          example: APPROVED
+          description: The status of the transaction. possible values are APPROVED | DECLINED
+        user:
+          type: string
+          example: Helcim System
+          description: Full name of the user who processed the transaction. Default value is Helcim System
+        type:
+          type: string
+          example: purchase
+          description: The type of the transaction. possible values are purchase | preauth | verify
+        amount:
+          type: number
+          example: 11.99
+          description: The amount of processed transaction
+        currency:
+          type: string
+          example: CAD
+          description: The abbreviation of the transaction's currency
+        avsResponse:
+          type: string
+          example: M
+          description: AVS Response
+        cvvResponse:
+          type: string
+          example: Y
+          description: CVV Response
+        cardType:
+          type: string
+          example: Visa
+          description: "Abbreviated card issuer name\n  * `VI` - Visa\n  * `MC` - MasterCard\n  * `AX` - American Express\n  * `DI` - Discover\n  * `DCI` - Diners Club\n  * `JCB` - JCB\n  * `UP` - China Union Pay\n  * `MR` - Maestro\n  * `AF` - AFFN\n  * `AO` - Alaska Option\n  * `CU` - Credit Union 24\n  * `EB` - EBT Network\n  * `EX` - Accel\n  * `IL` - Interlink\n  * `NT` - Nets\n  * `NY` - NYCE\n  * `PS` - Pulse\n  * `ST` - Star\n  * `SZ` - Shazam\n  * `AT` - ATH\n  * `IN` - Interac\n  * `DB` - Debit\n"
+        approvalCode:
+          type: string
+          example: HCMAPPRV
+          description: Approval Code
+        cardToken:
+          type: string
+          example: 5454HCMXTEST5454
+          description: Card token associated to the transaction
+        cardNumber:
+          type: string
+          example: 5454545454
+          description: First-6 Last-4 numbers of the card number associated to the transaction
+        cardHolderName:
+          type: string
+          example: John Smith
+          description: Cardholdername associated to the transaction
+        customerCode:
+          type: string
+          example: CST1010
+          description: Customer code associated to the transaction
+        invoiceNumber:
+          type: string
+          example: INV2022
+          description: Invoice number associated to the transaction
+        warning:
+          type: string
+          example: Failed to link customer to invoice
+          description: Warnings
+    Tax:
+      title: Tax Data
+      type: object
+      required:
+      - amount
+      - details
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total tax amount applied at the invoice level.  This does not include item-level taxes.
+
+            '
+          example: 5.99
+        details:
+          type: string
+          description: 'A description of the tax or tax breakdown.
+
+            '
+          example: GST 5%
+    PreauthRequest:
+      title: PreauthRequest
+      allOf:
+      - $ref: '#/components/schemas/PaymentRequestBase'
+      - type: object
+        properties:
+          invoice:
+            allOf:
+            - $ref: '#/components/schemas/InvoiceBase'
+            - $ref: '#/components/schemas/InvoiceCreateAfterProcessing'
+            description: To be filled when creating new invoice to be associated to transaction. Will be linked to Customer owning the Card used
+    Pickup:
+      title: Pickup Data
+      type: object
+      required:
+      - date
+      properties:
+        date:
+          type: string
+          description: 'The scheduled pickup date and time in the format: `YYYY-MM-DD HH:MM:SS`.
+
+            '
+          example: '2022-01-25 13:55:55'
+        name:
+          type: string
+          readOnly: true
+          description: 'Read-only. Derived from the linked customer''s contact name (empty when no customer is linked to the invoice). A `name` supplied in a create or update request is ignored — only `date` is writable. To change the displayed pickup name, update the linked customer''s contact name.
+
+            '
+          example: Jane Smith
+    InvoiceCreateAfterProcessing:
+      title: Invoice Create after transaction processing
+      type: object
+      properties:
+        shipping:
+          $ref: '#/components/schemas/Shipping'
+        pickup:
+          $ref: '#/components/schemas/Pickup'
+        tax:
+          $ref: '#/components/schemas/Tax'
+        discount:
+          $ref: '#/components/schemas/Discount'
+        lineItems:
+          type: array
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/LineItem'
+    Shipping:
+      title: Shipping Data
+      type: object
+      required:
+      - amount
+      - details
+      - address
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total shipping amount for the invoice.
+
+            '
+          example: 10.99
+        details:
+          type: string
+          description: 'A description of the shipping method. This information appears on the invoice.
+
+            '
+          example: Canada Post 1-day shipping
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          description: 'The destination shipping address for this invoice.
+
+            '
+    Discount:
+      title: Discount Data
+      type: object
+      required:
+      - amount
+      - details
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total discount amount applied at the invoice level.  This does not include item-level discounts.
+
+            '
+          example: 10.99
+        details:
+          type: string
+          description: 'A description or code identifying the discount.
+
+            '
+          example: DISC100
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
+    CaptureRequest:
+      title: Capture Request
+      type: object
+      required:
+      - preAuthTransactionId
+      - amount
+      - ipAddress
+      properties:
+        preAuthTransactionId:
+          type: integer
+          example: 198763
+          description: The transaction ID of the original pre-authorization transaction.
+        amount:
+          type: number
+          example: 100.99
+          description: The amount to capture. Must be less or equal to the original pre-authorization amount.
+        ipAddress:
+          type: string
+          example: 192.168.1.1
+          description: IP address of the customer making the transaction, used as part of fraud detection.
+        ecommerce:
+          type: boolean
+          example: true
+          description: Set to indicate that the transaction is e-commerce. When set, the Helcim Fraud Defender will provide further analysis.
+    Address:
+      title: Address
+      type: object
+      required:
+      - name
+      - street1
+      - postalCode
+      properties:
+        name:
+          type: string
+          description: 'The recipient''s name or business name for this address.
+
+            '
+          example: John Smith / Helcim
+        street1:
+          type: string
+          description: 'The primary street address.
+
+            '
+          example: 21 Jump Street
+        street2:
+          type: string
+          description: 'Additional address details, such as unit or suite number.
+
+            '
+          example: Suite 400
+        city:
+          type: string
+          description: 'The city for this address.
+
+            '
+          example: Calgary
+        province:
+          type: string
+          description: 'The two-letter province or state code (e.g., AB, BC, CA).  Required if the country is CAN or USA.
+
+            '
+          example: AB
+        country:
+          type: string
+          description: 'The three-letter [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code (e.g., CAN, USA).
+
+            '
+          example: CAN
+        postalCode:
+          type: string
+          description: 'The postal or ZIP code for this address.
+
+            '
+          example: H0H0H0
+        phone:
+          type: string
+          description: 'Contact phone number (10 to 15 digits).
+
+            '
+          example: 4031231234
+        email:
+          type: string
+          description: 'Contact email address for this address.
+
+            '
+          example: john@example.com
+    VerifyRequest:
+      title: Verify Request
+      type: object
+      required:
+      - amount
+      - currency
+      - cardData
+      - billingAddress
+      - ipAddress
+      properties:
+        ipAddress:
+          type: string
+          example: 192.168.1.1
+          description: IP address of the customer making the transaction, used as part of fraud detection.
+        ecommerce:
+          type: boolean
+          example: true
+          description: Set to indicate that the transaction is e-commerce. When set, the Helcim Fraud Defender will provide further analysis.
+        currency:
+          type: string
+          example: CAD
+          description: The currency abbreviation of the transaction.
+        amount:
+          type: number
+          example: 100
+          description: Amount to be verified
+        customerCode:
+          type: string
+          example: ''
+          description: Existing customer code associated with the transaction
+        invoiceNumber:
+          type: string
+          example: ''
+          description: To be filled when associating transaction to existing invoice. Invoice should be associated to the same customer linked to the card
+        invoice:
+          allOf:
+          - $ref: '#/components/schemas/InvoiceBase'
+          - $ref: '#/components/schemas/InvoiceCreateAfterProcessing'
+        cardData:
+          $ref: '#/components/schemas/Card'
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+    BankAccount:
+      title: BankAccount
+      type: object
+      required:
+      - firstName
+      - lastName
+      - companyName
+      - bankAccountNumber
+      - accountType
+      - accountCorporate
+      - streetAddress
+      - city
+      - country
+      - province
+      - postalCode
+      properties:
+        firstName:
+          type: string
+          example: John
+          description: The bank account holder first name
+        lastName:
+          type: string
+          example: Smith
+          description: The bank account holder last name
+        companyName:
+          type: string
+          example: Microsoft
+          description: The company name
+        bankAccountNumber:
+          type: string
+          example: 999999999
+          description: Bank account number
+        accountType:
+          type: string
+          example: CHECKING
+          description: CHECKING - Chequing, SAVINGS - Savings
+        accountCorporate:
+          type: string
+          example: PERSONAL
+          description: PERSONAL - Personal Bank Account, CORPORATE - Corporate Bank Account
+        bankIdNumber:
+          type: string
+          example: 888
+          description: Required for Canadian Bank Account Holder, the institution number - three digits - identifies your bank.
+        transitNumber:
+          type: string
+          example: 55555
+          description: Required for Canadian Bank Account Holder, the transit number - five digits - shows which branch you opened your account at.
+        routingNumber:
+          type: string
+          example: 123456789
+          description: Required for US Bank Account Holder, a nine-digit code printed on the bottom of checks to identify the financial institution on which it was drawn.
+        streetAddress:
+          type: string
+          example: 440 - something
+        city:
+          type: string
+          example: Calgary
+        country:
+          type: string
+          example: CAN
+          description: Only allow CAN - Canada, USA - United States
+        province:
+          type: string
+          example: AB
+        postalCode:
+          type: string
+          example: T2T2T2
+        padAgreement:
+          type: boolean
+          example: true
+          description: Customer given permission for a company or financial institution to debit a bank account when the payment is due.
+    CardData:
+      title: CardData
+      type: object
+      required:
+      - cardData
+      properties:
+        cardData:
+          oneOf:
+          - $ref: '#/components/schemas/Card'
+          - $ref: '#/components/schemas/CardToken'
+    CardToken:
+      title: Card Token
+      type: object
+      required:
+      - cardToken
+      properties:
+        cardToken:
+          type: string
+          example: HGKHJK5647698HGJJK
+          description: The token for the card on file. If Customer Code is filled, The card should must be owned by a passed customer code
+    BankToken:
+      title: Bank Token
+      type: object
+      required:
+      - bankToken
+      properties:
+        bankToken:
+          type: string
+          example: HGKHJK5647698HGJJK
+          description: The token for the bank account on file.
+    PaymentRequestBase:
+      title: PaymentRequestBase
+      type: object
+      required:
+      - amount
+      - currency
+      - cardData
+      - ipAddress
+      properties:
+        ipAddress:
+          type: string
+          example: 192.168.1.1
+          description: IP address of the customer making the transaction, used as part of fraud detection.
+        ecommerce:
+          type: boolean
+          example: true
+          description: Set to indicate that the transaction is e-commerce. When set, the Helcim Fraud Defender will provide further analysis.
+        terminalId:
+          type: integer
+          example: 3215
+          description: For card transactions only. Id of the terminal you would want to use. Default terminal for of the currency will be used if you dont send this.
+        currency:
+          type: string
+          example: CAD
+          description: The currency abbreviation of the invoice, such as CAD or USD. This should match currency of existing invoice.
+        amount:
+          type: number
+          example: 100.99
+          description: Amount to be processed
+        customerCode:
+          type: string
+          example: ''
+          description: Existing customer code associated with the transaction
+        invoiceNumber:
+          type: string
+          example: ''
+          description: To be filled when associating transaction to existing invoice. Invoice should be associated to the same customer linked to the card
+        cardData:
+          $ref: '#/components/schemas/Card'
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+    InvoiceWithTip:
+      title: InvoiceWithTip
+      allOf:
+      - $ref: '#/components/schemas/InvoiceBase'
+      - type: object
+        properties:
+          tipAmount:
+            type: number
+            example: 0.99
+            description: Tip amount
+    BankData:
+      title: BankData
+      type: object
+      required:
+      - bankData
+      properties:
+        bankData:
+          oneOf:
+          - $ref: '#/components/schemas/BankAccount'
+          - $ref: '#/components/schemas/BankToken'
+  securitySchemes:
+    ApiAccessAuth:
+      description: API Token with required permissions
+      type: apiKey
+      in: header
+      name: api-token

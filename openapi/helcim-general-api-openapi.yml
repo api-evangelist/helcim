@@ -1,0 +1,57 @@
+openapi: 3.2.0
+info:
+  description: This API covers publicly accessible merchant actions
+  version: 2.2.0
+  title: Helcim General API
+servers:
+- url: https://api.helcim.com/v2
+- url: https://api.helcim.test/v2
+tags:
+- name: General
+paths:
+  /connection-test:
+    get:
+      tags:
+      - General
+      summary: Tests connectivity to the Helcim API
+      operationId: connectionTest
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                title: Successful Connection Test
+                example:
+                  message: Connection Successful
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                title: Invalid Business ID
+                example:
+                  errors: invalid businessId
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: No credentials included
+                description: No API token was included in the request
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Forbidden
+                description: Invalid API token was included in the request
+      security:
+      - ApiAccessAuth: []
+components:
+  securitySchemes:
+    ApiAccessAuth:
+      description: API Token with required permissions
+      type: apiKey
+      in: header
+      name: api-token

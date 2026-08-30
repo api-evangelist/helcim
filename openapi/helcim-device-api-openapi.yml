@@ -1,0 +1,378 @@
+openapi: 3.2.0
+info:
+  description: This API covers publicly accessible merchant actions
+  version: 2.2.0
+  title: Helcim Device API
+servers:
+- url: https://api.helcim.com/v2
+- url: https://api.helcim.test/v2
+tags:
+- name: Device
+paths:
+  /devices:
+    get:
+      tags:
+      - Device
+      summary: Get Devices
+      operationId: get-devices
+      description: 'This operation requires the provided API key to have General permission set to ''Read'' or higher, and Settings permission set to ''Read'' or higher.
+
+        '
+      parameters:
+      - name: code
+        in: query
+        description: Four Digit Alphanumeric Code. Can be a partial match.
+        example: XY7Z
+        schema:
+          type: string
+          maxLength: 4
+      - name: limit
+        in: query
+        description: 'Specifies the maximum number of devices to be returned in one request.
+
+          The maximum allowed limit is 100 objects per request.
+
+          If not specified, the default limit is 100 objects.
+
+          '
+        example: 10
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 100
+      - name: offset
+        in: query
+        description: 'Specifies the offset of the results you want to retrieve.
+
+          Note: offset and page cannot be used simultaneously.
+
+          '
+        example: 100
+        schema:
+          type: integer
+          minimum: 0
+          default: 0
+      - name: page
+        in: query
+        description: 'Specifies the page number of the results you want to retrieve.
+
+          Note: offset and page cannot be used simultaneously.
+
+          '
+        example: 2
+        schema:
+          type: integer
+          minimum: 0
+          default: 0
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '404':
+          description: Devices Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+      security:
+      - ApiAccessAuth: []
+  /devices/{code}:
+    get:
+      tags:
+      - Device
+      summary: Get Device Information
+      operationId: get-device
+      description: 'This operation requires the provided API key to have General permission set to ''Read'' or higher, and Settings permission set to ''Read'' or higher.
+
+        '
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Four Digit Alphanumeric Code
+        schema:
+          type: string
+          maxLength: 4
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '404':
+          description: Device Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+      security:
+      - ApiAccessAuth: []
+  /devices/{code}/payment/purchase:
+    post:
+      tags:
+      - Device
+      summary: Start A Purchase
+      operationId: start-purchase
+      description: 'This operation requires the provided API key to have Processing permission set to ''PositiveTransaction'' or higher.
+
+        '
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Four Digit Alphanumeric Code.
+        schema:
+          type: string
+          maxLength: 4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest-2'
+      responses:
+        '202':
+          description: Accepted
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '404':
+          description: Device Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '409':
+          description: Device Not Listening
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+      security:
+      - ApiAccessAuth: []
+  /devices/{code}/payment/refund:
+    post:
+      tags:
+      - Device
+      summary: Start A Refund
+      operationId: start-refund
+      description: 'This operation requires the provided API key to have Processing permission set to ''Admin''.
+
+        '
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Four Digit Alphanumeric Code.
+        schema:
+          type: string
+          maxLength: 4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundRequest'
+      responses:
+        '202':
+          description: Accepted
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '404':
+          description: Device Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '409':
+          description: Device Not Listening
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+      security:
+      - ApiAccessAuth: []
+  /devices/{code}/ping:
+    get:
+      tags:
+      - Device
+      summary: Send a Ping Event to a Device
+      operationId: ping-device
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Four Digit Alphanumeric Code
+        schema:
+          type: string
+          maxLength: 4
+      responses:
+        '202':
+          description: Accepted
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '404':
+          description: Device Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '409':
+          description: Device Not Listening
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponse'
+      security:
+      - ApiAccessAuth: []
+components:
+  schemas:
+    RefundRequest:
+      title: RefundRequest
+      type: object
+      required:
+      - transactionAmount
+      - originalTransactionId
+      properties:
+        transactionAmount:
+          type: number
+          example: 100.99
+          description: 'The amount to be refunded in the currency on the original transaction.
+
+            '
+        originalTransactionId:
+          type: integer
+          example: 1234567890
+          description: 'The identifier of the original transaction to refund.
+
+            This identifier must correspond to the transaction Id of the original transaction to be refunded.
+
+            '
+    PaymentRequest-2:
+      title: PaymentRequest
+      type: object
+      required:
+      - currency
+      - transactionAmount
+      properties:
+        currency:
+          type: string
+          example: CAD
+          description: 'The currency code for the transaction amount, such as CAD or USD.
+
+            '
+        transactionAmount:
+          type: number
+          example: 100.99
+          description: 'The amount to be processed, specified in the currency defined by the currency parameter.
+
+            '
+        invoiceNumber:
+          type: string
+          example: INV1000
+          description: 'An identifier for an invoice.
+
+            If an existing invoiceNumber is provided, Helcim will relate this transaction to that invoice.
+
+            If invoiceNumber provided does not exist, Helcim will create an invoice and link the provided invoiceNumber.
+
+            If not provided, Helcim will create an invoice.
+
+            '
+        customerCode:
+          type: string
+          example: C-12345
+          description: 'An identifier for a customer.
+
+            If existing customerCode is provided, Helcim will attach that customer.
+
+            If customerCode provided does not exist, Helcim will create a customer with the provided customerCode.
+
+            If not provided, Helcim will create a customer.
+
+            '
+    FailedResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
+    Device:
+      title: Device
+      type: object
+      properties:
+        code:
+          type: string
+          example: ABC1
+          description: Code of the device.
+        dateCreated:
+          type: string
+          example: '2024-02-09 14:08:08'
+          description: Date and time when the device was created in the format "YYYY-MM-DD HH:MM:SS"
+  securitySchemes:
+    ApiAccessAuth:
+      description: API Token with required permissions
+      type: apiKey
+      in: header
+      name: api-token

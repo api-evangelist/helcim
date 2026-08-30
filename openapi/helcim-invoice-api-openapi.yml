@@ -1,0 +1,723 @@
+openapi: 3.2.0
+info:
+  description: This API covers publicly accessible merchant actions
+  version: 2.2.0
+  title: Helcim Invoice API
+servers:
+- url: https://api.helcim.com/v2
+- url: https://api.helcim.test/v2
+tags:
+- name: Invoice
+paths:
+  /invoices:
+    post:
+      tags:
+      - Invoice
+      summary: Create invoice
+      operationId: create-invoice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceUpsertRequest'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+    get:
+      tags:
+      - Invoice
+      summary: Get invoices
+      operationId: get-invoices
+      parameters:
+      - in: query
+        name: page
+        description: 'Page number for paginated results. Defaults to the first page if omitted.
+
+          '
+        example: 1
+        schema:
+          type: integer
+          minimum: 1
+      - in: query
+        name: dateStart
+        description: 'Filter invoices created on or after this date or date-time. Format: `YYYY-MM-DD` or `YYYY-MM-DD HH:MM:SS`. If time is omitted, `00:00:00` is assumed. If `dateEnd` is provided, it must not be earlier than `dateStart`.
+
+          '
+        example: '2020-01-01'
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: dateEnd
+        description: 'Filter invoices created on or before this date or date-time. Format: `YYYY-MM-DD` or `YYYY-MM-DD HH:MM:SS`. If time is omitted, `23:59:59` is assumed. If `dateStart` is provided, `dateEnd` must not be earlier than `dateStart`.
+
+          '
+        example: '2021-01-01'
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: invoiceNumber
+        description: 'Filter invoices by the exact invoice number. Matches exactly (case-insensitive). If no match exists, no invoices are returned.
+
+          '
+        example: INV1000
+        schema:
+          type: string
+      - in: query
+        name: customerId
+        description: 'Filter invoices by customer ID.
+
+          '
+        example: 12345
+        schema:
+          type: string
+      - in: query
+        name: status
+        description: 'Filter invoices by status.
+
+          '
+        example: PAID
+        schema:
+          type: string
+          enum:
+          - CANCELLED
+          - DUE
+          - PAID
+          - SHIPPED
+          - COMPLETED
+          - REFUNDED
+          - APP
+          - IN_PROGRESS
+          - OVERDUE
+          - FOR_APPROVAL
+          - APPROVED
+      - in: query
+        name: type
+        description: 'Filter invoices by type.
+
+          '
+        example: INVOICE
+        schema:
+          type: string
+          enum:
+          - ESTIMATE
+          - QUOTE
+          - ORDER
+          - PURCHASE_ORDER
+          - INVOICE
+          - STATEMENT
+          - REGISTRATION
+          - CREDIT
+      - in: query
+        name: currency
+        description: 'Filter invoices by currency code.
+
+          '
+        example: USD
+        schema:
+          type: string
+          enum:
+          - CAD
+          - USD
+      - in: query
+        name: withConvenienceFee
+        description: 'Include the convenience fee for each invoice.  If `1`, the convenience fee is included in the response.  If `0` or omitted, the convenience fee is set to 0.
+
+          '
+        example: 1
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+      - in: query
+        name: withOrderFields
+        description: 'Include custom field values for each invoice. If `1`, the `orderFields` array for each invoice is populated. If `0` or omitted, `orderFields` is always an empty array.
+
+          '
+        example: 1
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+      - in: query
+        name: convenienceFeeEnabled
+        description: 'Filter invoices by whether the convenience fee is enabled.  If `1`, return all invoices with the convenience fee enabled. If `0`, return all invoices with the convenience fee disabled.  If omitted, no filter is applied.
+
+          '
+        example: 1
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+  /invoices/{invoiceId}:
+    get:
+      tags:
+      - Invoice
+      summary: Get invoice
+      operationId: get-invoice
+      parameters:
+      - in: path
+        name: invoiceId
+        schema:
+          type: string
+        required: true
+        description: The unique ID of the invoice to retrieve.
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+    put:
+      tags:
+      - Invoice
+      summary: Update invoice
+      operationId: update-invoice
+      parameters:
+      - in: path
+        name: invoiceId
+        schema:
+          type: string
+        required: true
+        description: The unique invoice Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceUpsertRequest'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceResponse'
+        default:
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedPaymentResponse'
+      security:
+      - ApiAccessAuth: []
+components:
+  schemas:
+    Shipping:
+      title: Shipping Data
+      type: object
+      required:
+      - amount
+      - details
+      - address
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total shipping amount for the invoice.
+
+            '
+          example: 10.99
+        details:
+          type: string
+          description: 'A description of the shipping method. This information appears on the invoice.
+
+            '
+          example: Canada Post 1-day shipping
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          description: 'The destination shipping address for this invoice.
+
+            '
+    Discount:
+      title: Discount Data
+      type: object
+      required:
+      - amount
+      - details
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total discount amount applied at the invoice level.  This does not include item-level discounts.
+
+            '
+          example: 10.99
+        details:
+          type: string
+          description: 'A description or code identifying the discount.
+
+            '
+          example: DISC100
+    InvoiceResponse:
+      title: InvoiceResponse
+      type: object
+      properties:
+        invoiceId:
+          type: integer
+          description: Unique ID of the invoice.
+          example: 28658838
+        invoiceNumber:
+          type: string
+          description: Invoice number. Generated if not provided during creation.
+          example: INV1000
+        token:
+          type: string
+          description: 'A system generated unique token to reference the invoice with. can be used to view the invoice online.
+
+            '
+          example: 4e71b0b71b032e8bd95097
+        type:
+          type: string
+          description: 'The type of the invoice.  Possible values include: ESTIMATE, INVOICE, QUOTE, ORDER, PURCHASE_ORDER, STATEMENT, REGISTRATION, CREDIT.
+
+            '
+          example: INVOICE
+        status:
+          type: string
+          description: 'The current status of the invoice. Possible values include: CANCELLED, DUE, PAID, SHIPPED, COMPLETED, REFUNDED, APP, IN_PROGRESS, OVERDUE, FOR_APPROVAL, APPROVED.
+
+            '
+          example: DUE
+        currency:
+          type: string
+          description: 'The three-letter ISO 4217 currency code for this invoice. Possible values include: CAD, USD.
+
+            '
+          example: CAD
+        customerId:
+          type: integer
+          description: 'ID of the customer associated with this invoice. Will be 0 if no customer is associated with the invoice.
+
+            '
+          example: 15301549
+        billingAddress:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          description: The billing address for this invoice.
+        shipping:
+          allOf:
+          - $ref: '#/components/schemas/Shipping'
+          description: Shipping details for this invoice.
+        pickup:
+          allOf:
+          - $ref: '#/components/schemas/Pickup'
+          description: Pickup details for this invoice.
+        tax:
+          allOf:
+          - $ref: '#/components/schemas/Tax'
+          description: Tax details for this invoice.
+        discount:
+          allOf:
+          - $ref: '#/components/schemas/Discount'
+          description: Discount details for this invoice.
+        lineItems:
+          type: array
+          description: 'List of line items included in this invoice.
+
+            '
+          items:
+            $ref: '#/components/schemas/LineItem'
+        dateCreated:
+          type: string
+          format: date-time
+          description: The date and time when the invoice was created.
+          example: '2025-06-20 13:05:03'
+        dateUpdated:
+          type: string
+          format: date-time
+          description: The date and time when the invoice was last updated.
+          example: '2025-06-20 13:05:03'
+        datePaid:
+          type: string
+          format: date-time
+          description: The date and time when the invoice was paid, if applicable.
+          example: '0000-00-00 00:00:00'
+        dateIssued:
+          type: string
+          format: date-time
+          description: The date and time when the invoice was issued.
+          example: '2025-06-20 13:05:03'
+        amount:
+          type: number
+          format: float
+          description: The total amount of the invoice.
+          example: 127.48
+        amountPaid:
+          type: number
+          format: float
+          description: The total amount that has been paid towards this invoice.
+          example: 0
+        amountDue:
+          type: number
+          format: float
+          description: The remaining balance due for this invoice.
+          example: 127.48
+        tipAmount:
+          type: number
+          format: float
+          description: The tip amount applied to this invoice.
+          example: 0.99
+        depositAmount:
+          type: number
+          format: float
+          description: The deposit for items on the invoice, e.g bottle fees.
+          example: 0
+        convenienceFee:
+          type: number
+          format: float
+          description: The total convenience fee applied to this invoice.
+          example: 0
+        convenienceFeeEnabled:
+          type: boolean
+          description: Indicates whether a convenience fee was enabled for this invoice.
+          example: false
+        surchargingFee:
+          type: number
+          format: float
+          description: The total surcharging fee applied to this invoice.
+          example: 0
+        orderFields:
+          type: array
+          description: Any custom order fields attached to this invoice.
+          items:
+            $ref: '#/components/schemas/OrderField'
+        notes:
+          type: string
+          description: Notes visible to the customer at the bottom of the invoice.
+          example: No vegetables please
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
+    Tax:
+      title: Tax Data
+      type: object
+      required:
+      - amount
+      - details
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total tax amount applied at the invoice level.  This does not include item-level taxes.
+
+            '
+          example: 5.99
+        details:
+          type: string
+          description: 'A description of the tax or tax breakdown.
+
+            '
+          example: GST 5%
+    InvoiceUpsertRequest:
+      title: InvoiceCreateRequest
+      type: object
+      required:
+      - currency
+      - lineItems
+      properties:
+        currency:
+          type: string
+          enum:
+          - CAD
+          - USD
+          description: 'The three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code used for all monetary amounts in this invoice.
+
+            '
+          example: CAD
+        lineItems:
+          type: array
+          description: 'A list of line items to include in the invoice. Must contain at least 1 item and no more than 100.
+
+            '
+          minItems: 1
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/LineItem'
+        customerId:
+          type: integer
+          description: 'Unique customer ID to associate with this invoice.
+
+            '
+          example: 123123
+          default: 0
+        billingAddress:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          description: 'The billing address for this invoice.
+
+            '
+        shipping:
+          allOf:
+          - $ref: '#/components/schemas/Shipping'
+          description: 'The shipping details for this invoice, including shipping cost, method, and destination address.
+
+            '
+        pickup:
+          allOf:
+          - $ref: '#/components/schemas/Pickup'
+          description: 'The pickup details for this invoice. Only the pickup date is writable; the pickup name is read-only and derived from the linked customer''s contact name.
+
+            '
+        tax:
+          allOf:
+          - $ref: '#/components/schemas/Tax'
+          description: 'The invoice-level tax details.
+
+            '
+        discount:
+          allOf:
+          - $ref: '#/components/schemas/Discount'
+          description: 'The invoice-level discount details.
+
+            '
+        type:
+          type: string
+          description: 'The invoice type. Allowed values: ESTIMATE, QUOTE, ORDER, PURCHASE_ORDER, INVOICE, STATEMENT, REGISTRATION, CREDIT. Defaults to `INVOICE` if omitted.
+
+            '
+          enum:
+          - ESTIMATE
+          - QUOTE
+          - ORDER
+          - PURCHASE_ORDER
+          - INVOICE
+          - STATEMENT
+          - REGISTRATION
+          - CREDIT
+          example: INVOICE
+          default: INVOICE
+        status:
+          type: string
+          description: 'The initial status of the invoice. Allowed values: CANCELLED, DUE, PAID, SHIPPED, COMPLETED, REFUNDED, IN_PROGRESS. Defaults to `DUE` if omitted.
+
+            '
+          enum:
+          - CANCELLED
+          - DUE
+          - PAID
+          - SHIPPED
+          - COMPLETED
+          - REFUNDED
+          - IN_PROGRESS
+          example: DUE
+          default: DUE
+        convenienceFeeEnabled:
+          type: boolean
+          description: 'Indicates whether a convenience fee is enabled for this invoice. If not provided, the system will use the merchant''s global Fee Saver settings to determine this value.
+
+            '
+          example: true
+        tipAmount:
+          type: number
+          format: float
+          description: 'Optional tip amount to include. Must be greater than zero if provided.
+
+            '
+          example: 0.99
+        invoiceNumber:
+          type: string
+          description: 'Optional custom invoice number.  If omitted or blank, the system will generate one automatically based on the Invoice Settings.
+
+            '
+          example: ''
+        notes:
+          type: string
+          description: 'Optional notes to display at the bottom of the invoice, visible to the customer.
+
+            '
+          example: No vegetables please
+    LineItem:
+      title: Line Item Data
+      type: object
+      required:
+      - description
+      - quantity
+      - price
+      properties:
+        description:
+          type: string
+          description: 'A short description of the product or service.
+
+            '
+          example: Red Hat
+        quantity:
+          type: number
+          format: float
+          description: 'The quantity of the line item. Can have up to 2 decimal places.
+
+            '
+          example: 10.5
+        price:
+          type: number
+          format: float
+          description: 'The unit price for a single quantity of this line item, before tax or discounts.
+
+            '
+          example: 10.55
+        taxAmount:
+          type: number
+          format: float
+          description: 'The tax amount for this line item.
+
+            '
+          example: 0
+        discountAmount:
+          type: number
+          format: float
+          description: 'The discount amount applied to this line item.
+
+            '
+          example: 0
+        sku:
+          type: string
+          description: 'The stock keeping unit (SKU) code for this product (or service).
+
+            '
+          example: ITM1434
+    Address:
+      title: Address
+      type: object
+      required:
+      - name
+      - street1
+      - postalCode
+      properties:
+        name:
+          type: string
+          description: 'The recipient''s name or business name for this address.
+
+            '
+          example: John Smith / Helcim
+        street1:
+          type: string
+          description: 'The primary street address.
+
+            '
+          example: 21 Jump Street
+        street2:
+          type: string
+          description: 'Additional address details, such as unit or suite number.
+
+            '
+          example: Suite 400
+        city:
+          type: string
+          description: 'The city for this address.
+
+            '
+          example: Calgary
+        province:
+          type: string
+          description: 'The two-letter province or state code (e.g., AB, BC, CA).  Required if the country is CAN or USA.
+
+            '
+          example: AB
+        country:
+          type: string
+          description: 'The three-letter [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code (e.g., CAN, USA).
+
+            '
+          example: CAN
+        postalCode:
+          type: string
+          description: 'The postal or ZIP code for this address.
+
+            '
+          example: H0H0H0
+        phone:
+          type: string
+          description: 'Contact phone number (10 to 15 digits).
+
+            '
+          example: 4031231234
+        email:
+          type: string
+          description: 'Contact email address for this address.
+
+            '
+          example: john@example.com
+    OrderField:
+      title: Order Field Data
+      type: object
+      properties:
+        displayName:
+          type: string
+          example: Table Number
+        value:
+          type: string
+          example: 44B
+    Pickup:
+      title: Pickup Data
+      type: object
+      required:
+      - date
+      properties:
+        date:
+          type: string
+          description: 'The scheduled pickup date and time in the format: `YYYY-MM-DD HH:MM:SS`.
+
+            '
+          example: '2022-01-25 13:55:55'
+        name:
+          type: string
+          readOnly: true
+          description: 'Read-only. Derived from the linked customer''s contact name (empty when no customer is linked to the invoice). A `name` supplied in a create or update request is ignored — only `date` is writable. To change the displayed pickup name, update the linked customer''s contact name.
+
+            '
+          example: Jane Smith
+  securitySchemes:
+    ApiAccessAuth:
+      description: API Token with required permissions
+      type: apiKey
+      in: header
+      name: api-token

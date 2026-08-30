@@ -1,0 +1,632 @@
+openapi: 3.2.0
+info:
+  description: This API covers publicly accessible merchant actions
+  version: 2.2.0
+  title: Helcim ACH Payment API
+servers:
+- url: https://api.helcim.com/v2
+- url: https://api.helcim.test/v2
+tags:
+- name: ACH Payment
+paths:
+  /ach/withdraw:
+    put:
+      tags:
+      - ACH Payment
+      summary: Process an ACH withdraw.
+      operationId: ach-withdraw
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Req-3'
+      responses:
+        '200':
+          description: An ACH withdrawal was successfully processed. This does not guarantee that all necessary sub-objects were updated, only a guarantee that the payments action was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Res-4'
+        '400':
+          description: Invalid request. Likely caused by malformed content in request payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '403':
+          description: User does not have valid permissions.
+        '500':
+          description: Unexpected internal error.
+      security:
+      - ApiAccessAuth: []
+  /ach/transactions:
+    get:
+      tags:
+      - ACH Payment
+      summary: Collects all ACH transactions.
+      operationId: get-many-ach-transactions
+      parameters:
+      - in: query
+        name: page
+        description: Page number for paginated results.
+        example: 1
+        schema:
+          type: integer
+          minimum: 1
+      - in: query
+        name: limit
+        description: 'The number of transactions that will be returned in one request. We only allow maximum 125 objects per request.  If no limit specified, the default limit will be 125 objects.
+
+          '
+        example: 50
+        schema:
+          type: integer
+          maximum: 125
+      - in: query
+        name: startDate
+        description: 'Filter transactions created on or after this date. Format: `YYYY-MM-DD`. If `endDate` is provided, it must not be earlier than `startDate`.
+
+          '
+        example: '2020-01-01'
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: endDate
+        description: 'Filter transactions created on or before this date. Format: `YYYY-MM-DD`. If `startDate` is provided, `endDate` must not be earlier than `startDate`.
+
+          '
+        example: '2021-01-01'
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: amountMin
+        description: 'Filter transactions by minimum amount. If `amountMax` is provided, `amountMin` must not be greater than `amountMax`.
+
+          '
+        example: 150
+        schema:
+          type: number
+          format: float
+      - in: query
+        name: amountMax
+        description: 'Filter transactions by maximum amount. If `amountMin` is provided, `amountMax` must not be less than `amountMin`.
+
+          '
+        example: 200
+        schema:
+          type: number
+          format: float
+      - in: query
+        name: statusAuth
+        description: Filter transactions by auth status.
+        example: APPROVED,PENDING
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - APPROVED
+            - DECLINED
+            - IN_PROGRESS
+            - PENDING
+            - CANCELLED
+      - in: query
+        name: statusClearing
+        description: Filter transactions by clearing status.
+        example: REJECTED,CONTESTED
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - OPENED
+            - CLEARED
+            - REJECTED
+            - CONTESTED
+            - RETURNED
+      - in: query
+        name: users
+        description: Filter transactions by users.
+        example: 1234,5678,8271
+        schema:
+          type: array
+          items:
+            type: integer
+      - in: query
+        name: search
+        description: 'Searches id, bankAccountL4l4, order id, batch id, contact name and business name.
+
+          '
+        example: Joe
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All ACH transactions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionEft'
+        '400':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '403':
+          description: User does not have valid permissions.
+        '500':
+          description: Unexpected internal error.
+      security:
+      - ApiAccessAuth: []
+  /ach/transactions/{transactionId}:
+    get:
+      tags:
+      - ACH Payment
+      summary: Retrieves a single ACH transaction.
+      operationId: get-ach-transaction-by-id
+      parameters:
+      - name: transactionId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: The ID of the ACH transaction.
+      responses:
+        '200':
+          description: An ACH transaction.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionEft'
+        '400':
+          description: Invalid request. Likely due to using an invalid ACH transaction ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '403':
+          description: User does not have valid permissions.
+        '500':
+          description: Unexpected internal error.
+      security:
+      - ApiAccessAuth: []
+  /ach/transactions/{transactionId}/refund:
+    put:
+      tags:
+      - ACH Payment
+      summary: Refund an ACH transaction.
+      operationId: ach-refund
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - in: path
+        name: transactionId
+        description: The ID of the ACH transaction to refund.
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Req-4'
+      responses:
+        '200':
+          description: An ACH refund was successfully processed. This does not guarantee that all necessary sub-objects were updated, only a guarantee that the payments action was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Res-5'
+        '400':
+          description: Invalid request. Likely caused by malformed content in request payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '403':
+          description: User does not have valid permissions.
+        '500':
+          description: Unexpected internal error.
+      security:
+      - ApiAccessAuth: []
+  /ach/transactions/{transactionId}/void:
+    put:
+      tags:
+      - ACH Payment
+      summary: Void an ACH transaction.
+      operationId: ach-void
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - in: path
+        name: transactionId
+        description: The ID of the ACH transaction to void.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The ACH transaction was successfully voided. This does not guarantee that all necessary sub-objects were updated, only a guarantee that the payments action was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Res-6'
+        '400':
+          description: Invalid request. Likely caused by providing an ACH transaction ID referencing a transaction that is not eligible for voiding.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '403':
+          description: User does not have valid permissions.
+        '500':
+          description: Unexpected internal error.
+      security:
+      - ApiAccessAuth: []
+  /ach/transactions/{transactionId}/cancel:
+    patch:
+      tags:
+      - ACH Payment
+      summary: Cancel a pending ACH transaction.
+      operationId: ach-cancel
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - in: path
+        name: transactionId
+        description: The ID of the ACH transaction to cancel.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The pending ACH transaction was successfully cancelled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Res-7'
+        '400':
+          description: Invalid request. Likely due to the ACH transaction not being pending.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '403':
+          description: User does not have valid permissions.
+        '500':
+          description: Unexpected internal error.
+      security:
+      - ApiAccessAuth: []
+  /ach/batches:
+    get:
+      tags:
+      - ACH Payment
+      summary: Collects all ACH batches.
+      operationId: get-many-ach-batches
+      responses:
+        '200':
+          description: All ACH Batches.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AchBatch'
+        '400':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '403':
+          description: User does not have valid permissions.
+        '500':
+          description: Unexpected internal error.
+      security:
+      - ApiAccessAuth: []
+  /ach/batches/{batchId}/settle:
+    put:
+      tags:
+      - ACH Payment
+      summary: Settle an ACH batch.
+      operationId: ach-batch-settle
+      parameters:
+      - in: header
+        name: idempotency-key
+        description: A UUID-formatted idempotency key. Accepted format is 25-36 alphanumeric characters (including '-' and '_').
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: batchId
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: The ID of the ACH batch.
+      responses:
+        '200':
+          description: The ACH batch was successfully settled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Res-8'
+        '400':
+          description: Invalid request. Likely caused by the batch not being eligible for settling.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '403':
+          description: User does not have valid permissions.
+        '500':
+          description: Unexpected internal error.
+      security:
+      - ApiAccessAuth: []
+components:
+  schemas:
+    Req-3:
+      title: ACH Withdraw Request Payload
+      type: object
+      required:
+      - bankAccountId
+      - customerId
+      - amount
+      - currencyId
+      properties:
+        bankAccountId:
+          type: integer
+          format: int64
+          description: The bank account ID to withdraw from.
+        customerId:
+          type: integer
+          format: int64
+          description: The customer ID associated with the bank account.
+        orderId:
+          type: integer
+          format: int64
+          description: An optional invoice ID to process the withdrawal with. If provided, the withdrawal action will perform invoice and inventory management.
+        amount:
+          type: number
+          format: float
+          description: The amount to withdraw.
+        currencyId:
+          type: integer
+          format: int64
+          enum:
+          - 1
+          - 2
+          description: "The currency of the transaction:\n  * `1` - CAD\n  * `2` - USD\n"
+      example:
+        bankAccountId: 1182342
+        customerId: 389829
+        orderId: 12083
+        amount: 79.99
+        currencyId: 1
+    AchBatch:
+      title: ACH Batch
+      type: object
+      properties:
+        batchId:
+          type: integer
+          format: int64
+          example: 861456
+          description: The id for the ACH batch.
+        batchReference:
+          type: string
+          example: ach-1234
+          description: The reference identifier for the ACH batch.
+        merchantId:
+          type: integer
+          format: int64
+          example: 8
+          description: The id of the merchant associated with this batch.
+        statusBatch:
+          type: integer
+          format: int64
+          example: 1
+          description: 'The current state of the batch. Valid values: 1 (Open), 2 (Closed).'
+          enum:
+          - 1
+          - 2
+        amountWithdrawals:
+          type: number
+          format: float
+          example: 120.5
+          description: The total monetary amount withdrawn.
+        countWithdrawals:
+          type: number
+          format: int64
+          example: 2
+          description: The number of withdrawn transactions.
+        amountDeposits:
+          type: number
+          format: float
+          example: 150
+          description: The total monetary amount deposited.
+        countDeposits:
+          type: number
+          format: int64
+          example: 2
+          description: The number of deposited transactions.
+        amountReversed:
+          type: number
+          format: float
+          example: 0
+          description: The total monetary amount reversed.
+        countReversed:
+          type: number
+          format: int64
+          example: 0
+          description: The number of reversed transactions.
+        amountRefunded:
+          type: number
+          format: float
+          example: 8.5
+          description: The total monetary amount refunded.
+        countRefunded:
+          type: number
+          format: int64
+          example: 5
+          description: The number of refunded transactions.
+        dateOpened:
+          type: string
+          example: '2026-05-06 13:01:15'
+          description: The timestamp indicating when the batch was opened.
+        dateClosed:
+          type: string
+          example: '2026-05-06 13:01:15'
+          description: The timestamp indicating when the batch was closed.
+    Res-6:
+      title: ACH Void Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully voided transaction ID #24732. Void transaction ID #24859 created.'
+    Res-5:
+      title: ACH Refund Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully refunded transaction ID #1342. Refund transaction ID #1355 created.'
+    Message:
+      title: Generic Response Payload Message
+      type: object
+      properties:
+        message:
+          type: string
+    Res-8:
+      title: ACH Void Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully settled ACH batch ID #1533.'
+    Req-4:
+      title: ACH Refund Request Payload
+      type: object
+      required:
+      - amount
+      properties:
+        amount:
+          type: number
+          format: float
+          description: The amount to be refunded.
+      example:
+        amount: 96.34
+    Res-7:
+      title: ACH Cancel Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully cancelled ACH transaction #34232.'
+    Res-4:
+      title: ACH Withdraw Response Payload
+      type: object
+      properties:
+        transaction:
+          $ref: '#/components/schemas/TransactionEft'
+    TransactionEft:
+      title: ACH Transaction
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        merchantId:
+          type: integer
+          format: int64
+        dateCreated:
+          type: string
+          format: date-time
+        statusAuth:
+          type: integer
+          format: int64
+        statusClearing:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        batchId:
+          type: integer
+          format: int64
+        bankAccountId:
+          type: integer
+          format: int64
+        bankAccountL4l4:
+          type: integer
+          format: int64
+        transactionType:
+          type: integer
+          format: int64
+        amount:
+          type: number
+          format: float
+        currency:
+          type: integer
+          format: int64
+        approvalCode:
+          type: string
+        test:
+          type: integer
+          format: int64
+        acquirerTransactionId:
+          type: string
+        responseMessage:
+          type: string
+        payFacTransactionId:
+          type: integer
+          format: int64
+        originalTransactionId:
+          type: integer
+          format: int64
+        statusBatch:
+          type: integer
+          format: int64
+        dateClosed:
+          type: string
+          format: date-time
+  securitySchemes:
+    ApiAccessAuth:
+      description: API Token with required permissions
+      type: apiKey
+      in: header
+      name: api-token
