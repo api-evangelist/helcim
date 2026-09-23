@@ -47,6 +47,15 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
     CardTerminal:
       title: Terminal
       type: object
@@ -91,15 +100,6 @@ components:
               type: string
               example: H0H0H0
               description: Postal or zip code
-    FailedPaymentResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of errors
-          items:
-            type: string
-            example: An error occurred
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions

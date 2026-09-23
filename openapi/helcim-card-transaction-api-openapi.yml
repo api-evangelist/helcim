@@ -118,6 +118,15 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
     SuccessfulPaymentResponse:
       title: Payment Response
       type: object
@@ -194,15 +203,6 @@ components:
           type: string
           example: Failed to link customer to invoice
           description: Warnings
-    FailedPaymentResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of errors
-          items:
-            type: string
-            example: An error occurred
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions

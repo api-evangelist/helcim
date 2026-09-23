@@ -1,0 +1,44 @@
+{
+  "provider": "helcim",
+  "sources": [
+    "_original/helcim-api.json"
+  ],
+  "outputs": [
+    "helcim-ach-payment-api-openapi.yml",
+    "helcim-card-batch-api-openapi.yml",
+    "helcim-card-terminal-api-openapi.yml",
+    "helcim-card-transaction-api-openapi.yml",
+    "helcim-customer-api-openapi.yml",
+    "helcim-device-api-openapi.yml",
+    "helcim-general-api-openapi.yml",
+    "helcim-invoice-api-openapi.yml",
+    "helcim-payment-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "helcim-api.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "helcim-api.json: declared missing tag: ACH Payment",
+    "helcim-api.json: declared missing tag: Card Batch",
+    "helcim-api.json: declared missing tag: Card Terminal",
+    "helcim-api.json: declared missing tag: Card Transaction",
+    "helcim-api.json: declared missing tag: Customer",
+    "helcim-api.json: declared missing tag: Device",
+    "helcim-api.json: declared missing tag: Invoice",
+    "helcim-api.json: declared missing tag: Payment",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "helcim-ach-payment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "helcim-card-batch-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "helcim-card-terminal-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "helcim-card-transaction-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "helcim-customer-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "helcim-device-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "helcim-general-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "helcim-invoice-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "helcim-payment-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

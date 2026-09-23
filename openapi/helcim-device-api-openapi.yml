@@ -15,9 +15,7 @@ paths:
       - Device
       summary: Get Devices
       operationId: get-devices
-      description: 'This operation requires the provided API key to have General permission set to ''Read'' or higher, and Settings permission set to ''Read'' or higher.
-
-        '
+      description: This operation requires the provided API key to have General permission set to 'Read' or higher, and Settings permission set to 'Read' or higher.
       parameters:
       - name: code
         in: query
@@ -100,9 +98,7 @@ paths:
       - Device
       summary: Get Device Information
       operationId: get-device
-      description: 'This operation requires the provided API key to have General permission set to ''Read'' or higher, and Settings permission set to ''Read'' or higher.
-
-        '
+      description: This operation requires the provided API key to have General permission set to 'Read' or higher, and Settings permission set to 'Read' or higher.
       parameters:
       - name: code
         in: path
@@ -144,9 +140,7 @@ paths:
       - Device
       summary: Start A Purchase
       operationId: start-purchase
-      description: 'This operation requires the provided API key to have Processing permission set to ''PositiveTransaction'' or higher.
-
-        '
+      description: This operation requires the provided API key to have Processing permission set to 'PositiveTransaction' or higher.
       parameters:
       - name: code
         in: path
@@ -195,9 +189,7 @@ paths:
       - Device
       summary: Start A Refund
       operationId: start-refund
-      description: 'This operation requires the provided API key to have Processing permission set to ''Admin''.
-
-        '
+      description: This operation requires the provided API key to have Processing permission set to 'Admin'.
       parameters:
       - name: code
         in: path
@@ -349,15 +341,6 @@ components:
             If not provided, Helcim will create a customer.
 
             '
-    FailedResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of errors
-          items:
-            type: string
-            example: An error occurred
     Device:
       title: Device
       type: object
@@ -370,6 +353,15 @@ components:
           type: string
           example: '2024-02-09 14:08:08'
           description: Date and time when the device was created in the format "YYYY-MM-DD HH:MM:SS"
+    FailedResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions

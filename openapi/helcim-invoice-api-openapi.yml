@@ -245,53 +245,25 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
-    Shipping:
-      title: Shipping Data
+    Pickup:
+      title: Pickup Data
       type: object
       required:
-      - amount
-      - details
-      - address
+      - date
       properties:
-        amount:
-          type: number
-          format: float
-          description: 'The total shipping amount for the invoice.
-
-            '
-          example: 10.99
-        details:
+        date:
           type: string
-          description: 'A description of the shipping method. This information appears on the invoice.
+          description: 'The scheduled pickup date and time in the format: `YYYY-MM-DD HH:MM:SS`.
 
             '
-          example: Canada Post 1-day shipping
-        address:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          description: 'The destination shipping address for this invoice.
-
-            '
-    Discount:
-      title: Discount Data
-      type: object
-      required:
-      - amount
-      - details
-      properties:
-        amount:
-          type: number
-          format: float
-          description: 'The total discount amount applied at the invoice level.  This does not include item-level discounts.
-
-            '
-          example: 10.99
-        details:
+          example: '2022-01-25 13:55:55'
+        name:
           type: string
-          description: 'A description or code identifying the discount.
+          readOnly: true
+          description: 'Read-only. Derived from the linked customer''s contact name (empty when no customer is linked to the invoice). A `name` supplied in a create or update request is ignored — only `date` is writable. To change the displayed pickup name, update the linked customer''s contact name.
 
             '
-          example: DISC100
+          example: Jane Smith
     InvoiceResponse:
       title: InvoiceResponse
       type: object
@@ -438,26 +410,81 @@ components:
           items:
             type: string
             example: An error occurred
-    Tax:
-      title: Tax Data
+    Shipping:
+      title: Shipping Data
       type: object
       required:
       - amount
       - details
+      - address
       properties:
         amount:
           type: number
           format: float
-          description: 'The total tax amount applied at the invoice level.  This does not include item-level taxes.
+          description: 'The total shipping amount for the invoice.
 
             '
-          example: 5.99
+          example: 10.99
         details:
           type: string
-          description: 'A description of the tax or tax breakdown.
+          description: 'A description of the shipping method. This information appears on the invoice.
 
             '
-          example: GST 5%
+          example: Canada Post 1-day shipping
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          description: 'The destination shipping address for this invoice.
+
+            '
+    LineItem:
+      title: Line Item Data
+      type: object
+      required:
+      - description
+      - quantity
+      - price
+      properties:
+        description:
+          type: string
+          description: 'A short description of the product or service.
+
+            '
+          example: Red Hat
+        quantity:
+          type: number
+          format: float
+          description: 'The quantity of the line item. Can have up to 2 decimal places.
+
+            '
+          example: 10.5
+        price:
+          type: number
+          format: float
+          description: 'The unit price for a single quantity of this line item, before tax or discounts.
+
+            '
+          example: 10.55
+        taxAmount:
+          type: number
+          format: float
+          description: 'The tax amount for this line item.
+
+            '
+          example: 0
+        discountAmount:
+          type: number
+          format: float
+          description: 'The discount amount applied to this line item.
+
+            '
+          example: 0
+        sku:
+          type: string
+          description: 'The stock keeping unit (SKU) code for this product (or service).
+
+            '
+          example: ITM1434
     InvoiceUpsertRequest:
       title: InvoiceCreateRequest
       type: object
@@ -576,54 +603,6 @@ components:
 
             '
           example: No vegetables please
-    LineItem:
-      title: Line Item Data
-      type: object
-      required:
-      - description
-      - quantity
-      - price
-      properties:
-        description:
-          type: string
-          description: 'A short description of the product or service.
-
-            '
-          example: Red Hat
-        quantity:
-          type: number
-          format: float
-          description: 'The quantity of the line item. Can have up to 2 decimal places.
-
-            '
-          example: 10.5
-        price:
-          type: number
-          format: float
-          description: 'The unit price for a single quantity of this line item, before tax or discounts.
-
-            '
-          example: 10.55
-        taxAmount:
-          type: number
-          format: float
-          description: 'The tax amount for this line item.
-
-            '
-          example: 0
-        discountAmount:
-          type: number
-          format: float
-          description: 'The discount amount applied to this line item.
-
-            '
-          example: 0
-        sku:
-          type: string
-          description: 'The stock keeping unit (SKU) code for this product (or service).
-
-            '
-          example: ITM1434
     Address:
       title: Address
       type: object
@@ -686,6 +665,26 @@ components:
 
             '
           example: john@example.com
+    Tax:
+      title: Tax Data
+      type: object
+      required:
+      - amount
+      - details
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total tax amount applied at the invoice level.  This does not include item-level taxes.
+
+            '
+          example: 5.99
+        details:
+          type: string
+          description: 'A description of the tax or tax breakdown.
+
+            '
+          example: GST 5%
     OrderField:
       title: Order Field Data
       type: object
@@ -696,25 +695,26 @@ components:
         value:
           type: string
           example: 44B
-    Pickup:
-      title: Pickup Data
+    Discount:
+      title: Discount Data
       type: object
       required:
-      - date
+      - amount
+      - details
       properties:
-        date:
-          type: string
-          description: 'The scheduled pickup date and time in the format: `YYYY-MM-DD HH:MM:SS`.
+        amount:
+          type: number
+          format: float
+          description: 'The total discount amount applied at the invoice level.  This does not include item-level discounts.
 
             '
-          example: '2022-01-25 13:55:55'
-        name:
+          example: 10.99
+        details:
           type: string
-          readOnly: true
-          description: 'Read-only. Derived from the linked customer''s contact name (empty when no customer is linked to the invoice). A `name` supplied in a create or update request is ignored — only `date` is writable. To change the displayed pickup name, update the linked customer''s contact name.
+          description: 'A description or code identifying the discount.
 
             '
-          example: Jane Smith
+          example: DISC100
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions

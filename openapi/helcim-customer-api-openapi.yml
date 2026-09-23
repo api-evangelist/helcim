@@ -291,7 +291,7 @@ paths:
     get:
       tags:
       - Customer
-      summary: Get all PADS for a customer.
+      summary: Get all PADS for a customer
       operationId: get-pads
       parameters:
       - name: customerId
@@ -325,7 +325,7 @@ paths:
     get:
       tags:
       - Customer
-      summary: Get customer bank accounts.
+      summary: Get customer bank accounts
       operationId: get-customer-bank-accounts
       parameters:
       - in: path
@@ -369,7 +369,7 @@ paths:
     post:
       tags:
       - Customer
-      summary: Create a bank account.
+      summary: Create a bank account
       operationId: create-bank-account
       parameters:
       - name: customerId
@@ -411,7 +411,7 @@ paths:
     get:
       tags:
       - Customer
-      summary: Request bank account information from a customer.
+      summary: Request bank account information from a customer
       operationId: request-new-bank-account
       parameters:
       - name: customerId
@@ -474,7 +474,7 @@ paths:
     delete:
       tags:
       - Customer
-      summary: Delete customer bank account.
+      summary: Delete customer bank account
       operationId: delete-customer-bank-account
       parameters:
       - in: path
@@ -542,7 +542,7 @@ paths:
     get:
       tags:
       - Customer
-      summary: Get a PAD by its ID.
+      summary: Get a PAD by its ID
       operationId: get-pad
       parameters:
       - name: customerId
@@ -585,7 +585,7 @@ paths:
     put:
       tags:
       - Customer
-      summary: Update a PAD by its ID.
+      summary: Update a PAD by its ID
       operationId: update-pad
       parameters:
       - name: customerId
@@ -630,94 +630,21 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
-    CardResponse:
-      title: Card
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 161462
-          description: The id of the card.
-        cardToken:
-          type: string
-          example: 907af81acc0224e0134949
-          description: The card token.
-        dateCreated:
-          type: string
-          example: '2025-01-30 13:35:36'
-          description: The date when the card is created.
-        dateUpdated:
-          type: string
-          example: '2025-01-30 13:35:36'
-          description: The date when the card last got updated.
-        cardHolderName:
-          type: string
-          example: John Smith
-          description: The cardholder name.
-        cardF6L4:
-          type: string
-          example: '5454545454'
-          description: The first-six and last-four card numbers.
-        cardExpiry:
-          type: string
-          example: '1257'
-          description: The card expiry date, in MMYY format (total of 4 digits without spaces or slashes).
-        cardCVV:
-          type: string
-          example: '100'
-          description: The card CVV (3-4 digits on back of credit card).
-    Customer:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 2488717
-          description: Id of Customer
-        customerCode:
-          type: string
-          example: CST1200
-          description: Customer code of the customer
-        businessName:
-          type: string
-          example: Best company
-          description: Name of the business
-        contactName:
-          type: string
-          example: John Smith
-          description: Contact Name
-        cellPhone:
-          type: string
-          example: 908-295-4902
-          description: Cell phone number of customer
-        billingAddress:
-          $ref: '#/components/schemas/Address'
-        shippingAddress:
-          $ref: '#/components/schemas/Address'
-        cards:
-          type: array
-          description: Array of cards stored in the vault associated with this customer.
-          items:
-            title: Card
-            type: object
-            properties:
-              cardHolderName:
-                type: string
-                example: John Smith
-                description: The card holder name.
-              cardF6L4:
-                type: string
-                example: 5454545454
-                description: The F6L4 of card.
-              cardToken:
-                type: string
-                example: a1b2c3d4e5f6
-                description: Card token
     Res-3:
       title: Get Pre-Authorized Debit Agreement Response Payload
       type: object
       properties:
         pad:
           $ref: '#/components/schemas/Pad'
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
     Pad:
       title: Pre-Authorized Debit Agreement
       type: object
@@ -786,12 +713,6 @@ components:
         merchantId: 333
         type: 2
         status: 2
-    Message:
-      title: Generic Response Payload Message
-      type: object
-      properties:
-        message:
-          type: string
     CustomerRequest:
       title: Customer Request
       type: object
@@ -816,30 +737,172 @@ components:
           $ref: '#/components/schemas/Address'
         shippingAddress:
           $ref: '#/components/schemas/Address'
-    CustomerUpdateRequest:
-      title: Customer Update Request
+    Address:
+      title: Address
+      type: object
+      required:
+      - name
+      - street1
+      - postalCode
+      properties:
+        name:
+          type: string
+          description: 'The recipient''s name or business name for this address.
+
+            '
+          example: John Smith / Helcim
+        street1:
+          type: string
+          description: 'The primary street address.
+
+            '
+          example: 21 Jump Street
+        street2:
+          type: string
+          description: 'Additional address details, such as unit or suite number.
+
+            '
+          example: Suite 400
+        city:
+          type: string
+          description: 'The city for this address.
+
+            '
+          example: Calgary
+        province:
+          type: string
+          description: 'The two-letter province or state code (e.g., AB, BC, CA).  Required if the country is CAN or USA.
+
+            '
+          example: AB
+        country:
+          type: string
+          description: 'The three-letter [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code (e.g., CAN, USA).
+
+            '
+          example: CAN
+        postalCode:
+          type: string
+          description: 'The postal or ZIP code for this address.
+
+            '
+          example: H0H0H0
+        phone:
+          type: string
+          description: 'Contact phone number (10 to 15 digits).
+
+            '
+          example: 4031231234
+        email:
+          type: string
+          description: 'Contact email address for this address.
+
+            '
+          example: john@example.com
+    Customer:
       type: object
       properties:
+        id:
+          type: integer
+          example: 2488717
+          description: Id of Customer
         customerCode:
           type: string
-          example: CST1000
-          description: The unique customer code.
+          example: CST1200
+          description: Customer code of the customer
+        businessName:
+          type: string
+          example: Best company
+          description: Name of the business
         contactName:
           type: string
           example: John Smith
-          description: The primary contact name (full name) of the customer.
-        businessName:
-          type: string
-          example: Best Company
-          description: The business name of the customer. There must be either a contact name or business name present.
+          description: Contact Name
         cellPhone:
           type: string
           example: 908-295-4902
-          description: The cell phone number of the customer.
+          description: Cell phone number of customer
         billingAddress:
           $ref: '#/components/schemas/Address'
         shippingAddress:
           $ref: '#/components/schemas/Address'
+        cards:
+          type: array
+          description: Array of cards stored in the vault associated with this customer.
+          items:
+            title: Card
+            type: object
+            properties:
+              cardHolderName:
+                type: string
+                example: John Smith
+                description: The card holder name.
+              cardF6L4:
+                type: string
+                example: 5454545454
+                description: The F6L4 of card.
+              cardToken:
+                type: string
+                example: a1b2c3d4e5f6
+                description: Card token
+    Res-2:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Successfully created new bank account with ID #12345. A bank authorization email was also emailed to customer@helcim.com.'
+        bankAccount:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+          example:
+            id: 12345
+    CardResponse:
+      title: Card
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 161462
+          description: The id of the card.
+        cardToken:
+          type: string
+          example: 907af81acc0224e0134949
+          description: The card token.
+        dateCreated:
+          type: string
+          example: '2025-01-30 13:35:36'
+          description: The date when the card is created.
+        dateUpdated:
+          type: string
+          example: '2025-01-30 13:35:36'
+          description: The date when the card last got updated.
+        cardHolderName:
+          type: string
+          example: John Smith
+          description: The cardholder name.
+        cardF6L4:
+          type: string
+          example: '5454545454'
+          description: The first-six and last-four card numbers.
+        cardExpiry:
+          type: string
+          example: '1257'
+          description: The card expiry date, in MMYY format (total of 4 digits without spaces or slashes).
+        cardCVV:
+          type: string
+          example: '100'
+          description: The card CVV (3-4 digits on back of credit card).
+    Res:
+      title: Get All Pre-Authorized Debit Agreement Response Payload
+      type: object
+      properties:
+        pads:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pad'
     Req-2:
       title: Update Pre-Authorized Debit Agreement
       type: object
@@ -872,15 +935,12 @@ components:
         ipAddress: 123.456.789.0
         type: 2
         status: 1
-    FailedPaymentResponse:
+    Message:
+      title: Generic Response Payload Message
       type: object
       properties:
-        errors:
-          type: array
-          description: List of errors
-          items:
-            type: string
-            example: An error occurred
+        message:
+          type: string
     BankAccountResponse:
       title: BankAccount
       type: object
@@ -946,6 +1006,30 @@ components:
           example: '9999'
           description: Last 4 digits of the bank account number.
         address:
+          $ref: '#/components/schemas/Address'
+    CustomerUpdateRequest:
+      title: Customer Update Request
+      type: object
+      properties:
+        customerCode:
+          type: string
+          example: CST1000
+          description: The unique customer code.
+        contactName:
+          type: string
+          example: John Smith
+          description: The primary contact name (full name) of the customer.
+        businessName:
+          type: string
+          example: Best Company
+          description: The business name of the customer. There must be either a contact name or business name present.
+        cellPhone:
+          type: string
+          example: 908-295-4902
+          description: The cell phone number of the customer.
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+        shippingAddress:
           $ref: '#/components/schemas/Address'
     Req:
       title: Create Bank Account Request Payload
@@ -1020,90 +1104,6 @@ components:
         postalCode: T2P5E9
         provinceAlpha2: AB
         streetAddress: 440 2 Ave SW
-    Address:
-      title: Address
-      type: object
-      required:
-      - name
-      - street1
-      - postalCode
-      properties:
-        name:
-          type: string
-          description: 'The recipient''s name or business name for this address.
-
-            '
-          example: John Smith / Helcim
-        street1:
-          type: string
-          description: 'The primary street address.
-
-            '
-          example: 21 Jump Street
-        street2:
-          type: string
-          description: 'Additional address details, such as unit or suite number.
-
-            '
-          example: Suite 400
-        city:
-          type: string
-          description: 'The city for this address.
-
-            '
-          example: Calgary
-        province:
-          type: string
-          description: 'The two-letter province or state code (e.g., AB, BC, CA).  Required if the country is CAN or USA.
-
-            '
-          example: AB
-        country:
-          type: string
-          description: 'The three-letter [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code (e.g., CAN, USA).
-
-            '
-          example: CAN
-        postalCode:
-          type: string
-          description: 'The postal or ZIP code for this address.
-
-            '
-          example: H0H0H0
-        phone:
-          type: string
-          description: 'Contact phone number (10 to 15 digits).
-
-            '
-          example: 4031231234
-        email:
-          type: string
-          description: 'Contact email address for this address.
-
-            '
-          example: john@example.com
-    Res-2:
-      type: object
-      properties:
-        message:
-          type: string
-          example: 'Successfully created new bank account with ID #12345. A bank authorization email was also emailed to customer@helcim.com.'
-        bankAccount:
-          type: object
-          properties:
-            id:
-              type: integer
-              format: int64
-          example:
-            id: 12345
-    Res:
-      title: Get All Pre-Authorized Debit Agreement Response Payload
-      type: object
-      properties:
-        pads:
-          type: array
-          items:
-            $ref: '#/components/schemas/Pad'
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions

@@ -122,6 +122,15 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
     CardBatch:
       type: object
       properties:
@@ -185,15 +194,6 @@ components:
           type: number
           example: 0
           description: Number of declined transactions
-    FailedPaymentResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of errors
-          items:
-            type: string
-            example: An error occurred
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions
