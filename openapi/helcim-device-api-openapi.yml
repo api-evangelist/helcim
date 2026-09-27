@@ -298,6 +298,18 @@ components:
             This identifier must correspond to the transaction Id of the original transaction to be refunded.
 
             '
+    Device:
+      title: Device
+      type: object
+      properties:
+        code:
+          type: string
+          example: ABC1
+          description: Code of the device.
+        dateCreated:
+          type: string
+          example: '2024-02-09 14:08:08'
+          description: Date and time when the device was created in the format "YYYY-MM-DD HH:MM:SS"
     PaymentRequest-2:
       title: PaymentRequest
       type: object
@@ -341,18 +353,6 @@ components:
             If not provided, Helcim will create a customer.
 
             '
-    Device:
-      title: Device
-      type: object
-      properties:
-        code:
-          type: string
-          example: ABC1
-          description: Code of the device.
-        dateCreated:
-          type: string
-          example: '2024-02-09 14:08:08'
-          description: Date and time when the device was created in the format "YYYY-MM-DD HH:MM:SS"
     FailedResponse:
       type: object
       properties:

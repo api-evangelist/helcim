@@ -403,6 +403,30 @@ components:
           type: string
       example:
         message: 'Successfully voided transaction ID #24732. Void transaction ID #24859 created.'
+    Res-7:
+      title: ACH Cancel Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully cancelled ACH transaction #34232.'
+    Res-8:
+      title: ACH Void Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully settled ACH batch ID #1533.'
+    Res-5:
+      title: ACH Refund Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully refunded transaction ID #1342. Refund transaction ID #1355 created.'
     Res-4:
       title: ACH Withdraw Response Payload
       type: object
@@ -483,14 +507,6 @@ components:
           type: string
           example: '2026-05-06 13:01:15'
           description: The timestamp indicating when the batch was closed.
-    Res-5:
-      title: ACH Refund Response Payload
-      type: object
-      properties:
-        message:
-          type: string
-      example:
-        message: 'Successfully refunded transaction ID #1342. Refund transaction ID #1355 created.'
     Req-4:
       title: ACH Refund Request Payload
       type: object
@@ -541,20 +557,6 @@ components:
         orderId: 12083
         amount: 79.99
         currencyId: 1
-    Res-8:
-      title: ACH Void Response Payload
-      type: object
-      properties:
-        message:
-          type: string
-      example:
-        message: 'Successfully settled ACH batch ID #1533.'
-    Message:
-      title: Generic Response Payload Message
-      type: object
-      properties:
-        message:
-          type: string
     TransactionEft:
       title: ACH Transaction
       type: object
@@ -616,14 +618,12 @@ components:
         dateClosed:
           type: string
           format: date-time
-    Res-7:
-      title: ACH Cancel Response Payload
+    Message:
+      title: Generic Response Payload Message
       type: object
       properties:
         message:
           type: string
-      example:
-        message: 'Successfully cancelled ACH transaction #34232.'
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions
