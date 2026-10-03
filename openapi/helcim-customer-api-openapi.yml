@@ -630,6 +630,328 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
+    CustomerRequest:
+      title: Customer Request
+      type: object
+      properties:
+        customerCode:
+          type: string
+          example: CST1000
+          description: The unique customer code. If blank, it will be automatically generated.
+        contactName:
+          type: string
+          example: John Smith
+          description: The primary contact name (full name) of the customer.
+        businessName:
+          type: string
+          example: Best Company
+          description: The business name of the customer. There must be either a contact name or business name present.
+        cellPhone:
+          type: string
+          example: 908-295-4902
+          description: The cell phone number of the customer.
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+        shippingAddress:
+          $ref: '#/components/schemas/Address'
+    Message:
+      title: Generic Response Payload Message
+      type: object
+      properties:
+        message:
+          type: string
+    Req-2:
+      title: Update Pre-Authorized Debit Agreement
+      type: object
+      properties:
+        accepted:
+          type: integer
+          format: int8
+          enum:
+          - 0
+          - 1
+          description: "Whether the PAD was accepted or not:\n  * `0` - Unaccepted\n  * `1` - Accepted\n\nIf the PAD is set to accepted and the PAD is active, a side effect of updating the associated bank account to ready will also happen. If the PAD was set to unaccepted, it will unready the bank account.\n"
+        ipAddress:
+          type: string
+        type:
+          type: integer
+          format: int8
+          enum:
+          - 1
+          - 2
+          description: "The type of the bank account:\n  * `1` - Personal\n  * `2` - Business\n"
+        status:
+          type: integer
+          format: int8
+          enum:
+          - 1
+          - 2
+          description: "The status of the PAD:\n  * `1` - Active\n  * `2` - Inactive\n\nIf the PAD is set to active and the PAD is accepted, a side effect of updating the associated bank account to ready will also happen. If the PAD was unaccepted, it will unready the bank account. Note: there can only be 1 active PAD per bank account.\n"
+      example:
+        accepted: 1
+        ipAddress: 123.456.789.0
+        type: 2
+        status: 1
+    Req:
+      title: Create Bank Account Request Payload
+      type: object
+      required:
+      - accountCorporate
+      - accountType
+      - bankAccountNumber
+      - city
+      - countryAlpha2
+      - postalCode
+      - provinceAlpha2
+      - streetAddress
+      properties:
+        accountCorporate:
+          type: integer
+          format: int8
+          enum:
+          - 1
+          - 2
+          description: "The bank account type:\n  * `1` - Personal\n  * `2` - Corporate\n"
+        accountType:
+          type: integer
+          format: int8
+          enum:
+          - 1
+          - 2
+          description: "The bank account type:\n  * `1` - Checking\n  * `2` - Savings\n"
+        bankAccountNumber:
+          type: string
+          description: 7-12 digits for Canadian bank accounts and 8-12 for US bank accounts.
+        bankFinancialNumber:
+          type: string
+          description: This 3 digit number is needed for Canadian bank accounts.
+        bankRoutingNumber:
+          type: string
+          description: This 9 digit number is needed for US bank accounts.
+        bankTransitNumber:
+          type: string
+          description: This 5 digit number is needed for Canadian bank accounts.
+        city:
+          type: string
+        countryAlpha2:
+          type: string
+          description: Country name in ISO2 format, e.g "CA", "US"
+        firstName:
+          type: string
+          description: Either first and last name or company name need to be specified.
+        lastName:
+          type: string
+          description: Either first and last name or company name need to be specified.
+        companyName:
+          type: string
+          description: Either first and last name or company name need to be specified.
+        postalCode:
+          type: string
+        provinceAlpha2:
+          type: string
+          description: Province/State name in ISO2 format, e.g "AB", "ON"
+        streetAddress:
+          type: string
+      example:
+        accountCorporate: 1
+        accountType: 2
+        bankAccountNumber: '123456789'
+        bankFinancialNumber: '123'
+        bankTransitNumber: '12345'
+        city: Calgary
+        countryAlpha2: CA
+        firstName: John
+        lastName: Doe
+        postalCode: T2P5E9
+        provinceAlpha2: AB
+        streetAddress: 440 2 Ave SW
+    BankAccountResponse:
+      title: BankAccount
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 12312
+          description: The id of the bank account.
+        customerId:
+          type: integer
+          example: 2222
+          description: The id of the customer owning the bank account.
+        dateCreated:
+          type: string
+          example: '2025-01-30 13:35:36'
+          description: The date when the bank account is created.
+        dateUpdated:
+          type: string
+          example: '2025-01-30 13:35:36'
+          description: The date when the bank account last got updated.
+        dateLastUsed:
+          type: string
+          example: '2025-01-30 13:35:36'
+          description: The date when the bank account last got used.
+        dateVerified:
+          type: string
+          example: '2025-01-30 13:35:36'
+          description: The date when the bank account is verified.
+        bankToken:
+          type: string
+          example: JHKJHKLKJLOHKJ876545KJBK
+          description: The token of the bank account.
+        accountType:
+          type: string
+          example: CHECKING
+          description: The type of the bank account, such as CHECKING | SAVINGS.
+        accountCorporate:
+          type: string
+          example: PERSONAL
+          description: The corporate type of the bank account, such as PERSONAL | CORPORATE.
+        verified:
+          type: string
+          example: 1
+          description: Verified status of the bank account, 1|0.
+        ready:
+          type: string
+          example: 1
+          description: Ready status of the bank account, 1|0.
+        bankIdNumber:
+          type: string
+          example: '333'
+          description: The institution number of Canadian Bank Account that identifies the bank.
+        transitNumber:
+          type: string
+          example: '55555'
+          description: The transit number of Canadian Bank Account. Shows which branch you opened your account at.
+        routingNumber:
+          type: string
+          example: '999999999'
+          description: The routing number of US Bank Account. Identifies the financial institution on which it was drawn.
+        bankAccountNumberL4:
+          type: string
+          example: '9999'
+          description: Last 4 digits of the bank account number.
+        address:
+          $ref: '#/components/schemas/Address'
+    CustomerUpdateRequest:
+      title: Customer Update Request
+      type: object
+      properties:
+        customerCode:
+          type: string
+          example: CST1000
+          description: The unique customer code.
+        contactName:
+          type: string
+          example: John Smith
+          description: The primary contact name (full name) of the customer.
+        businessName:
+          type: string
+          example: Best Company
+          description: The business name of the customer. There must be either a contact name or business name present.
+        cellPhone:
+          type: string
+          example: 908-295-4902
+          description: The cell phone number of the customer.
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+        shippingAddress:
+          $ref: '#/components/schemas/Address'
+    Pad:
+      title: Pre-Authorized Debit Agreement
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        accepted:
+          type: integer
+          format: int8
+          enum:
+          - 0
+          - 1
+          description: "Whether the PAD was accepted or not:\n  * `0` - Unaccepted\n  * `1` - Accepted\n"
+        bankAccountId:
+          type: integer
+          format: int8
+        customerId:
+          type: integer
+          format: int64
+        dateAccepted:
+          type: string
+          format: date-time
+        dateCreated:
+          type: string
+          format: date-time
+        dateEarliestDebit:
+          type: string
+          format: date-time
+        dateRevoked:
+          type: string
+          format: date-time
+        dateUpdated:
+          type: string
+          format: date-time
+        ipAddress:
+          type: string
+        merchantId:
+          type: integer
+          format: int64
+        type:
+          type: integer
+          format: int8
+          enum:
+          - 1
+          - 2
+          description: "The type of the bank account:\n  * `1` - Personal\n  * `2` - Business\n"
+        status:
+          type: integer
+          format: int8
+          enum:
+          - 1
+          - 2
+          description: "The status of the PAD:\n  * `1` - Active\n  * `2` - Inactive\n"
+      example:
+        id: 238954
+        accepted: 1
+        bankAccountId: 111
+        customerId: 222
+        dateAccepted: '2023-04-23 13:30:00'
+        dateCreated: '2023-09-19 13:30:00'
+        dateEarliestDebit: '2023-10-06 13:30:00'
+        dateRevoked: '2023-11-17 13:30:00'
+        dateUpdated: '2023-08-10 13:30:00'
+        ipAddress: 123.456.789.0
+        merchantId: 333
+        type: 2
+        status: 2
+    Res-3:
+      title: Get Pre-Authorized Debit Agreement Response Payload
+      type: object
+      properties:
+        pad:
+          $ref: '#/components/schemas/Pad'
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
+    Res-2:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Successfully created new bank account with ID #12345. A bank authorization email was also emailed to customer@helcim.com.'
+        bankAccount:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+          example:
+            id: 12345
     CardResponse:
       title: Card
       type: object
@@ -728,154 +1050,6 @@ components:
 
             '
           example: john@example.com
-    Pad:
-      title: Pre-Authorized Debit Agreement
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        accepted:
-          type: integer
-          format: int8
-          enum:
-          - 0
-          - 1
-          description: "Whether the PAD was accepted or not:\n  * `0` - Unaccepted\n  * `1` - Accepted\n"
-        bankAccountId:
-          type: integer
-          format: int8
-        customerId:
-          type: integer
-          format: int64
-        dateAccepted:
-          type: string
-          format: date-time
-        dateCreated:
-          type: string
-          format: date-time
-        dateEarliestDebit:
-          type: string
-          format: date-time
-        dateRevoked:
-          type: string
-          format: date-time
-        dateUpdated:
-          type: string
-          format: date-time
-        ipAddress:
-          type: string
-        merchantId:
-          type: integer
-          format: int64
-        type:
-          type: integer
-          format: int8
-          enum:
-          - 1
-          - 2
-          description: "The type of the bank account:\n  * `1` - Personal\n  * `2` - Business\n"
-        status:
-          type: integer
-          format: int8
-          enum:
-          - 1
-          - 2
-          description: "The status of the PAD:\n  * `1` - Active\n  * `2` - Inactive\n"
-      example:
-        id: 238954
-        accepted: 1
-        bankAccountId: 111
-        customerId: 222
-        dateAccepted: '2023-04-23 13:30:00'
-        dateCreated: '2023-09-19 13:30:00'
-        dateEarliestDebit: '2023-10-06 13:30:00'
-        dateRevoked: '2023-11-17 13:30:00'
-        dateUpdated: '2023-08-10 13:30:00'
-        ipAddress: 123.456.789.0
-        merchantId: 333
-        type: 2
-        status: 2
-    Res-2:
-      type: object
-      properties:
-        message:
-          type: string
-          example: 'Successfully created new bank account with ID #12345. A bank authorization email was also emailed to customer@helcim.com.'
-        bankAccount:
-          type: object
-          properties:
-            id:
-              type: integer
-              format: int64
-          example:
-            id: 12345
-    BankAccountResponse:
-      title: BankAccount
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 12312
-          description: The id of the bank account.
-        customerId:
-          type: integer
-          example: 2222
-          description: The id of the customer owning the bank account.
-        dateCreated:
-          type: string
-          example: '2025-01-30 13:35:36'
-          description: The date when the bank account is created.
-        dateUpdated:
-          type: string
-          example: '2025-01-30 13:35:36'
-          description: The date when the bank account last got updated.
-        dateLastUsed:
-          type: string
-          example: '2025-01-30 13:35:36'
-          description: The date when the bank account last got used.
-        dateVerified:
-          type: string
-          example: '2025-01-30 13:35:36'
-          description: The date when the bank account is verified.
-        bankToken:
-          type: string
-          example: JHKJHKLKJLOHKJ876545KJBK
-          description: The token of the bank account.
-        accountType:
-          type: string
-          example: CHECKING
-          description: The type of the bank account, such as CHECKING | SAVINGS.
-        accountCorporate:
-          type: string
-          example: PERSONAL
-          description: The corporate type of the bank account, such as PERSONAL | CORPORATE.
-        verified:
-          type: string
-          example: 1
-          description: Verified status of the bank account, 1|0.
-        ready:
-          type: string
-          example: 1
-          description: Ready status of the bank account, 1|0.
-        bankIdNumber:
-          type: string
-          example: '333'
-          description: The institution number of Canadian Bank Account that identifies the bank.
-        transitNumber:
-          type: string
-          example: '55555'
-          description: The transit number of Canadian Bank Account. Shows which branch you opened your account at.
-        routingNumber:
-          type: string
-          example: '999999999'
-          description: The routing number of US Bank Account. Identifies the financial institution on which it was drawn.
-        bankAccountNumberL4:
-          type: string
-          example: '9999'
-          description: Last 4 digits of the bank account number.
-        address:
-          $ref: '#/components/schemas/Address'
     Customer:
       type: object
       properties:
@@ -922,95 +1096,6 @@ components:
                 type: string
                 example: a1b2c3d4e5f6
                 description: Card token
-    Req-2:
-      title: Update Pre-Authorized Debit Agreement
-      type: object
-      properties:
-        accepted:
-          type: integer
-          format: int8
-          enum:
-          - 0
-          - 1
-          description: "Whether the PAD was accepted or not:\n  * `0` - Unaccepted\n  * `1` - Accepted\n\nIf the PAD is set to accepted and the PAD is active, a side effect of updating the associated bank account to ready will also happen. If the PAD was set to unaccepted, it will unready the bank account.\n"
-        ipAddress:
-          type: string
-        type:
-          type: integer
-          format: int8
-          enum:
-          - 1
-          - 2
-          description: "The type of the bank account:\n  * `1` - Personal\n  * `2` - Business\n"
-        status:
-          type: integer
-          format: int8
-          enum:
-          - 1
-          - 2
-          description: "The status of the PAD:\n  * `1` - Active\n  * `2` - Inactive\n\nIf the PAD is set to active and the PAD is accepted, a side effect of updating the associated bank account to ready will also happen. If the PAD was unaccepted, it will unready the bank account. Note: there can only be 1 active PAD per bank account.\n"
-      example:
-        accepted: 1
-        ipAddress: 123.456.789.0
-        type: 2
-        status: 1
-    CustomerRequest:
-      title: Customer Request
-      type: object
-      properties:
-        customerCode:
-          type: string
-          example: CST1000
-          description: The unique customer code. If blank, it will be automatically generated.
-        contactName:
-          type: string
-          example: John Smith
-          description: The primary contact name (full name) of the customer.
-        businessName:
-          type: string
-          example: Best Company
-          description: The business name of the customer. There must be either a contact name or business name present.
-        cellPhone:
-          type: string
-          example: 908-295-4902
-          description: The cell phone number of the customer.
-        billingAddress:
-          $ref: '#/components/schemas/Address'
-        shippingAddress:
-          $ref: '#/components/schemas/Address'
-    CustomerUpdateRequest:
-      title: Customer Update Request
-      type: object
-      properties:
-        customerCode:
-          type: string
-          example: CST1000
-          description: The unique customer code.
-        contactName:
-          type: string
-          example: John Smith
-          description: The primary contact name (full name) of the customer.
-        businessName:
-          type: string
-          example: Best Company
-          description: The business name of the customer. There must be either a contact name or business name present.
-        cellPhone:
-          type: string
-          example: 908-295-4902
-          description: The cell phone number of the customer.
-        billingAddress:
-          $ref: '#/components/schemas/Address'
-        shippingAddress:
-          $ref: '#/components/schemas/Address'
-    FailedPaymentResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of errors
-          items:
-            type: string
-            example: An error occurred
     Res:
       title: Get All Pre-Authorized Debit Agreement Response Payload
       type: object
@@ -1019,91 +1104,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Pad'
-    Req:
-      title: Create Bank Account Request Payload
-      type: object
-      required:
-      - accountCorporate
-      - accountType
-      - bankAccountNumber
-      - city
-      - countryAlpha2
-      - postalCode
-      - provinceAlpha2
-      - streetAddress
-      properties:
-        accountCorporate:
-          type: integer
-          format: int8
-          enum:
-          - 1
-          - 2
-          description: "The bank account type:\n  * `1` - Personal\n  * `2` - Corporate\n"
-        accountType:
-          type: integer
-          format: int8
-          enum:
-          - 1
-          - 2
-          description: "The bank account type:\n  * `1` - Checking\n  * `2` - Savings\n"
-        bankAccountNumber:
-          type: string
-          description: 7-12 digits for Canadian bank accounts and 8-12 for US bank accounts.
-        bankFinancialNumber:
-          type: string
-          description: This 3 digit number is needed for Canadian bank accounts.
-        bankRoutingNumber:
-          type: string
-          description: This 9 digit number is needed for US bank accounts.
-        bankTransitNumber:
-          type: string
-          description: This 5 digit number is needed for Canadian bank accounts.
-        city:
-          type: string
-        countryAlpha2:
-          type: string
-          description: Country name in ISO2 format, e.g "CA", "US"
-        firstName:
-          type: string
-          description: Either first and last name or company name need to be specified.
-        lastName:
-          type: string
-          description: Either first and last name or company name need to be specified.
-        companyName:
-          type: string
-          description: Either first and last name or company name need to be specified.
-        postalCode:
-          type: string
-        provinceAlpha2:
-          type: string
-          description: Province/State name in ISO2 format, e.g "AB", "ON"
-        streetAddress:
-          type: string
-      example:
-        accountCorporate: 1
-        accountType: 2
-        bankAccountNumber: '123456789'
-        bankFinancialNumber: '123'
-        bankTransitNumber: '12345'
-        city: Calgary
-        countryAlpha2: CA
-        firstName: John
-        lastName: Doe
-        postalCode: T2P5E9
-        provinceAlpha2: AB
-        streetAddress: 440 2 Ave SW
-    Message:
-      title: Generic Response Payload Message
-      type: object
-      properties:
-        message:
-          type: string
-    Res-3:
-      title: Get Pre-Authorized Debit Agreement Response Payload
-      type: object
-      properties:
-        pad:
-          $ref: '#/components/schemas/Pad'
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions

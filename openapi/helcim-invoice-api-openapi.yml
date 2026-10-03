@@ -245,78 +245,62 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
-    OrderField:
-      title: Order Field Data
+    FailedPaymentResponse:
       type: object
       properties:
-        displayName:
-          type: string
-          example: Table Number
-        value:
-          type: string
-          example: 44B
-    Address:
-      title: Address
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
+    Shipping:
+      title: Shipping Data
       type: object
       required:
-      - name
-      - street1
-      - postalCode
+      - amount
+      - details
+      - address
       properties:
-        name:
-          type: string
-          description: 'The recipient''s name or business name for this address.
+        amount:
+          type: number
+          format: float
+          description: 'The total shipping amount for the invoice.
 
             '
-          example: John Smith / Helcim
-        street1:
+          example: 10.99
+        details:
           type: string
-          description: 'The primary street address.
+          description: 'A description of the shipping method. This information appears on the invoice.
 
             '
-          example: 21 Jump Street
-        street2:
-          type: string
-          description: 'Additional address details, such as unit or suite number.
+          example: Canada Post 1-day shipping
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          description: 'The destination shipping address for this invoice.
 
             '
-          example: Suite 400
-        city:
-          type: string
-          description: 'The city for this address.
+    Tax:
+      title: Tax Data
+      type: object
+      required:
+      - amount
+      - details
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total tax amount applied at the invoice level.  This does not include item-level taxes.
 
             '
-          example: Calgary
-        province:
+          example: 5.99
+        details:
           type: string
-          description: 'The two-letter province or state code (e.g., AB, BC, CA).  Required if the country is CAN or USA.
+          description: 'A description of the tax or tax breakdown.
 
             '
-          example: AB
-        country:
-          type: string
-          description: 'The three-letter [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code (e.g., CAN, USA).
-
-            '
-          example: CAN
-        postalCode:
-          type: string
-          description: 'The postal or ZIP code for this address.
-
-            '
-          example: H0H0H0
-        phone:
-          type: string
-          description: 'Contact phone number (10 to 15 digits).
-
-            '
-          example: 4031231234
-        email:
-          type: string
-          description: 'Contact email address for this address.
-
-            '
-          example: john@example.com
+          example: GST 5%
     Pickup:
       title: Pickup Data
       type: object
@@ -336,6 +320,182 @@ components:
 
             '
           example: Jane Smith
+    InvoiceUpsertRequest:
+      title: InvoiceCreateRequest
+      type: object
+      required:
+      - currency
+      - lineItems
+      properties:
+        currency:
+          type: string
+          enum:
+          - CAD
+          - USD
+          description: 'The three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code used for all monetary amounts in this invoice.
+
+            '
+          example: CAD
+        lineItems:
+          type: array
+          description: 'A list of line items to include in the invoice. Must contain at least 1 item and no more than 100.
+
+            '
+          minItems: 1
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/LineItem'
+        customerId:
+          type: integer
+          description: 'Unique customer ID to associate with this invoice.
+
+            '
+          example: 123123
+          default: 0
+        billingAddress:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          description: 'The billing address for this invoice.
+
+            '
+        shipping:
+          allOf:
+          - $ref: '#/components/schemas/Shipping'
+          description: 'The shipping details for this invoice, including shipping cost, method, and destination address.
+
+            '
+        pickup:
+          allOf:
+          - $ref: '#/components/schemas/Pickup'
+          description: 'The pickup details for this invoice. Only the pickup date is writable; the pickup name is read-only and derived from the linked customer''s contact name.
+
+            '
+        tax:
+          allOf:
+          - $ref: '#/components/schemas/Tax'
+          description: 'The invoice-level tax details.
+
+            '
+        discount:
+          allOf:
+          - $ref: '#/components/schemas/Discount'
+          description: 'The invoice-level discount details.
+
+            '
+        type:
+          type: string
+          description: 'The invoice type. Allowed values: ESTIMATE, QUOTE, ORDER, PURCHASE_ORDER, INVOICE, STATEMENT, REGISTRATION, CREDIT. Defaults to `INVOICE` if omitted.
+
+            '
+          enum:
+          - ESTIMATE
+          - QUOTE
+          - ORDER
+          - PURCHASE_ORDER
+          - INVOICE
+          - STATEMENT
+          - REGISTRATION
+          - CREDIT
+          example: INVOICE
+          default: INVOICE
+        status:
+          type: string
+          description: 'The initial status of the invoice. Allowed values: CANCELLED, DUE, PAID, SHIPPED, COMPLETED, REFUNDED, IN_PROGRESS. Defaults to `DUE` if omitted.
+
+            '
+          enum:
+          - CANCELLED
+          - DUE
+          - PAID
+          - SHIPPED
+          - COMPLETED
+          - REFUNDED
+          - IN_PROGRESS
+          example: DUE
+          default: DUE
+        convenienceFeeEnabled:
+          type: boolean
+          description: 'Indicates whether a convenience fee is enabled for this invoice. If not provided, the system will use the merchant''s global Fee Saver settings to determine this value.
+
+            '
+          example: true
+        tipAmount:
+          type: number
+          format: float
+          description: 'Optional tip amount to include. Must be greater than zero if provided.
+
+            '
+          example: 0.99
+        invoiceNumber:
+          type: string
+          description: 'Optional custom invoice number.  If omitted or blank, the system will generate one automatically based on the Invoice Settings.
+
+            '
+          example: ''
+        notes:
+          type: string
+          description: 'Optional notes to display at the bottom of the invoice, visible to the customer.
+
+            '
+          example: No vegetables please
+    OrderField:
+      title: Order Field Data
+      type: object
+      properties:
+        displayName:
+          type: string
+          example: Table Number
+        value:
+          type: string
+          example: 44B
+    LineItem:
+      title: Line Item Data
+      type: object
+      required:
+      - description
+      - quantity
+      - price
+      properties:
+        description:
+          type: string
+          description: 'A short description of the product or service.
+
+            '
+          example: Red Hat
+        quantity:
+          type: number
+          format: float
+          description: 'The quantity of the line item. Can have up to 2 decimal places.
+
+            '
+          example: 10.5
+        price:
+          type: number
+          format: float
+          description: 'The unit price for a single quantity of this line item, before tax or discounts.
+
+            '
+          example: 10.55
+        taxAmount:
+          type: number
+          format: float
+          description: 'The tax amount for this line item.
+
+            '
+          example: 0
+        discountAmount:
+          type: number
+          format: float
+          description: 'The discount amount applied to this line item.
+
+            '
+          example: 0
+        sku:
+          type: string
+          description: 'The stock keeping unit (SKU) code for this product (or service).
+
+            '
+          example: ITM1434
     InvoiceResponse:
       title: InvoiceResponse
       type: object
@@ -473,180 +633,68 @@ components:
           type: string
           description: Notes visible to the customer at the bottom of the invoice.
           example: No vegetables please
-    InvoiceUpsertRequest:
-      title: InvoiceCreateRequest
+    Address:
+      title: Address
       type: object
       required:
-      - currency
-      - lineItems
+      - name
+      - street1
+      - postalCode
       properties:
-        currency:
+        name:
           type: string
-          enum:
-          - CAD
-          - USD
-          description: 'The three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code used for all monetary amounts in this invoice.
+          description: 'The recipient''s name or business name for this address.
 
             '
-          example: CAD
-        lineItems:
-          type: array
-          description: 'A list of line items to include in the invoice. Must contain at least 1 item and no more than 100.
-
-            '
-          minItems: 1
-          maxItems: 100
-          items:
-            $ref: '#/components/schemas/LineItem'
-        customerId:
-          type: integer
-          description: 'Unique customer ID to associate with this invoice.
-
-            '
-          example: 123123
-          default: 0
-        billingAddress:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          description: 'The billing address for this invoice.
-
-            '
-        shipping:
-          allOf:
-          - $ref: '#/components/schemas/Shipping'
-          description: 'The shipping details for this invoice, including shipping cost, method, and destination address.
-
-            '
-        pickup:
-          allOf:
-          - $ref: '#/components/schemas/Pickup'
-          description: 'The pickup details for this invoice. Only the pickup date is writable; the pickup name is read-only and derived from the linked customer''s contact name.
-
-            '
-        tax:
-          allOf:
-          - $ref: '#/components/schemas/Tax'
-          description: 'The invoice-level tax details.
-
-            '
-        discount:
-          allOf:
-          - $ref: '#/components/schemas/Discount'
-          description: 'The invoice-level discount details.
-
-            '
-        type:
+          example: John Smith / Helcim
+        street1:
           type: string
-          description: 'The invoice type. Allowed values: ESTIMATE, QUOTE, ORDER, PURCHASE_ORDER, INVOICE, STATEMENT, REGISTRATION, CREDIT. Defaults to `INVOICE` if omitted.
+          description: 'The primary street address.
 
             '
-          enum:
-          - ESTIMATE
-          - QUOTE
-          - ORDER
-          - PURCHASE_ORDER
-          - INVOICE
-          - STATEMENT
-          - REGISTRATION
-          - CREDIT
-          example: INVOICE
-          default: INVOICE
-        status:
+          example: 21 Jump Street
+        street2:
           type: string
-          description: 'The initial status of the invoice. Allowed values: CANCELLED, DUE, PAID, SHIPPED, COMPLETED, REFUNDED, IN_PROGRESS. Defaults to `DUE` if omitted.
+          description: 'Additional address details, such as unit or suite number.
 
             '
-          enum:
-          - CANCELLED
-          - DUE
-          - PAID
-          - SHIPPED
-          - COMPLETED
-          - REFUNDED
-          - IN_PROGRESS
-          example: DUE
-          default: DUE
-        convenienceFeeEnabled:
-          type: boolean
-          description: 'Indicates whether a convenience fee is enabled for this invoice. If not provided, the system will use the merchant''s global Fee Saver settings to determine this value.
-
-            '
-          example: true
-        tipAmount:
-          type: number
-          format: float
-          description: 'Optional tip amount to include. Must be greater than zero if provided.
-
-            '
-          example: 0.99
-        invoiceNumber:
+          example: Suite 400
+        city:
           type: string
-          description: 'Optional custom invoice number.  If omitted or blank, the system will generate one automatically based on the Invoice Settings.
+          description: 'The city for this address.
 
             '
-          example: ''
-        notes:
+          example: Calgary
+        province:
           type: string
-          description: 'Optional notes to display at the bottom of the invoice, visible to the customer.
+          description: 'The two-letter province or state code (e.g., AB, BC, CA).  Required if the country is CAN or USA.
 
             '
-          example: No vegetables please
-    Tax:
-      title: Tax Data
-      type: object
-      required:
-      - amount
-      - details
-      properties:
-        amount:
-          type: number
-          format: float
-          description: 'The total tax amount applied at the invoice level.  This does not include item-level taxes.
-
-            '
-          example: 5.99
-        details:
+          example: AB
+        country:
           type: string
-          description: 'A description of the tax or tax breakdown.
+          description: 'The three-letter [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code (e.g., CAN, USA).
 
             '
-          example: GST 5%
-    Shipping:
-      title: Shipping Data
-      type: object
-      required:
-      - amount
-      - details
-      - address
-      properties:
-        amount:
-          type: number
-          format: float
-          description: 'The total shipping amount for the invoice.
-
-            '
-          example: 10.99
-        details:
+          example: CAN
+        postalCode:
           type: string
-          description: 'A description of the shipping method. This information appears on the invoice.
+          description: 'The postal or ZIP code for this address.
 
             '
-          example: Canada Post 1-day shipping
-        address:
-          allOf:
-          - $ref: '#/components/schemas/Address'
-          description: 'The destination shipping address for this invoice.
+          example: H0H0H0
+        phone:
+          type: string
+          description: 'Contact phone number (10 to 15 digits).
 
             '
-    FailedPaymentResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of errors
-          items:
-            type: string
-            example: An error occurred
+          example: 4031231234
+        email:
+          type: string
+          description: 'Contact email address for this address.
+
+            '
+          example: john@example.com
     Discount:
       title: Discount Data
       type: object
@@ -667,54 +715,6 @@ components:
 
             '
           example: DISC100
-    LineItem:
-      title: Line Item Data
-      type: object
-      required:
-      - description
-      - quantity
-      - price
-      properties:
-        description:
-          type: string
-          description: 'A short description of the product or service.
-
-            '
-          example: Red Hat
-        quantity:
-          type: number
-          format: float
-          description: 'The quantity of the line item. Can have up to 2 decimal places.
-
-            '
-          example: 10.5
-        price:
-          type: number
-          format: float
-          description: 'The unit price for a single quantity of this line item, before tax or discounts.
-
-            '
-          example: 10.55
-        taxAmount:
-          type: number
-          format: float
-          description: 'The tax amount for this line item.
-
-            '
-          example: 0
-        discountAmount:
-          type: number
-          format: float
-          description: 'The discount amount applied to this line item.
-
-            '
-          example: 0
-        sku:
-          type: string
-          description: 'The stock keeping unit (SKU) code for this product (or service).
-
-            '
-          example: ITM1434
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions

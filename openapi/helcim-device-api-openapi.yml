@@ -277,6 +277,15 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
+    FailedResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
     RefundRequest:
       title: RefundRequest
       type: object
@@ -353,15 +362,6 @@ components:
             If not provided, Helcim will create a customer.
 
             '
-    FailedResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of errors
-          items:
-            type: string
-            example: An error occurred
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions
