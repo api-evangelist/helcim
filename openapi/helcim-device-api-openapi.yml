@@ -277,48 +277,6 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
-    FailedResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of errors
-          items:
-            type: string
-            example: An error occurred
-    RefundRequest:
-      title: RefundRequest
-      type: object
-      required:
-      - transactionAmount
-      - originalTransactionId
-      properties:
-        transactionAmount:
-          type: number
-          example: 100.99
-          description: 'The amount to be refunded in the currency on the original transaction.
-
-            '
-        originalTransactionId:
-          type: integer
-          example: 1234567890
-          description: 'The identifier of the original transaction to refund.
-
-            This identifier must correspond to the transaction Id of the original transaction to be refunded.
-
-            '
-    Device:
-      title: Device
-      type: object
-      properties:
-        code:
-          type: string
-          example: ABC1
-          description: Code of the device.
-        dateCreated:
-          type: string
-          example: '2024-02-09 14:08:08'
-          description: Date and time when the device was created in the format "YYYY-MM-DD HH:MM:SS"
     PaymentRequest-2:
       title: PaymentRequest
       type: object
@@ -362,6 +320,48 @@ components:
             If not provided, Helcim will create a customer.
 
             '
+    RefundRequest:
+      title: RefundRequest
+      type: object
+      required:
+      - transactionAmount
+      - originalTransactionId
+      properties:
+        transactionAmount:
+          type: number
+          example: 100.99
+          description: 'The amount to be refunded in the currency on the original transaction.
+
+            '
+        originalTransactionId:
+          type: integer
+          example: 1234567890
+          description: 'The identifier of the original transaction to refund.
+
+            This identifier must correspond to the transaction Id of the original transaction to be refunded.
+
+            '
+    FailedResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
+    Device:
+      title: Device
+      type: object
+      properties:
+        code:
+          type: string
+          example: ABC1
+          description: Code of the device.
+        dateCreated:
+          type: string
+          example: '2024-02-09 14:08:08'
+          description: Date and time when the device was created in the format "YYYY-MM-DD HH:MM:SS"
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions

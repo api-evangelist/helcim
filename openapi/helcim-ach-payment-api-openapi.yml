@@ -395,161 +395,6 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
-    Res-5:
-      title: ACH Refund Response Payload
-      type: object
-      properties:
-        message:
-          type: string
-      example:
-        message: 'Successfully refunded transaction ID #1342. Refund transaction ID #1355 created.'
-    Res-6:
-      title: ACH Void Response Payload
-      type: object
-      properties:
-        message:
-          type: string
-      example:
-        message: 'Successfully voided transaction ID #24732. Void transaction ID #24859 created.'
-    Req-3:
-      title: ACH Withdraw Request Payload
-      type: object
-      required:
-      - bankAccountId
-      - customerId
-      - amount
-      - currencyId
-      properties:
-        bankAccountId:
-          type: integer
-          format: int64
-          description: The bank account ID to withdraw from.
-        customerId:
-          type: integer
-          format: int64
-          description: The customer ID associated with the bank account.
-        orderId:
-          type: integer
-          format: int64
-          description: An optional invoice ID to process the withdrawal with. If provided, the withdrawal action will perform invoice and inventory management.
-        amount:
-          type: number
-          format: float
-          description: The amount to withdraw.
-        currencyId:
-          type: integer
-          format: int64
-          enum:
-          - 1
-          - 2
-          description: "The currency of the transaction:\n  * `1` - CAD\n  * `2` - USD\n"
-      example:
-        bankAccountId: 1182342
-        customerId: 389829
-        orderId: 12083
-        amount: 79.99
-        currencyId: 1
-    Message:
-      title: Generic Response Payload Message
-      type: object
-      properties:
-        message:
-          type: string
-    Res-7:
-      title: ACH Cancel Response Payload
-      type: object
-      properties:
-        message:
-          type: string
-      example:
-        message: 'Successfully cancelled ACH transaction #34232.'
-    TransactionEft:
-      title: ACH Transaction
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        merchantId:
-          type: integer
-          format: int64
-        dateCreated:
-          type: string
-          format: date-time
-        statusAuth:
-          type: integer
-          format: int64
-        statusClearing:
-          type: integer
-          format: int64
-        userId:
-          type: integer
-          format: int64
-        batchId:
-          type: integer
-          format: int64
-        bankAccountId:
-          type: integer
-          format: int64
-        bankAccountL4l4:
-          type: integer
-          format: int64
-        transactionType:
-          type: integer
-          format: int64
-        amount:
-          type: number
-          format: float
-        currency:
-          type: integer
-          format: int64
-        approvalCode:
-          type: string
-        test:
-          type: integer
-          format: int64
-        acquirerTransactionId:
-          type: string
-        responseMessage:
-          type: string
-        payFacTransactionId:
-          type: integer
-          format: int64
-        originalTransactionId:
-          type: integer
-          format: int64
-        statusBatch:
-          type: integer
-          format: int64
-        dateClosed:
-          type: string
-          format: date-time
-    Res-8:
-      title: ACH Void Response Payload
-      type: object
-      properties:
-        message:
-          type: string
-      example:
-        message: 'Successfully settled ACH batch ID #1533.'
-    Req-4:
-      title: ACH Refund Request Payload
-      type: object
-      required:
-      - amount
-      properties:
-        amount:
-          type: number
-          format: float
-          description: The amount to be refunded.
-      example:
-        amount: 96.34
-    Res-4:
-      title: ACH Withdraw Response Payload
-      type: object
-      properties:
-        transaction:
-          $ref: '#/components/schemas/TransactionEft'
     AchBatch:
       title: ACH Batch
       type: object
@@ -624,6 +469,161 @@ components:
           type: string
           example: '2026-05-06 13:01:15'
           description: The timestamp indicating when the batch was closed.
+    Res-8:
+      title: ACH Void Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully settled ACH batch ID #1533.'
+    TransactionEft:
+      title: ACH Transaction
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        merchantId:
+          type: integer
+          format: int64
+        dateCreated:
+          type: string
+          format: date-time
+        statusAuth:
+          type: integer
+          format: int64
+        statusClearing:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        batchId:
+          type: integer
+          format: int64
+        bankAccountId:
+          type: integer
+          format: int64
+        bankAccountL4l4:
+          type: integer
+          format: int64
+        transactionType:
+          type: integer
+          format: int64
+        amount:
+          type: number
+          format: float
+        currency:
+          type: integer
+          format: int64
+        approvalCode:
+          type: string
+        test:
+          type: integer
+          format: int64
+        acquirerTransactionId:
+          type: string
+        responseMessage:
+          type: string
+        payFacTransactionId:
+          type: integer
+          format: int64
+        originalTransactionId:
+          type: integer
+          format: int64
+        statusBatch:
+          type: integer
+          format: int64
+        dateClosed:
+          type: string
+          format: date-time
+    Res-7:
+      title: ACH Cancel Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully cancelled ACH transaction #34232.'
+    Message:
+      title: Generic Response Payload Message
+      type: object
+      properties:
+        message:
+          type: string
+    Req-3:
+      title: ACH Withdraw Request Payload
+      type: object
+      required:
+      - bankAccountId
+      - customerId
+      - amount
+      - currencyId
+      properties:
+        bankAccountId:
+          type: integer
+          format: int64
+          description: The bank account ID to withdraw from.
+        customerId:
+          type: integer
+          format: int64
+          description: The customer ID associated with the bank account.
+        orderId:
+          type: integer
+          format: int64
+          description: An optional invoice ID to process the withdrawal with. If provided, the withdrawal action will perform invoice and inventory management.
+        amount:
+          type: number
+          format: float
+          description: The amount to withdraw.
+        currencyId:
+          type: integer
+          format: int64
+          enum:
+          - 1
+          - 2
+          description: "The currency of the transaction:\n  * `1` - CAD\n  * `2` - USD\n"
+      example:
+        bankAccountId: 1182342
+        customerId: 389829
+        orderId: 12083
+        amount: 79.99
+        currencyId: 1
+    Res-6:
+      title: ACH Void Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully voided transaction ID #24732. Void transaction ID #24859 created.'
+    Res-5:
+      title: ACH Refund Response Payload
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Successfully refunded transaction ID #1342. Refund transaction ID #1355 created.'
+    Res-4:
+      title: ACH Withdraw Response Payload
+      type: object
+      properties:
+        transaction:
+          $ref: '#/components/schemas/TransactionEft'
+    Req-4:
+      title: ACH Refund Request Payload
+      type: object
+      required:
+      - amount
+      properties:
+        amount:
+          type: number
+          format: float
+          description: The amount to be refunded.
+      example:
+        amount: 96.34
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions
