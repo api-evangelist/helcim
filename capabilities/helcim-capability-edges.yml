@@ -1,0 +1,26 @@
+slug: helcim
+provider: Helcim
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Invoice
+  spec_file: helcim-invoice-api-openapi.yml
+  capability_id: BC-200.30
+  capability_id_l1: BC-200
+  capability_name: Accounts Receivable Management
+  confidence: 0.72
+  evidence: 'POST /invoices create-invoice Create invoice; schemas: InvoiceUpsertRequest, LineItem, Tax,
+    Discount, Shipping'
+  reason: Creation, retrieval and update of customer invoices with line items, tax, discount and shipping
+    is customer invoicing under accounts receivable. Could alternatively be read as subscription invoicing,
+    but Helcim invoices are one-off merchant invoices, so AR is the better fit.
