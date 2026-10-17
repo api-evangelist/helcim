@@ -341,88 +341,65 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
-    Tax:
-      title: Tax Data
+    LineItem:
+      title: Line Item Data
       type: object
       required:
-      - amount
-      - details
+      - description
+      - quantity
+      - price
       properties:
-        amount:
+        description:
+          type: string
+          description: 'A short description of the product or service.
+
+            '
+          example: Red Hat
+        quantity:
           type: number
           format: float
-          description: 'The total tax amount applied at the invoice level.  This does not include item-level taxes.
+          description: 'The quantity of the line item. Can have up to 2 decimal places.
 
             '
-          example: 5.99
-        details:
+          example: 10.5
+        price:
+          type: number
+          format: float
+          description: 'The unit price for a single quantity of this line item, before tax or discounts.
+
+            '
+          example: 10.55
+        taxAmount:
+          type: number
+          format: float
+          description: 'The tax amount for this line item.
+
+            '
+          example: 0
+        discountAmount:
+          type: number
+          format: float
+          description: 'The discount amount applied to this line item.
+
+            '
+          example: 0
+        sku:
           type: string
-          description: 'A description of the tax or tax breakdown.
+          description: 'The stock keeping unit (SKU) code for this product (or service).
 
             '
-          example: GST 5%
-    Address:
-      title: Address
-      type: object
-      required:
-      - name
-      - street1
-      - postalCode
-      properties:
-        name:
-          type: string
-          description: 'The recipient''s name or business name for this address.
-
-            '
-          example: John Smith / Helcim
-        street1:
-          type: string
-          description: 'The primary street address.
-
-            '
-          example: 21 Jump Street
-        street2:
-          type: string
-          description: 'Additional address details, such as unit or suite number.
-
-            '
-          example: Suite 400
-        city:
-          type: string
-          description: 'The city for this address.
-
-            '
-          example: Calgary
-        province:
-          type: string
-          description: 'The two-letter province or state code (e.g., AB, BC, CA).  Required if the country is CAN or USA.
-
-            '
-          example: AB
-        country:
-          type: string
-          description: 'The three-letter [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code (e.g., CAN, USA).
-
-            '
-          example: CAN
-        postalCode:
-          type: string
-          description: 'The postal or ZIP code for this address.
-
-            '
-          example: H0H0H0
-        phone:
-          type: string
-          description: 'Contact phone number (10 to 15 digits).
-
-            '
-          example: 4031231234
-        email:
-          type: string
-          description: 'Contact email address for this address.
-
-            '
-          example: john@example.com
+          example: ITM1434
+    PreauthRequest:
+      title: PreauthRequest
+      allOf:
+      - $ref: '#/components/schemas/PaymentRequestBase'
+      - type: object
+        properties:
+          invoice:
+            allOf:
+            - $ref: '#/components/schemas/InvoiceBase'
+            - $ref: '#/components/schemas/InvoiceCreateAfterProcessing'
+            description: To be filled when creating new invoice to be associated to transaction. Will be linked to Customer owning the Card used
     Card:
       title: Card
       type: object
@@ -448,65 +425,6 @@ components:
           type: string
           example: John Doe
           description: The name of the card holder as it appears on the card.
-    InvoiceCreateAfterProcessing:
-      title: Invoice Create after transaction processing
-      type: object
-      properties:
-        shipping:
-          $ref: '#/components/schemas/Shipping'
-        pickup:
-          $ref: '#/components/schemas/Pickup'
-        tax:
-          $ref: '#/components/schemas/Tax'
-        discount:
-          $ref: '#/components/schemas/Discount'
-        lineItems:
-          type: array
-          maxItems: 10
-          items:
-            $ref: '#/components/schemas/LineItem'
-    VerifyRequest:
-      title: Verify Request
-      type: object
-      required:
-      - amount
-      - currency
-      - cardData
-      - billingAddress
-      - ipAddress
-      properties:
-        ipAddress:
-          type: string
-          example: 192.168.1.1
-          description: IP address of the customer making the transaction, used as part of fraud detection.
-        ecommerce:
-          type: boolean
-          example: true
-          description: Set to indicate that the transaction is e-commerce. When set, the Helcim Fraud Defender will provide further analysis.
-        currency:
-          type: string
-          example: CAD
-          description: The currency abbreviation of the transaction.
-        amount:
-          type: number
-          example: 100
-          description: Amount to be verified
-        customerCode:
-          type: string
-          example: ''
-          description: Existing customer code associated with the transaction
-        invoiceNumber:
-          type: string
-          example: ''
-          description: To be filled when associating transaction to existing invoice. Invoice should be associated to the same customer linked to the card
-        invoice:
-          allOf:
-          - $ref: '#/components/schemas/InvoiceBase'
-          - $ref: '#/components/schemas/InvoiceCreateAfterProcessing'
-        cardData:
-          $ref: '#/components/schemas/Card'
-        billingAddress:
-          $ref: '#/components/schemas/Address'
     BankData:
       title: BankData
       type: object
@@ -517,46 +435,52 @@ components:
           oneOf:
           - $ref: '#/components/schemas/BankAccount'
           - $ref: '#/components/schemas/BankToken'
-    CardData:
-      title: CardData
+    CardToken:
+      title: Card Token
       type: object
       required:
-      - cardData
+      - cardToken
       properties:
-        cardData:
-          oneOf:
-          - $ref: '#/components/schemas/Card'
-          - $ref: '#/components/schemas/CardToken'
-    Pickup:
-      title: Pickup Data
+        cardToken:
+          type: string
+          example: HGKHJK5647698HGJJK
+          description: The token for the card on file. If Customer Code is filled, The card should must be owned by a passed customer code
+    CaptureRequest:
+      title: Capture Request
       type: object
       required:
-      - date
+      - preAuthTransactionId
+      - amount
+      - ipAddress
       properties:
-        date:
+        preAuthTransactionId:
+          type: integer
+          example: 198763
+          description: The transaction ID of the original pre-authorization transaction.
+        amount:
+          type: number
+          example: 100.99
+          description: The amount to capture. Must be less or equal to the original pre-authorization amount.
+        ipAddress:
           type: string
-          description: 'The scheduled pickup date and time in the format: `YYYY-MM-DD HH:MM:SS`.
-
-            '
-          example: '2022-01-25 13:55:55'
-        name:
+          example: 192.168.1.1
+          description: IP address of the customer making the transaction, used as part of fraud detection.
+        ecommerce:
+          type: boolean
+          example: true
+          description: Set to indicate that the transaction is e-commerce. When set, the Helcim Fraud Defender will provide further analysis.
+    InvoiceBase:
+      title: Invoice Base
+      type: object
+      properties:
+        invoiceNumber:
           type: string
-          readOnly: true
-          description: 'Read-only. Derived from the linked customer''s contact name (empty when no customer is linked to the invoice). A `name` supplied in a create or update request is ignored — only `date` is writable. To change the displayed pickup name, update the linked customer''s contact name.
-
-            '
-          example: Jane Smith
-    PaymentRequest:
-      title: PaymentRequest
-      allOf:
-      - $ref: '#/components/schemas/PaymentRequestBase'
-      - type: object
-        properties:
-          invoice:
-            allOf:
-            - $ref: '#/components/schemas/InvoiceWithTip'
-            - $ref: '#/components/schemas/InvoiceCreateAfterProcessing'
-            description: To be filled when creating new invoice to be associated to transaction. Will be linked to Customer owning the Card used
+          example: ''
+          description: Invoice number of invoice to be created. Will be generated if blank
+        notes:
+          type: string
+          example: No vegetables please
+          description: Comment to appear at the bottom of the invoice, visible to the customer.
     Shipping:
       title: Shipping Data
       type: object
@@ -584,78 +508,33 @@ components:
           description: 'The destination shipping address for this invoice.
 
             '
-    InvoiceWithTip:
-      title: InvoiceWithTip
-      allOf:
-      - $ref: '#/components/schemas/InvoiceBase'
-      - type: object
-        properties:
-          tipAmount:
-            type: number
-            example: 0.99
-            description: Tip amount
-    SuccessfulAchTransactionResponse:
-      title: Ach Transaction Response
+    InvoiceCreateAfterProcessing:
+      title: Invoice Create after transaction processing
       type: object
       properties:
-        transactionId:
-          type: number
-          example: 10
-          description: The transaction id
-        batchId:
-          type: number
-          example: 11
-          description: The id of associated card batch
-        dateCreated:
-          type: string
-          example: '2020-01-01 00:00:00'
-          description: The date(Mountain Time) when the transaction is created.
-        statusAuth:
-          type: string
-          example: APPROVED
-          description: The status of the transaction. possible values are APPROVED | DECLINED | IN_PROGRESS | CANCELLED | PENDING
-        statusClearing:
-          type: string
-          example: OPENED
-          description: The status of the transaction. possible values are OPENED | CLEARED | REJECTED | CONTESTED | RETURNED
-        type:
-          type: string
-          example: WITHDRAWAL
-          description: The type of the transaction. possible values are WITHDRAWAL | DEPOSIT | SETTLE | REVERSE | REFUND
-        amount:
-          type: number
-          example: 11.99
-          description: The amount of processed transaction
-        currency:
-          type: string
-          example: CAD
-          description: The abbreviation of the transaction's currency
-        approvalCode:
-          type: string
-          example: HCMAPPRV
-          description: Approval Code
-        bankAccountNumber:
-          type: string
-          example: A1B2C3D4E5F6G7
-          description: Bank account number
-        bankToken:
-          type: string
-          example: -A1B2C3D4E5F6G7*
-          description: Bank Token associated with bankAccount
-        invoiceNumber:
-          type: string
-          example: INV2022
-          description: Invoice number associated to the transaction
-    BankToken:
-      title: Bank Token
+        shipping:
+          $ref: '#/components/schemas/Shipping'
+        pickup:
+          $ref: '#/components/schemas/Pickup'
+        tax:
+          $ref: '#/components/schemas/Tax'
+        discount:
+          $ref: '#/components/schemas/Discount'
+        lineItems:
+          type: array
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/LineItem'
+    CardData:
+      title: CardData
       type: object
       required:
-      - bankToken
+      - cardData
       properties:
-        bankToken:
-          type: string
-          example: HGKHJK5647698HGJJK
-          description: The token for the bank account on file.
+        cardData:
+          oneOf:
+          - $ref: '#/components/schemas/Card'
+          - $ref: '#/components/schemas/CardToken'
     SuccessfulPaymentResponse:
       title: Payment Response
       type: object
@@ -732,127 +611,14 @@ components:
           type: string
           example: Failed to link customer to invoice
           description: Warnings
-    PreauthRequest:
-      title: PreauthRequest
-      allOf:
-      - $ref: '#/components/schemas/PaymentRequestBase'
-      - type: object
-        properties:
-          invoice:
-            allOf:
-            - $ref: '#/components/schemas/InvoiceBase'
-            - $ref: '#/components/schemas/InvoiceCreateAfterProcessing'
-            description: To be filled when creating new invoice to be associated to transaction. Will be linked to Customer owning the Card used
-    InvoiceBase:
-      title: Invoice Base
-      type: object
-      properties:
-        invoiceNumber:
-          type: string
-          example: ''
-          description: Invoice number of invoice to be created. Will be generated if blank
-        notes:
-          type: string
-          example: No vegetables please
-          description: Comment to appear at the bottom of the invoice, visible to the customer.
-    CardToken:
-      title: Card Token
-      type: object
-      required:
-      - cardToken
-      properties:
-        cardToken:
-          type: string
-          example: HGKHJK5647698HGJJK
-          description: The token for the card on file. If Customer Code is filled, The card should must be owned by a passed customer code
-    CaptureRequest:
-      title: Capture Request
-      type: object
-      required:
-      - preAuthTransactionId
-      - amount
-      - ipAddress
-      properties:
-        preAuthTransactionId:
-          type: integer
-          example: 198763
-          description: The transaction ID of the original pre-authorization transaction.
-        amount:
-          type: number
-          example: 100.99
-          description: The amount to capture. Must be less or equal to the original pre-authorization amount.
-        ipAddress:
-          type: string
-          example: 192.168.1.1
-          description: IP address of the customer making the transaction, used as part of fraud detection.
-        ecommerce:
-          type: boolean
-          example: true
-          description: Set to indicate that the transaction is e-commerce. When set, the Helcim Fraud Defender will provide further analysis.
-    LineItem:
-      title: Line Item Data
-      type: object
-      required:
-      - description
-      - quantity
-      - price
-      properties:
-        description:
-          type: string
-          description: 'A short description of the product or service.
-
-            '
-          example: Red Hat
-        quantity:
-          type: number
-          format: float
-          description: 'The quantity of the line item. Can have up to 2 decimal places.
-
-            '
-          example: 10.5
-        price:
-          type: number
-          format: float
-          description: 'The unit price for a single quantity of this line item, before tax or discounts.
-
-            '
-          example: 10.55
-        taxAmount:
-          type: number
-          format: float
-          description: 'The tax amount for this line item.
-
-            '
-          example: 0
-        discountAmount:
-          type: number
-          format: float
-          description: 'The discount amount applied to this line item.
-
-            '
-          example: 0
-        sku:
-          type: string
-          description: 'The stock keeping unit (SKU) code for this product (or service).
-
-            '
-          example: ITM1434
-    FailedPaymentResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of errors
-          items:
-            type: string
-            example: An error occurred
-    PaymentRequestBase:
-      title: PaymentRequestBase
+    VerifyRequest:
+      title: Verify Request
       type: object
       required:
       - amount
       - currency
       - cardData
+      - billingAddress
       - ipAddress
       properties:
         ipAddress:
@@ -863,18 +629,14 @@ components:
           type: boolean
           example: true
           description: Set to indicate that the transaction is e-commerce. When set, the Helcim Fraud Defender will provide further analysis.
-        terminalId:
-          type: integer
-          example: 3215
-          description: For card transactions only. Id of the terminal you would want to use. Default terminal for of the currency will be used if you dont send this.
         currency:
           type: string
           example: CAD
-          description: The currency abbreviation of the invoice, such as CAD or USD. This should match currency of existing invoice.
+          description: The currency abbreviation of the transaction.
         amount:
           type: number
-          example: 100.99
-          description: Amount to be processed
+          example: 100
+          description: Amount to be verified
         customerCode:
           type: string
           example: ''
@@ -883,30 +645,87 @@ components:
           type: string
           example: ''
           description: To be filled when associating transaction to existing invoice. Invoice should be associated to the same customer linked to the card
+        invoice:
+          allOf:
+          - $ref: '#/components/schemas/InvoiceBase'
+          - $ref: '#/components/schemas/InvoiceCreateAfterProcessing'
         cardData:
           $ref: '#/components/schemas/Card'
         billingAddress:
           $ref: '#/components/schemas/Address'
-    Discount:
-      title: Discount Data
+    PaymentRequest:
+      title: PaymentRequest
+      allOf:
+      - $ref: '#/components/schemas/PaymentRequestBase'
+      - type: object
+        properties:
+          invoice:
+            allOf:
+            - $ref: '#/components/schemas/InvoiceWithTip'
+            - $ref: '#/components/schemas/InvoiceCreateAfterProcessing'
+            description: To be filled when creating new invoice to be associated to transaction. Will be linked to Customer owning the Card used
+    Address:
+      title: Address
       type: object
       required:
-      - amount
-      - details
+      - name
+      - street1
+      - postalCode
       properties:
-        amount:
-          type: number
-          format: float
-          description: 'The total discount amount applied at the invoice level.  This does not include item-level discounts.
-
-            '
-          example: 10.99
-        details:
+        name:
           type: string
-          description: 'A description or code identifying the discount.
+          description: 'The recipient''s name or business name for this address.
 
             '
-          example: DISC100
+          example: John Smith / Helcim
+        street1:
+          type: string
+          description: 'The primary street address.
+
+            '
+          example: 21 Jump Street
+        street2:
+          type: string
+          description: 'Additional address details, such as unit or suite number.
+
+            '
+          example: Suite 400
+        city:
+          type: string
+          description: 'The city for this address.
+
+            '
+          example: Calgary
+        province:
+          type: string
+          description: 'The two-letter province or state code (e.g., AB, BC, CA).  Required if the country is CAN or USA.
+
+            '
+          example: AB
+        country:
+          type: string
+          description: 'The three-letter [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code (e.g., CAN, USA).
+
+            '
+          example: CAN
+        postalCode:
+          type: string
+          description: 'The postal or ZIP code for this address.
+
+            '
+          example: H0H0H0
+        phone:
+          type: string
+          description: 'Contact phone number (10 to 15 digits).
+
+            '
+          example: 4031231234
+        email:
+          type: string
+          description: 'Contact email address for this address.
+
+            '
+          example: john@example.com
     BankAccount:
       title: BankAccount
       type: object
@@ -979,6 +798,187 @@ components:
           type: boolean
           example: true
           description: Customer given permission for a company or financial institution to debit a bank account when the payment is due.
+    Pickup:
+      title: Pickup Data
+      type: object
+      required:
+      - date
+      properties:
+        date:
+          type: string
+          description: 'The scheduled pickup date and time in the format: `YYYY-MM-DD HH:MM:SS`.
+
+            '
+          example: '2022-01-25 13:55:55'
+        name:
+          type: string
+          readOnly: true
+          description: 'Read-only. Derived from the linked customer''s contact name (empty when no customer is linked to the invoice). A `name` supplied in a create or update request is ignored — only `date` is writable. To change the displayed pickup name, update the linked customer''s contact name.
+
+            '
+          example: Jane Smith
+    Tax:
+      title: Tax Data
+      type: object
+      required:
+      - amount
+      - details
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total tax amount applied at the invoice level.  This does not include item-level taxes.
+
+            '
+          example: 5.99
+        details:
+          type: string
+          description: 'A description of the tax or tax breakdown.
+
+            '
+          example: GST 5%
+    FailedPaymentResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of errors
+          items:
+            type: string
+            example: An error occurred
+    SuccessfulAchTransactionResponse:
+      title: Ach Transaction Response
+      type: object
+      properties:
+        transactionId:
+          type: number
+          example: 10
+          description: The transaction id
+        batchId:
+          type: number
+          example: 11
+          description: The id of associated card batch
+        dateCreated:
+          type: string
+          example: '2020-01-01 00:00:00'
+          description: The date(Mountain Time) when the transaction is created.
+        statusAuth:
+          type: string
+          example: APPROVED
+          description: The status of the transaction. possible values are APPROVED | DECLINED | IN_PROGRESS | CANCELLED | PENDING
+        statusClearing:
+          type: string
+          example: OPENED
+          description: The status of the transaction. possible values are OPENED | CLEARED | REJECTED | CONTESTED | RETURNED
+        type:
+          type: string
+          example: WITHDRAWAL
+          description: The type of the transaction. possible values are WITHDRAWAL | DEPOSIT | SETTLE | REVERSE | REFUND
+        amount:
+          type: number
+          example: 11.99
+          description: The amount of processed transaction
+        currency:
+          type: string
+          example: CAD
+          description: The abbreviation of the transaction's currency
+        approvalCode:
+          type: string
+          example: HCMAPPRV
+          description: Approval Code
+        bankAccountNumber:
+          type: string
+          example: A1B2C3D4E5F6G7
+          description: Bank account number
+        bankToken:
+          type: string
+          example: -A1B2C3D4E5F6G7*
+          description: Bank Token associated with bankAccount
+        invoiceNumber:
+          type: string
+          example: INV2022
+          description: Invoice number associated to the transaction
+    InvoiceWithTip:
+      title: InvoiceWithTip
+      allOf:
+      - $ref: '#/components/schemas/InvoiceBase'
+      - type: object
+        properties:
+          tipAmount:
+            type: number
+            example: 0.99
+            description: Tip amount
+    Discount:
+      title: Discount Data
+      type: object
+      required:
+      - amount
+      - details
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total discount amount applied at the invoice level.  This does not include item-level discounts.
+
+            '
+          example: 10.99
+        details:
+          type: string
+          description: 'A description or code identifying the discount.
+
+            '
+          example: DISC100
+    PaymentRequestBase:
+      title: PaymentRequestBase
+      type: object
+      required:
+      - amount
+      - currency
+      - cardData
+      - ipAddress
+      properties:
+        ipAddress:
+          type: string
+          example: 192.168.1.1
+          description: IP address of the customer making the transaction, used as part of fraud detection.
+        ecommerce:
+          type: boolean
+          example: true
+          description: Set to indicate that the transaction is e-commerce. When set, the Helcim Fraud Defender will provide further analysis.
+        terminalId:
+          type: integer
+          example: 3215
+          description: For card transactions only. Id of the terminal you would want to use. Default terminal for of the currency will be used if you dont send this.
+        currency:
+          type: string
+          example: CAD
+          description: The currency abbreviation of the invoice, such as CAD or USD. This should match currency of existing invoice.
+        amount:
+          type: number
+          example: 100.99
+          description: Amount to be processed
+        customerCode:
+          type: string
+          example: ''
+          description: Existing customer code associated with the transaction
+        invoiceNumber:
+          type: string
+          example: ''
+          description: To be filled when associating transaction to existing invoice. Invoice should be associated to the same customer linked to the card
+        cardData:
+          $ref: '#/components/schemas/Card'
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+    BankToken:
+      title: Bank Token
+      type: object
+      required:
+      - bankToken
+      properties:
+        bankToken:
+          type: string
+          example: HGKHJK5647698HGJJK
+          description: The token for the bank account on file.
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions

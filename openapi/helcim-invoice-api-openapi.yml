@@ -245,16 +245,136 @@ paths:
       - ApiAccessAuth: []
 components:
   schemas:
-    OrderField:
-      title: Order Field Data
+    Address:
+      title: Address
       type: object
+      required:
+      - name
+      - street1
+      - postalCode
       properties:
-        displayName:
+        name:
           type: string
-          example: Table Number
-        value:
+          description: 'The recipient''s name or business name for this address.
+
+            '
+          example: John Smith / Helcim
+        street1:
           type: string
-          example: 44B
+          description: 'The primary street address.
+
+            '
+          example: 21 Jump Street
+        street2:
+          type: string
+          description: 'Additional address details, such as unit or suite number.
+
+            '
+          example: Suite 400
+        city:
+          type: string
+          description: 'The city for this address.
+
+            '
+          example: Calgary
+        province:
+          type: string
+          description: 'The two-letter province or state code (e.g., AB, BC, CA).  Required if the country is CAN or USA.
+
+            '
+          example: AB
+        country:
+          type: string
+          description: 'The three-letter [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code (e.g., CAN, USA).
+
+            '
+          example: CAN
+        postalCode:
+          type: string
+          description: 'The postal or ZIP code for this address.
+
+            '
+          example: H0H0H0
+        phone:
+          type: string
+          description: 'Contact phone number (10 to 15 digits).
+
+            '
+          example: 4031231234
+        email:
+          type: string
+          description: 'Contact email address for this address.
+
+            '
+          example: john@example.com
+    Discount:
+      title: Discount Data
+      type: object
+      required:
+      - amount
+      - details
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total discount amount applied at the invoice level.  This does not include item-level discounts.
+
+            '
+          example: 10.99
+        details:
+          type: string
+          description: 'A description or code identifying the discount.
+
+            '
+          example: DISC100
+    LineItem:
+      title: Line Item Data
+      type: object
+      required:
+      - description
+      - quantity
+      - price
+      properties:
+        description:
+          type: string
+          description: 'A short description of the product or service.
+
+            '
+          example: Red Hat
+        quantity:
+          type: number
+          format: float
+          description: 'The quantity of the line item. Can have up to 2 decimal places.
+
+            '
+          example: 10.5
+        price:
+          type: number
+          format: float
+          description: 'The unit price for a single quantity of this line item, before tax or discounts.
+
+            '
+          example: 10.55
+        taxAmount:
+          type: number
+          format: float
+          description: 'The tax amount for this line item.
+
+            '
+          example: 0
+        discountAmount:
+          type: number
+          format: float
+          description: 'The discount amount applied to this line item.
+
+            '
+          example: 0
+        sku:
+          type: string
+          description: 'The stock keeping unit (SKU) code for this product (or service).
+
+            '
+          example: ITM1434
     InvoiceResponse:
       title: InvoiceResponse
       type: object
@@ -392,26 +512,6 @@ components:
           type: string
           description: Notes visible to the customer at the bottom of the invoice.
           example: No vegetables please
-    Tax:
-      title: Tax Data
-      type: object
-      required:
-      - amount
-      - details
-      properties:
-        amount:
-          type: number
-          format: float
-          description: 'The total tax amount applied at the invoice level.  This does not include item-level taxes.
-
-            '
-          example: 5.99
-        details:
-          type: string
-          description: 'A description of the tax or tax breakdown.
-
-            '
-          example: GST 5%
     InvoiceUpsertRequest:
       title: InvoiceCreateRequest
       type: object
@@ -530,68 +630,6 @@ components:
 
             '
           example: No vegetables please
-    Address:
-      title: Address
-      type: object
-      required:
-      - name
-      - street1
-      - postalCode
-      properties:
-        name:
-          type: string
-          description: 'The recipient''s name or business name for this address.
-
-            '
-          example: John Smith / Helcim
-        street1:
-          type: string
-          description: 'The primary street address.
-
-            '
-          example: 21 Jump Street
-        street2:
-          type: string
-          description: 'Additional address details, such as unit or suite number.
-
-            '
-          example: Suite 400
-        city:
-          type: string
-          description: 'The city for this address.
-
-            '
-          example: Calgary
-        province:
-          type: string
-          description: 'The two-letter province or state code (e.g., AB, BC, CA).  Required if the country is CAN or USA.
-
-            '
-          example: AB
-        country:
-          type: string
-          description: 'The three-letter [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code (e.g., CAN, USA).
-
-            '
-          example: CAN
-        postalCode:
-          type: string
-          description: 'The postal or ZIP code for this address.
-
-            '
-          example: H0H0H0
-        phone:
-          type: string
-          description: 'Contact phone number (10 to 15 digits).
-
-            '
-          example: 4031231234
-        email:
-          type: string
-          description: 'Contact email address for this address.
-
-            '
-          example: john@example.com
     Pickup:
       title: Pickup Data
       type: object
@@ -611,6 +649,36 @@ components:
 
             '
           example: Jane Smith
+    OrderField:
+      title: Order Field Data
+      type: object
+      properties:
+        displayName:
+          type: string
+          example: Table Number
+        value:
+          type: string
+          example: 44B
+    Tax:
+      title: Tax Data
+      type: object
+      required:
+      - amount
+      - details
+      properties:
+        amount:
+          type: number
+          format: float
+          description: 'The total tax amount applied at the invoice level.  This does not include item-level taxes.
+
+            '
+          example: 5.99
+        details:
+          type: string
+          description: 'A description of the tax or tax breakdown.
+
+            '
+          example: GST 5%
     FailedPaymentResponse:
       type: object
       properties:
@@ -647,74 +715,6 @@ components:
           description: 'The destination shipping address for this invoice.
 
             '
-    LineItem:
-      title: Line Item Data
-      type: object
-      required:
-      - description
-      - quantity
-      - price
-      properties:
-        description:
-          type: string
-          description: 'A short description of the product or service.
-
-            '
-          example: Red Hat
-        quantity:
-          type: number
-          format: float
-          description: 'The quantity of the line item. Can have up to 2 decimal places.
-
-            '
-          example: 10.5
-        price:
-          type: number
-          format: float
-          description: 'The unit price for a single quantity of this line item, before tax or discounts.
-
-            '
-          example: 10.55
-        taxAmount:
-          type: number
-          format: float
-          description: 'The tax amount for this line item.
-
-            '
-          example: 0
-        discountAmount:
-          type: number
-          format: float
-          description: 'The discount amount applied to this line item.
-
-            '
-          example: 0
-        sku:
-          type: string
-          description: 'The stock keeping unit (SKU) code for this product (or service).
-
-            '
-          example: ITM1434
-    Discount:
-      title: Discount Data
-      type: object
-      required:
-      - amount
-      - details
-      properties:
-        amount:
-          type: number
-          format: float
-          description: 'The total discount amount applied at the invoice level.  This does not include item-level discounts.
-
-            '
-          example: 10.99
-        details:
-          type: string
-          description: 'A description or code identifying the discount.
-
-            '
-          example: DISC100
   securitySchemes:
     ApiAccessAuth:
       description: API Token with required permissions
