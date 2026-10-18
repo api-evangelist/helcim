@@ -55,6 +55,17 @@ tags:
 - Merchant Services
 - ACH
 - Invoicing
+- Payment Terminals
+- Small Business
+tags_raw:
+- Payments
+- Canada
+- Payment Gateway
+- Payment Processing
+- Acquiring
+- Merchant Services
+- ACH
+- Invoicing
 - Card Terminal
 - Small Business
 created: '2026-07-24'
@@ -95,6 +106,8 @@ apis:
   humanURL: https://devdocs.helcim.com/reference
   baseURL: https://api.helcim.com/v2
   tags:
+  - Payment Terminals
+  tags_raw:
   - Card Terminal
   properties:
   - type: OpenAPI
