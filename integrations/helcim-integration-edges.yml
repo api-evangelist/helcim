@@ -1,10 +1,33 @@
-generated: '2026-10-15'
+generated: '2026-10-20'
 method: searched
+source:
+- woocommerce/integrations/woocommerce-integration-edges.yml
+- https://n8n.io/integrations/helcim/
 checked:
 - woocommerce/integrations/woocommerce-integration-edges.yml
 - wordpress/integrations/wordpress-integration-edges.yml
-source:
-- woocommerce/integrations/woocommerce-integration-edges.yml
+- https://composio.dev/toolkits/helcim
+- https://monid.ai/tools/helcim
+- https://n8n.io/integrations/helcim/
+- https://zapier.com/apps/helcim/integrations
+summary: null
+marketplace_apps:
+- marketplace: n8n
+  channel: open-source-node
+  app: helcim
+  url: https://n8n.io/integrations/helcim/
+  identity: title
+  pair_pages: 9
+  pairs:
+  - http-request
+  - microsoft-excel
+  - mysql
+  - notion
+  - openai
+  - postgres
+  - slack
+  - supabase
+  - telegram
 edges:
 - partner_name: WooCommerce (own)
   partner: woocommerce
@@ -40,3 +63,4 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: WordPress plugin
+templates: []
