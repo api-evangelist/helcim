@@ -1,4 +1,4 @@
-# Helcim (helcim)
+# Helcim
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,101 +64,143 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Helcim is a Calgary, Canada based payment processor and merchant services provider serving small and medium-sized businesses across Canada and the United States with interchange-plus pricing and no monthly fees. Alongside its merchant dashboard, Smart Terminal hardware, and online store, Helcim ships a genuine developer surface — the versioned Helcim API (v2) for card and ACH payments, customers, invoices, batches, and in-person terminals — plus HelcimPay.js hosted checkout and connected-account webhooks.
+Helcim is a Calgary, Canada based payment processor and merchant services provider serving small and medium-sized businesses across Canada and the United States with interchange-plus pricing and no monthly fees. Beyond its merchant dashboard, Smart Terminal hardware, and online store, Helcim ships a genuine developer surface: the versioned Helcim API (v2) for taking card and ACH payments, managing customers, cards, bank accounts and pre-authorized debits (PADs), issuing invoices, settling card and ACH batches, and driving in-person Card Terminal devices, alongside HelcimPay.js hosted checkout and connected-account webhooks. Authentication is a permissioned API access token passed in an api-token header, and the public developer portal publishes a downloadable OpenAPI 3.0 definition. In Canada's small, concentrated payments market, Helcim is one of the API-native SMB money-movement fintechs building above the incumbent acquiring and Interac rails.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/helcim/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/helcim/refs/heads/main/apis.yml)
+**Areas:** Payments · Canada · Payment Gateway · Payment Processing · Acquiring · Merchant Services · ACH · Invoicing · Payment Terminals · Small Business
 
-## Tags
+## Helcim on APIs.io
 
-- Payments
-- Canada
-- Payment Gateway
-- Payment Processing
-- Acquiring
-- Merchant Services
-- ACH
-- Invoicing
-- Card Terminal
-- Small Business
+Everything profiled for Helcim is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/helcim/](https://apis.io/providers/helcim/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (9)
 
-- **Created:** 2026-07-24
-- **Modified:** 2026-07-24
+- [Helcim ACH Payment API](https://apis.io/apis/helcim/helcim-ach-payment-api/) — The ACH Payment API from Helcim — 8 operation(s) for ach payment.
+- [Helcim Card Batch API](https://apis.io/apis/helcim/helcim-card-batch-api/) — The Card Batch API from Helcim — 3 operation(s) for card batch.
+- [Helcim Card Terminal API](https://apis.io/apis/helcim/helcim-card-terminal-api/) — The Card Terminal API from Helcim — 1 operation(s) for card terminal.
+- [Helcim Card Transaction API](https://apis.io/apis/helcim/helcim-card-transaction-api/) — The Card Transaction API from Helcim — 2 operation(s) for card transaction.
+- [Helcim Customer API](https://apis.io/apis/helcim/helcim-customer-api/) — The Customer API from Helcim — 11 operation(s) for customer.
+- [Helcim Device API](https://apis.io/apis/helcim/helcim-device-api/) — The Device API from Helcim — 5 operation(s) for device.
+- [Helcim General API](https://apis.io/apis/helcim/helcim-general-api/) — The General API from Helcim — 1 operation(s) for general.
+- [Helcim Invoice API](https://apis.io/apis/helcim/helcim-invoice-api/) — The Invoice API from Helcim — 2 operation(s) for invoice.
+- [Helcim Payment API](https://apis.io/apis/helcim/helcim-payment-api/) — The Payment API from Helcim — 7 operation(s) for payment.
 
-## API Posture
+### Published properties
 
-- **Developer portal:** [https://devdocs.helcim.com](https://devdocs.helcim.com) (ReadMe.io, HTTP 200)
-- **API reference:** [https://devdocs.helcim.com/reference](https://devdocs.helcim.com/reference)
-- **Base URL:** `https://api.helcim.com/v2`
-- **OpenAPI:** one real OpenAPI 3.0.0 definition — "The Helcim API" v2.2.0, 40 paths — harvested verbatim to [`openapi/helcim-api.json`](openapi/helcim-api.json)
-- **Authentication:** API key in an `api-token` header (permissioned API Access Configuration)
-- **Events:** connected-account webhooks
-- **Home market:** Canada (with US coverage)
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Helcim Payment API
+Event-driven and webhook contracts.
 
-Card payment processing across the full transaction lifecycle — Purchase, Preauthorization, Capture, Verify, Refund, Reverse, and Withdraw — plus a connection-test endpoint.
+- [Helcim Webhooks](https://apis.io/asyncapis/helcim/helcim-webhooks/)
 
-- **Human URL:** [https://devdocs.helcim.com/reference](https://devdocs.helcim.com/reference)
-- **Base URL:** `https://api.helcim.com/v2`
-- **Properties:** [OpenAPI](openapi/helcim-api.json) · [Documentation](https://devdocs.helcim.com/docs/overview-of-helcim-api)
+#### MCP servers (1)
 
-### Helcim ACH Payment API
+Model Context Protocol servers that expose the API to agents.
 
-Bank-to-bank (ACH / pre-authorized debit) money movement — withdraw, refund, void, cancel, retrieve ACH transactions, and list and settle ACH batches.
+- [helcim](https://apis.io/servers/helcim/helcim/)
 
-- **Human URL:** [https://devdocs.helcim.com/reference](https://devdocs.helcim.com/reference)
-- **Base URL:** `https://api.helcim.com/v2`
-- **Properties:** [OpenAPI](openapi/helcim-api.json) · [Documentation](https://devdocs.helcim.com/docs/overview-of-helcim-api)
+#### Agentic access (1)
 
-### Helcim Customer API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Create, retrieve, and update customers and manage their saved payment instruments — stored cards, bank accounts, and pre-authorized debit agreements (PADs).
+- [Helcim Agentic Access](https://apis.io/agentic-access/helcim/helcim-agentic-access/)
 
-- **Human URL:** [https://devdocs.helcim.com/reference](https://devdocs.helcim.com/reference)
-- **Base URL:** `https://api.helcim.com/v2`
-- **Properties:** [OpenAPI](openapi/helcim-api.json) · [Documentation](https://devdocs.helcim.com/docs/overview-of-helcim-api)
+#### Collections (2)
 
-### Helcim Invoice API
+Postman and Open Collection request collections.
 
-Create, retrieve, and update invoices for billing and payment collection.
+- [The Helcim API](https://apis.io/collections/helcim/open-helcim-api/)
+- [The Helcim API](https://apis.io/collections/helcim/postman-helcim-api/)
 
-- **Human URL:** [https://devdocs.helcim.com/reference](https://devdocs.helcim.com/reference)
-- **Base URL:** `https://api.helcim.com/v2`
-- **Properties:** [OpenAPI](openapi/helcim-api.json) · [Documentation](https://devdocs.helcim.com/docs/overview-of-helcim-api)
+#### Overlays (1)
 
-### Helcim Card Transaction & Batch API
+OpenAPI overlays, including conversational phrasing for each operation.
 
-Read access to processed card transactions and card batches, including settling a card batch.
+- [Helcim Api Overlay](https://apis.io/overlays/helcim/helcim-api-overlay/)
 
-- **Human URL:** [https://devdocs.helcim.com/reference](https://devdocs.helcim.com/reference)
-- **Base URL:** `https://api.helcim.com/v2`
-- **Properties:** [OpenAPI](openapi/helcim-api.json) · [Documentation](https://devdocs.helcim.com/docs/overview-of-helcim-api)
+#### Security (2)
 
-### Helcim Card Terminal & Device API
+Authentication, trust centre, and vulnerability disclosure.
 
-In-person payments through Helcim Smart Terminal hardware — list terminals and devices, ping a device, and start purchase or refund transactions.
+- [Helcim Authentication](https://apis.io/security/helcim/helcim-authentication/)
+- [Helcim Domain Security](https://apis.io/security/helcim/helcim-domain-security/)
 
-- **Human URL:** [https://devdocs.helcim.com/reference](https://devdocs.helcim.com/reference)
-- **Base URL:** `https://api.helcim.com/v2`
-- **Properties:** [OpenAPI](openapi/helcim-api.json) · [Documentation](https://devdocs.helcim.com/docs/overview-of-helcim-api)
+#### Rate limits (1)
 
-## Common Properties
+Published request limits.
+
+- [Helcim Rate Limits](https://apis.io/rate-limits/helcim/helcim-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.helcim.com/)
-- [Developer Portal](https://devdocs.helcim.com/)
 - [Documentation](https://devdocs.helcim.com/docs)
-- [API Reference](https://devdocs.helcim.com/reference)
-- [Getting Started](https://devdocs.helcim.com/docs/overview-of-helcim-api)
-- [Authentication](https://devdocs.helcim.com/docs/authentication-with-the-helcim-api-and-helcimpayjs)
-- [Webhooks](https://devdocs.helcim.com/docs/connected-account-webhooks)
-- [GitHub Organization](https://github.com/helcim)
-- [Status Page](https://status.helcim.com)
+- [Getting started](https://devdocs.helcim.com/docs/overview-of-helcim-api)
+- [API reference](https://devdocs.helcim.com/reference)
+- [Pricing](https://www.helcim.com/pricing/)
+- [Sign up](https://hub.helcim.com/signup/register/)
+- [Support](https://devdocs.helcim.com/docs/get-help)
+- [Blog](https://www.helcim.com/blog/)
+- [Compliance](https://devdocs.helcim.com/docs/pci-compliance-scope)
+- [Terms of service](https://legal.helcim.com/ca/terms-of-service/)
+- [Privacy policy](https://legal.helcim.com/ca/privacy-policy/)
+- [GitHub](https://github.com/helcim)
+- [Status](https://status.helcim.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 53.0** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 52.1 |
+| Contract governance | 18.2 |
+| Operational transparency | 77.6 |
+| Developer ergonomics | 47.7 |
+| Access clarity | 48.7 |
+
+**Agent readiness 41.3** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | verified |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 31.7** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/helcim/](https://apis.io/providers/helcim/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Helcim: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/helcim/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
